@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>LIMFA Enrollment — OsteoStrong Naples</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',sans-serif;background:#F7F4EF;color:#1C1C2E;min-height:100vh;padding-bottom:60px}
+.header{background:#1C1C2E;padding:18px 24px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
+.header-logo{font-family:'Playfair Display',serif;font-size:21px;color:#fff;letter-spacing:-0.5px}
+.header-logo span{color:#C9A84C}
+.header-sub{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.header-badge{font-size:10px;font-weight:600;color:#C9A84C;border:1px solid rgba(201,168,76,0.4);border-radius:100px;padding:4px 10px;letter-spacing:1px;text-transform:uppercase}
+.progress-bar{height:3px;background:rgba(255,255,255,0.1)}
+.progress-fill{height:100%;background:linear-gradient(90deg,#C9A84C,#E8C96A);transition:width 0.4s ease;width:0%}
+.step-nav{display:flex;justify-content:center;padding:18px 24px 0;overflow-x:auto}
+.step-item{display:flex;flex-direction:column;align-items:center;position:relative;flex:1;min-width:52px}
+.step-item:not(:last-child)::after{content:'';position:absolute;top:13px;left:50%;width:100%;height:1px;background:#D8D0C4}
+.step-item.active:not(:last-child)::after,.step-item.done:not(:last-child)::after{background:#C9A84C}
+.step-dot{width:26px;height:26px;border-radius:50%;border:2px solid #D8D0C4;background:#F7F4EF;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#A09080;position:relative;z-index:1;transition:all 0.3s}
+.step-item.active .step-dot{border-color:#C9A84C;background:#C9A84C;color:#fff}
+.step-item.done .step-dot{border-color:#C9A84C;background:#C9A84C;color:#fff}
+.step-label{font-size:9px;font-weight:500;color:#A09080;margin-top:4px;text-align:center;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.step-item.active .step-label{color:#1C1C2E;font-weight:600}
+.step-item.done .step-label{color:#C9A84C}
+.form-container{max-width:600px;margin:22px auto 0;padding:0 16px}
+.step-panel{display:none}
+.step-panel.active{display:block}
+.panel-title{font-family:'Playfair Display',serif;font-size:23px;color:#1C1C2E;margin-bottom:4px}
+.panel-sub{font-size:13px;color:#7A6E62;margin-bottom:18px;line-height:1.5}
+.card{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;border:1px solid #EDE8E0;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.card-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#A09080;margin-bottom:14px}
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:12px;font-weight:600;color:#4A4035;margin-bottom:5px;letter-spacing:0.2px}
+label .req{color:#C9484C;margin-left:2px}
+input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;padding:11px 14px;border:1.5px solid #DDD8CF;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:#1C1C2E;background:#FDFCFA;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A09080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+input:focus,select:focus,textarea:focus{border-color:#C9A84C;background:#fff;box-shadow:0 0 0 3px rgba(201,168,76,0.12)}
+input.error,select.error{border-color:#C9484C}
+textarea{height:80px;resize:vertical}
+.field-hint{font-size:11px;color:#A09080;margin-top:4px}
+/* PROTOCOL RECOMMENDATION BOX */
+.proto-rec{background:#1C1C2E;border-radius:14px;padding:20px;margin-bottom:14px;display:none}
+.proto-rec.show{display:block}
+.pr-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;margin-bottom:4px}
+.pr-name{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin-bottom:14px;line-height:1.2}
+.pr-rows{border-top:1px solid rgba(255,255,255,0.1)}
+.pr-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.07);font-size:13px}
+.pr-row:last-child{border-bottom:none}
+.pr-label{color:rgba(255,255,255,0.45);flex-shrink:0;width:100px}
+.pr-val{color:#fff;font-weight:500;text-align:right}
+.pr-total{background:rgba(201,168,76,0.15);border-radius:8px;padding:10px 14px;margin-top:12px;display:flex;justify-content:space-between;align-items:center}
+.pr-total-label{font-size:12px;font-weight:600;color:#C9A84C}
+.pr-total-val{font-size:20px;font-weight:700;color:#C9A84C}
+/* PACKAGE PHASE BREAKDOWN */
+.phase-breakdown{margin-top:10px}
+.phase-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:12px}
+.phase-item:last-child{border-bottom:none}
+.phase-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+.ph-acute{background:rgba(201,72,76,0.25);color:#F0A0A0}
+.ph-repair{background:rgba(41,128,185,0.25);color:#90C4E8}
+.ph-suspension{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5)}
+.ph-consolidation{background:rgba(58,138,58,0.25);color:#90D090}
+.phase-detail{color:rgba(255,255,255,0.7)}
+/* CUSTOM SESSIONS */
+.custom-box{background:#F7F4EF;border-radius:10px;padding:14px;margin-top:12px;border:1.5px dashed #DDD8CF}
+.custom-box-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#A09080;margin-bottom:8px}
+/* PAYMENT */
+.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pay-btn{border:1.5px solid #DDD8CF;border-radius:12px;padding:16px 12px;cursor:pointer;background:#FDFCFA;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#4A4035;text-align:center;transition:all 0.18s;-webkit-tap-highlight-color:transparent}
+.pay-btn.selected{border-color:#C9A84C;background:#FBF6E9;color:#7A5C10;font-weight:600}
+.pay-icon{font-size:20px;display:block;margin-bottom:5px}
+.split-box{background:#F7F4EF;border-radius:10px;padding:14px;display:none}
+.split-box.show{display:block}
+/* CONSENT */
+.consent-block{background:#FFF8EC;border:1.5px solid #F0D080;border-radius:12px;padding:18px;margin-bottom:12px}
+.consent-title{font-size:12px;font-weight:700;color:#7A5C10;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px}
+.consent-text{font-size:12px;color:#5A4A30;line-height:1.7}
+.consent-text p{margin-bottom:10px}
+.consent-text p:last-child{margin-bottom:0}
+.check-row{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1.5px solid #DDD8CF;border-radius:10px;padding:14px;cursor:pointer;transition:border-color 0.2s;margin-bottom:10px}
+.check-row.checked{border-color:#3A8A3A;background:#F0FAF0}
+.check-row input[type=checkbox]{width:20px;height:20px;flex-shrink:0;border:2px solid #DDD8CF;border-radius:5px;appearance:none;-webkit-appearance:none;cursor:pointer;background:#fff;transition:all 0.2s;margin-top:1px}
+.check-row input[type=checkbox]:checked{background:#3A8A3A;border-color:#3A8A3A}
+.check-row input[type=checkbox]:checked::after{content:'✓';color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.check-label{font-size:13px;font-weight:500;color:#3A4A3A;line-height:1.5}
+.check-label span{font-weight:400;color:#5A6A5A}
+/* REVIEW */
+.review-section{margin-bottom:16px}
+.review-section-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A09080;margin-bottom:8px}
+.review-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F0EBE3;font-size:13px}
+.review-row:last-child{border-bottom:none}
+.rv-label{color:#7A6E62}
+.rv-value{font-weight:600;color:#1C1C2E;text-align:right;max-width:65%}
+/* NAV */
+.nav-row{display:flex;gap:12px;margin-top:18px;padding-bottom:16px}
+.btn-back{flex:1;padding:14px;border:1.5px solid #DDD8CF;border-radius:12px;background:transparent;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#7A6E62;cursor:pointer}
+.btn-next{flex:2;padding:14px;border:none;border-radius:12px;background:#1C1C2E;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#fff;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.btn-next:active{transform:scale(0.98)}
+.btn-next.gold{background:#C9A84C;color:#1C1C2E}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+/* SUCCESS */
+.success-panel{display:none;text-align:center;padding:40px 20px}
+.success-panel.show{display:block}
+.success-icon{width:80px;height:80px;background:#1C1C2E;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px}
+.success-title{font-family:'Playfair Display',serif;font-size:28px;color:#1C1C2E;margin-bottom:8px}
+.success-sub{font-size:14px;color:#7A6E62;line-height:1.6;margin-bottom:24px}
+.success-card{background:#fff;border:1px solid #EDE8E0;border-radius:14px;padding:20px;text-align:left;margin-bottom:20px}
+.ss-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F0EBE3;font-size:13px}
+.ss-row:last-child{border-bottom:none}
+.ss-label{color:#7A6E62}
+.ss-value{font-weight:600;color:#1C1C2E;text-align:right;max-width:60%}
+.btn-reset{width:100%;padding:15px;border:1.5px solid #DDD8CF;border-radius:12px;background:transparent;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#4A4035;cursor:pointer;margin-top:10px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(28,28,46,0.75);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.overlay.show{display:flex}
+.spinner{width:40px;height:40px;border:3px solid rgba(201,168,76,0.3);border-top-color:#C9A84C;border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.overlay-text{color:#fff;font-size:14px;font-weight:500}
+@media(max-width:400px){.field-row,.payment-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay">
+  <div class="spinner"></div>
+  <div class="overlay-text">Enrolling client…</div>
+</div>
+<header class="header">
+  <div>
+    <div class="header-logo"><span>L</span>IMFA</div>
+    <div class="header-sub">OsteoStrong Naples</div>
+  </div>
+  <div class="header-badge">Enrollment</div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav class="step-nav">
+  <div class="step-item active" id="nav-0"><div class="step-dot">1</div><div class="step-label">Staff</div></div>
+  <div class="step-item" id="nav-1"><div class="step-dot">2</div><div class="step-label">Client</div></div>
+  <div class="step-item" id="nav-2"><div class="step-dot">3</div><div class="step-label">Protocol</div></div>
+  <div class="step-item" id="nav-3"><div class="step-dot">4</div><div class="step-label">Package</div></div>
+  <div class="step-item" id="nav-4"><div class="step-dot">5</div><div class="step-label">Payment</div></div>
+  <div class="step-item" id="nav-5"><div class="step-dot">6</div><div class="step-label">Consent</div></div>
+  <div class="step-item" id="nav-6"><div class="step-dot">7</div><div class="step-label">Review</div></div>
+</nav>
+<main class="form-container">
+  <!-- STEP 0 — STAFF -->
+  <div class="step-panel active" id="step-0">
+    <p class="panel-title">Who's enrolling this client?</p>
+    <p class="panel-sub">Select your name for commission and record tracking.</p>
+    <div class="card">
+      <div class="field">
+        <label>Coach / Salesperson <span class="req">*</span></label>
+        <select id="salesperson">
+          <option value="">Select your name…</option>
+          <option>Amanda Restivo</option>
+          <option>Dan Little</option>
+          <option>Emily Shakeshaft</option>
+          <option>Josiah Biancaniello</option>
+          <option>Mackenzie McMahon</option>
+          <option>Rosanne Magee-Ryder</option>
+          <option>Sereena Wettels</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Enrollment date</label>
+        <input type="text" id="enroll-date" readonly>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-next" onclick="nextStep(0)">Continue →</button>
+    </div>
+  </div>
+  <!-- STEP 1 — CLIENT INFO -->
+  <div class="step-panel" id="step-1">
+    <p class="panel-title">Client details</p>
+    <p class="panel-sub">Enter the client's information exactly as they provided it.</p>
+    <div class="card">
+      <div class="field">
+        <label>Full name <span class="req">*</span></label>
+        <input type="text" id="client-name" placeholder="Jane Smith">
+      </div>
+      <div class="field-row field">
+        <div class="field" style="margin-bottom:0">
+          <label>Phone</label>
+          <input type="tel" id="client-phone" placeholder="(239) 555-0000">
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" id="client-email" placeholder="jane@email.com">
+        </div>
+      </div>
+      <div class="field">
+        <label>Date of birth <span style="font-weight:400;color:#A09080">(optional)</span></label>
+        <input type="text" id="client-dob" placeholder="MM/DD/YYYY">
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(1)">← Back</button>
+      <button class="btn-next" onclick="nextStep(1)">Continue →</button>
+    </div>
+  </div>
+  <!-- STEP 2 — PROTOCOL -->
+  <div class="step-panel" id="step-2">
+    <p class="panel-title">Confirm the protocol</p>
+    <p class="panel-sub">Select the protocol — the session count and phase breakdown will auto-populate.</p>
+    <div class="card">
+      <div class="field">
+        <label>Primary diagnosis / condition <span class="req">*</span></label>
+        <input type="text" id="diagnosis" placeholder="e.g. Osteoporosis, Knee Gonarthrosis">
+      </div>
+      <div class="field">
+        <label>Protocol <span class="req">*</span></label>
+        <select id="protocol-num" onchange="onProtocolChange()">
+          <option value="">Select protocol…</option>
+          <option value="1">1 — Osteopenia</option>
+          <option value="2">2 — Osteoporosis</option>
+          <option value="3">3 — Bone Healing Delay</option>
+          <option value="4">4 — Ankle — Inflammation (cartilage/tendon)</option>
+          <option value="5">5 — Ankle — Trauma</option>
+          <option value="6">6 — Knee — Sprain</option>
+          <option value="7">7 — Knee — Gonarthrosis (Osteoarthritis)</option>
+          <option value="8">8 — Knee — Cartilage Repair</option>
+          <option value="9">9 — Knee — Post Prosthesis</option>
+          <option value="10">10 — Knee — Tendinitis</option>
+          <option value="11">11 — Knee — Trauma</option>
+          <option value="12">12 — Hip — Arthrosis (Osteoarthritis)</option>
+          <option value="13">13 — Hip — Post Prosthesis</option>
+          <option value="14">14 — Groin Strain</option>
+          <option value="15">15 — Plantar Fasciitis</option>
+          <option value="16">16 — Achilles Tendinitis</option>
+          <option value="17">17 — Cervical Osteoarthritis</option>
+          <option value="18">18 — Sciatica / Lumbosciatalgia</option>
+          <option value="19">19 — Spinal Stenosis / Disc Hernia</option>
+          <option value="20">20 — Muscle Contractures</option>
+          <option value="21">21 — Muscle Pain</option>
+          <option value="22">22 — D.O.M.S.</option>
+          <option value="23">23 — Fibromyalgia</option>
+          <option value="24">24 — Post Surgery Pain</option>
+          <option value="25">25 — Rheumatoid Arthritis</option>
+          <option value="26">26 — Shoulder — Bursitis</option>
+          <option value="27">27 — Shoulder — Inflammation</option>
+          <option value="28">28 — Shoulder — Rotator Cuff Trauma</option>
+          <option value="29">29 — Shoulder — Frozen</option>
+          <option value="30">30 — Epicondylitis (Tennis Elbow)</option>
+          <option value="31">31 — Wrist — Inflammation (cartilage/tendon)</option>
+          <option value="32">32 — Wrist — Trauma</option>
+          <option value="33">33 — Carpal Tunnel Syndrome</option>
+          <option value="34">34 — Thumb — Rhizarthrosis</option>
+          <option value="35">35 — Thumb — Tendinitis</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Additional conditions <span style="font-weight:400;color:#A09080">(optional)</span></label>
+        <input type="text" id="additional-conds" placeholder="e.g. Also has osteopenia — address after primary protocol">
+      </div>
+    </div>
+    <!-- Auto-populated protocol summary -->
+    <div class="proto-rec" id="proto-rec">
+      <div class="pr-eyebrow" id="pr-eyebrow">Protocol #</div>
+      <div class="pr-name" id="pr-name"></div>
+      <div class="pr-rows" id="pr-rows"></div>
+      <div class="pr-total">
+        <div class="pr-total-label">Total sessions recommended</div>
+        <div class="pr-total-val" id="pr-total"></div>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(2)">← Back</button>
+      <button class="btn-next" onclick="nextStep(2)">Continue →</button>
+    </div>
+  </div>
+  <!-- STEP 3 — PACKAGE -->
+  <div class="step-panel" id="step-3">
+    <p class="panel-title">Package & sessions</p>
+    <p class="panel-sub">Based on the selected protocol. Edit only if adjusting for the client.</p>
+    <div class="proto-rec show" id="pkg-proto-summary" style="margin-bottom:14px">
+      <div class="pr-eyebrow" id="pkg-eyebrow"></div>
+      <div class="pr-name" id="pkg-proto-name"></div>
+      <div class="pr-rows" id="pkg-proto-rows"></div>
+      <div class="pr-total">
+        <div class="pr-total-label">Recommended sessions</div>
+        <div class="pr-total-val" id="pkg-total"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Confirm session details</div>
+      <div class="field-row field">
+        <div class="field" style="margin-bottom:0">
+          <label>Total sessions <span class="req">*</span></label>
+          <input type="text" id="confirmed-sessions" placeholder="e.g. 22">
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Total price <span class="req">*</span></label>
+          <input type="text" id="confirmed-price" placeholder="e.g. $2,200">
+        </div>
+      </div>
+      <div class="custom-box">
+        <div class="custom-box-title">Custom adjustment <span style="font-weight:400;text-transform:none;font-size:11px;color:#A09080">(optional)</span></div>
+        <input type="text" id="custom-note" placeholder="e.g. 1 complimentary session applied — 21 paid sessions at $100">
+        <div class="field-hint" style="margin-top:6px">Use this if you're adjusting sessions, applying a discount, or noting a special arrangement</div>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(3)">← Back</button>
+      <button class="btn-next" onclick="nextStep(3)">Continue →</button>
+    </div>
+  </div>
+  <!-- STEP 4 — PAYMENT -->
+  <div class="step-panel" id="step-4">
+    <p class="panel-title">Payment</p>
+    <p class="panel-sub">Select how the client is paying today.</p>
+    <div class="card">
+      <div class="card-title">Payment type</div>
+      <div class="payment-grid">
+        <button class="pay-btn" onclick="selectPayment(this,'Paid in full')"><span class="pay-icon">✅</span>Paid in full</button>
+        <button class="pay-btn" onclick="selectPayment(this,'Split payment')"><span class="pay-icon">📅</span>Split payment</button>
+      </div>
+      <div class="split-box" id="split-box">
+        <div class="field-row field">
+          <div class="field" style="margin-bottom:0">
+            <label>First payment amount</label>
+            <input type="text" id="first-payment" placeholder="e.g. $1,100">
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>First payment date</label>
+            <input type="text" id="first-payment-date" readonly>
+          </div>
+        </div>
+        <div class="field-row field" style="margin-top:12px">
+          <div class="field" style="margin-bottom:0">
+            <label>Second payment amount</label>
+            <input type="text" id="second-payment" placeholder="e.g. $1,100">
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label>Second payment due date <span class="req">*</span></label>
+            <input type="text" id="split-due" placeholder="MM/DD/YYYY">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(4)">← Back</button>
+      <button class="btn-next" onclick="nextStep(4)">Continue →</button>
+    </div>
+  </div>
+  <!-- STEP 5 — CONSENT -->
+  <div class="step-panel" id="step-5">
+    <p class="panel-title">Client agreement</p>
+    <p class="panel-sub">Read through each section with the client and confirm their acknowledgment.</p>
+    <div class="consent-block">
+      <div class="consent-title">📋 Terms of enrollment</div>
+      <div class="consent-text">
+        <p><strong>About LIMFA Therapy:</strong> LIMFA Therapy is a non-invasive, drug-free wellness service that uses low-frequency electromagnetic waves to support the body's natural healing process. LIMFA Therapy is not a medical treatment and does not diagnose, treat, cure, or prevent any disease or medical condition. Results may vary.</p>
+        <p><strong>Sessions & Scheduling:</strong> Sessions must be scheduled according to the recommended protocol frequency. Missed sessions or gaps outside the recommended frequency may affect results. OsteoStrong Naples reserves the right to adjust session counts based on client progress and clinical guidance.</p>
+        <p><strong>Payment:</strong> All payments are due as agreed at enrollment. Packages are non-refundable once sessions have begun. Split payment clients agree to complete the second payment by the agreed due date.</p>
+        <p><strong>Health responsibility:</strong> The client confirms they have disclosed all relevant health conditions and contraindications. OsteoStrong Naples staff are not medical professionals. Clients are encouraged to consult their physician before beginning any new wellness program.</p>
+        <p><strong>Founding member pricing:</strong> Current pricing of $100/session is a limited founding member rate. This rate is locked in for the duration of the purchased package only.</p>
+      </div>
+    </div>
+    <label class="check-row" id="check1-wrap">
+      <input type="checkbox" id="check1" onchange="updateConsent()">
+      <span class="check-label">I have read and understood the terms of enrollment. <span>I agree to the payment terms and scheduling requirements.</span></span>
+    </label>
+    <label class="check-row" id="check2-wrap">
+      <input type="checkbox" id="check2" onchange="updateConsent()">
+      <span class="check-label">I confirm I have no contraindications to LIMFA Therapy. <span>I understand this is a wellness service and not a medical treatment.</span></span>
+    </label>
+    <label class="check-row" id="check3-wrap">
+      <input type="checkbox" id="check3" onchange="updateConsent()">
+      <span class="check-label">I authorize OsteoStrong Naples to administer LIMFA Therapy sessions <span>according to the recommended protocol for my condition.</span></span>
+    </label>
+    <div class="card" style="margin-top:14px">
+      <div class="field">
+        <label>Client full name — typed as signature <span class="req">*</span></label>
+        <input type="text" id="client-signature" placeholder="Type full name to confirm agreement" oninput="checkConsentBtn()">
+        <div class="field-hint">Typing your full name confirms agreement to all terms above</div>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(5)">← Back</button>
+      <button class="btn-next" id="consent-btn" onclick="nextStep(5)" disabled>Continue →</button>
+    </div>
+  </div>
+  <!-- STEP 6 — REVIEW -->
+  <div class="step-panel" id="step-6">
+    <p class="panel-title">Review & enroll</p>
+    <p class="panel-sub">Confirm everything is correct before submitting.</p>
+    <div class="card" id="review-card"></div>
+    <div class="card">
+      <div class="field">
+        <label>Staff notes <span style="font-weight:400;color:#A09080">(optional)</span></label>
+        <textarea id="staff-notes" placeholder="e.g. Chuck's priority — arthritis first. Client prefers morning appointments. Will address osteoporosis after."></textarea>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevStep(6)">← Back</button>
+      <button class="btn-next gold" onclick="submitEnrollment()">✓ Enroll Client</button>
+    </div>
+  </div>
+  <!-- SUCCESS -->
+  <div class="success-panel" id="success-panel">
+    <div class="success-icon">✓</div>
+    <h2 class="success-title">Client enrolled!</h2>
+    <p class="success-sub">Confirmation sent to the client and to OsteoStrong Naples. Viktor will add this client to the tracker and prepare their first session note.</p>
+    <div class="success-card" id="success-summary"></div>
+    <button class="btn-reset" onclick="resetForm()">+ Enroll Another Client</button>
+  </div>
+</main>
+<script>
+// ── CONFIG ────────────────────────────────────────────────
+const EMAILJS_PUBLIC_KEY  = 'GsK59nMBs9e5QOjZM';
+const EMAILJS_SERVICE_ID  = 'service_vw8uqcj';
+const TEMPLATE_STAFF_ENR  = 'YOUR_ENROLLMENT_STAFF_TEMPLATE_ID';   // TODO: create in EmailJS and paste ID here
+const TEMPLATE_CLIENT_ENR = 'YOUR_ENROLLMENT_CLIENT_TEMPLATE_ID';  // TODO: create in EmailJS and paste ID here
+const STAFF_EMAIL         = 'mackenzie@osteostrong.me';
+const GOOGLE_SCRIPT_URL   = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';    // optional — leave if not using Sheets
+// ── PROTOCOL DATA — all 35 conditions with exact session counts ──
+const PROTOCOLS = {
+  '1':  { name:'Osteopenia', phase:'REPAIR', phases:[{p:'REPAIR',s:12,f:'Every 72 hrs'}], total:12, price:'$1,200' },
+  '2':  { name:'Osteoporosis', phase:'REPAIR', phases:[{p:'REPAIR',s:12,f:'Every 48-72 hrs',note:'Each session = femurs first (27 min) then spine (27 min) — 54 min combined'}], total:12, price:'$1,200' },
+  '3':  { name:'Bone Healing Delay', phase:'REPAIR', phases:[{p:'REPAIR',s:15,f:'Every 48 hrs'}], total:15, price:'$1,500' },
+  '4':  { name:'Ankle — Inflammation (cartilage/tendon)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '5':  { name:'Ankle — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
+  '6':  { name:'Knee — Sprain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '7':  { name:'Knee — Gonarthrosis (Osteoarthritis)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '8':  { name:'Knee — Cartilage Repair', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '9':  { name:'Knee — Post Prosthesis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '10': { name:'Knee — Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
+  '11': { name:'Knee — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
+  '12': { name:'Hip — Arthrosis (Osteoarthritis)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:6,f:'1× per week'}], total:26, price:'$2,600' },
+  '13': { name:'Hip — Post Prosthesis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '14': { name:'Groin Strain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '15': { name:'Plantar Fasciitis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 48-72 hrs'}], total:10, price:'$1,000' },
+  '16': { name:'Achilles Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '17': { name:'Cervical Osteoarthritis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
+  '18': { name:'Sciatica / Lumbosciatalgia', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '19': { name:'Spinal Stenosis / Disc Hernia', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '20': { name:'Muscle Contractures', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '21': { name:'Muscle Pain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '22': { name:'D.O.M.S.', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24 hrs'}], total:4, price:'$400' },
+  '23': { name:'Fibromyalgia', phase:'ACUTE', phases:[{p:'ACUTE',s:12,f:'Every 72 hrs'},{p:'REPAIR',s:6,f:'1× per week'}], total:18, price:'$1,800' },
+  '24': { name:'Post Surgery Pain', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24 hrs'}], total:5, price:'$500' },
+  '25': { name:'Rheumatoid Arthritis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:10,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '26': { name:'Shoulder — Bursitis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '27': { name:'Shoulder — Inflammation', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '28': { name:'Shoulder — Rotator Cuff Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:16, price:'$1,600' },
+  '29': { name:'Shoulder — Frozen', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '30': { name:'Epicondylitis (Tennis Elbow)', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
+  '31': { name:'Wrist — Inflammation (cartilage/tendon)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '32': { name:'Wrist — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:11, price:'$1,100' },
+  '33': { name:'Carpal Tunnel Syndrome', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '34': { name:'Thumb — Rhizarthrosis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '35': { name:'Thumb — Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
+};
+const PH_CLASS = {ACUTE:'ph-acute',REPAIR:'ph-repair',SUSPENSION:'ph-suspension',CONSOLIDATION:'ph-consolidation'};
+// ── STATE ─────────────────────────────────────────────────
+let S = {
+  step:0, salesperson:'', date:'',
+  clientName:'', phone:'', email:'', dob:'',
+  diagnosis:'', protocolNum:'', protocolName:'', startingPhase:'', additionalConds:'',
+  confirmedSessions:'', confirmedPrice:'', customNote:'',
+  paymentType:'', firstPayment:'', firstPaymentDate:'', secondPayment:'', splitDue:'',
+  consentOk:false, signature:'', staffNotes:''
+};
+document.addEventListener('DOMContentLoaded',()=>{
+  const t = new Date();
+  const ds = t.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('enroll-date').value = ds;
+  document.getElementById('first-payment-date').value = t.toLocaleDateString('en-US');
+  S.date = t.toLocaleDateString('en-US');
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+});
+// ── NAVIGATION ────────────────────────────────────────────
+function goTo(n){
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.step-item').forEach((item,i)=>{
+    item.classList.remove('active','done');
+    if(i<n) item.classList.add('done');
+    if(i===n) item.classList.add('active');
+  });
+  const el = document.getElementById('step-'+n);
+  if(el) el.classList.add('active');
+  S.step=n;
+  document.getElementById('progress').style.width=Math.round((n/7)*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextStep(from){
+  if(from===0){
+    const sp=document.getElementById('salesperson').value;
+    if(!sp){document.getElementById('salesperson').classList.add('error');return;}
+    S.salesperson=sp; document.getElementById('salesperson').classList.remove('error');
+  }
+  if(from===1){
+    const n=document.getElementById('client-name').value.trim();
+    const e=document.getElementById('client-email').value.trim();
+    if(!n){document.getElementById('client-name').classList.add('error');return;}
+    if(!e){document.getElementById('client-email').classList.add('error');return;}
+    S.clientName=n; S.phone=document.getElementById('client-phone').value;
+    S.email=e; S.dob=document.getElementById('client-dob').value;
+    document.getElementById('client-name').classList.remove('error');
+    document.getElementById('client-email').classList.remove('error');
+  }
+  if(from===2){
+    const dx=document.getElementById('diagnosis').value.trim();
+    const pn=document.getElementById('protocol-num').value;
+    if(!dx){document.getElementById('diagnosis').classList.add('error');return;}
+    if(!pn){document.getElementById('protocol-num').classList.add('error');return;}
+    S.diagnosis=dx; S.protocolNum=pn;
+    S.protocolName=PROTOCOLS[pn]?PROTOCOLS[pn].name:'';
+    S.startingPhase=PROTOCOLS[pn]?PROTOCOLS[pn].phase:'ACUTE';
+    S.additionalConds=document.getElementById('additional-conds').value;
+    document.getElementById('diagnosis').classList.remove('error');
+    document.getElementById('protocol-num').classList.remove('error');
+    // Pre-fill package step
+    if(PROTOCOLS[pn]){
+      document.getElementById('confirmed-sessions').value=PROTOCOLS[pn].total;
+      document.getElementById('confirmed-price').value=PROTOCOLS[pn].price;
+      buildPkgSummary(pn);
+    }
+  }
+  if(from===3){
+    const cs=document.getElementById('confirmed-sessions').value.trim();
+    const cp=document.getElementById('confirmed-price').value.trim();
+    if(!cs){document.getElementById('confirmed-sessions').classList.add('error');return;}
+    if(!cp){document.getElementById('confirmed-price').classList.add('error');return;}
+    S.confirmedSessions=cs; S.confirmedPrice=cp;
+    S.customNote=document.getElementById('custom-note').value;
+    document.getElementById('confirmed-sessions').classList.remove('error');
+    document.getElementById('confirmed-price').classList.remove('error');
+  }
+  if(from===4){
+    if(!S.paymentType){alert('Please select a payment type.');return;}
+    if(S.paymentType==='Split payment'){
+      if(!document.getElementById('split-due').value.trim()){
+        document.getElementById('split-due').classList.add('error');return;
+      }
+      S.firstPayment=document.getElementById('first-payment').value;
+      S.firstPaymentDate=document.getElementById('first-payment-date').value;
+      S.secondPayment=document.getElementById('second-payment').value;
+      S.splitDue=document.getElementById('split-due').value;
+      document.getElementById('split-due').classList.remove('error');
+    }
+  }
+  if(from===5){
+    const sig=document.getElementById('client-signature').value.trim();
+    if(!sig||!S.consentOk){alert('Please confirm all acknowledgments and type your full name.');return;}
+    S.signature=sig;
+    buildReview();
+  }
+  goTo(from+1);
+}
+function prevStep(from){goTo(from-1);}
+// ── PROTOCOL CHANGE ───────────────────────────────────────
+function onProtocolChange(){
+  const pn=document.getElementById('protocol-num').value;
+  const box=document.getElementById('proto-rec');
+  if(!pn||!PROTOCOLS[pn]){box.classList.remove('show');return;}
+  const p=PROTOCOLS[pn];
+  document.getElementById('pr-eyebrow').textContent='Protocol #'+pn;
+  document.getElementById('pr-name').textContent=p.name;
+  document.getElementById('pr-rows').innerHTML=buildPhaseRows(p.phases);
+  document.getElementById('pr-total').textContent=p.total+' sessions';
+  box.classList.add('show');
+}
+function buildPhaseRows(phases){
+  return phases.map(ph=>{
+    const s=typeof ph.s==='number'?ph.s+' sessions':ph.s;
+    const note=ph.note?`<br><span style="font-size:11px;color:rgba(255,255,255,0.4)">${ph.note}</span>`:'';
+    return `<div class="pr-row">
+      <span class="pr-label"><span class="phase-badge ${PH_CLASS[ph.p]||''}">${ph.p}</span></span>
+      <span class="pr-val">${s} · ${ph.f}${note}</span>
+    </div>`;
+  }).join('');
+}
+function buildPkgSummary(pn){
+  const p=PROTOCOLS[pn];
+  document.getElementById('pkg-eyebrow').textContent='Protocol #'+pn;
+  document.getElementById('pkg-proto-name').textContent=p.name;
+  document.getElementById('pkg-proto-rows').innerHTML=buildPhaseRows(p.phases);
+  document.getElementById('pkg-total').textContent=p.total+' sessions';
+}
+// ── PAYMENT ───────────────────────────────────────────────
+function selectPayment(btn,type){
+  document.querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  S.paymentType=type;
+  document.getElementById('split-box').classList.toggle('show',type==='Split payment');
+}
+// ── CONSENT ───────────────────────────────────────────────
+function updateConsent(){
+  const c1=document.getElementById('check1').checked;
+  const c2=document.getElementById('check2').checked;
+  const c3=document.getElementById('check3').checked;
+  ['check1','check2','check3'].forEach((id,i)=>{
+    document.getElementById(id+'-wrap').classList.toggle('checked',[c1,c2,c3][i]);
+  });
+  S.consentOk=c1&&c2&&c3;
+  checkConsentBtn();
+}
+function checkConsentBtn(){
+  const sig=document.getElementById('client-signature').value.trim();
+  document.getElementById('consent-btn').disabled=!(S.consentOk&&sig.length>2);
+}
+// ── REVIEW ────────────────────────────────────────────────
+function buildReview(){
+  const payDetail=S.paymentType==='Split payment'
+    ?`Split — ${S.firstPayment||'TBD'} today, ${S.secondPayment||'TBD'} due ${S.splitDue}`
+    :S.paymentType;
+  document.getElementById('review-card').innerHTML=`
+    <div class="review-section">
+      <div class="review-section-title">Staff</div>
+      <div class="review-row"><span class="rv-label">Enrolled by</span><span class="rv-value">${S.salesperson}</span></div>
+      <div class="review-row"><span class="rv-label">Date</span><span class="rv-value">${S.date}</span></div>
+    </div>
+    <div class="review-section">
+      <div class="review-section-title">Client</div>
+      <div class="review-row"><span class="rv-label">Name</span><span class="rv-value">${S.clientName}</span></div>
+      <div class="review-row"><span class="rv-label">Phone</span><span class="rv-value">${S.phone||'—'}</span></div>
+      <div class="review-row"><span class="rv-label">Email</span><span class="rv-value">${S.email}</span></div>
+      ${S.dob?`<div class="review-row"><span class="rv-label">Date of birth</span><span class="rv-value">${S.dob}</span></div>`:''}
+    </div>
+    <div class="review-section">
+      <div class="review-section-title">Protocol</div>
+      <div class="review-row"><span class="rv-label">Diagnosis</span><span class="rv-value">${S.diagnosis}</span></div>
+      <div class="review-row"><span class="rv-label">Protocol</span><span class="rv-value">#${S.protocolNum} — ${S.protocolName}</span></div>
+      <div class="review-row"><span class="rv-label">Starting phase</span><span class="rv-value">${S.startingPhase}</span></div>
+      ${S.additionalConds?`<div class="review-row"><span class="rv-label">Additional</span><span class="rv-value">${S.additionalConds}</span></div>`:''}
+    </div>
+    <div class="review-section">
+      <div class="review-section-title">Package & Payment</div>
+      <div class="review-row"><span class="rv-label">Sessions</span><span class="rv-value">${S.confirmedSessions}</span></div>
+      <div class="review-row"><span class="rv-label">Total price</span><span class="rv-value">${S.confirmedPrice}</span></div>
+      ${S.customNote?`<div class="review-row"><span class="rv-label">Adjustment</span><span class="rv-value">${S.customNote}</span></div>`:''}
+      <div class="review-row"><span class="rv-label">Payment</span><span class="rv-value">${payDetail}</span></div>
+    </div>
+    <div class="review-section">
+      <div class="review-section-title">Agreement</div>
+      <div class="review-row"><span class="rv-label">Signed by</span><span class="rv-value">${S.signature}</span></div>
+      <div class="review-row"><span class="rv-label">Consent</span><span class="rv-value">All 3 confirmed ✓</span></div>
+    </div>`;
+}
+// ── SUBMIT ────────────────────────────────────────────────
+async function submitEnrollment(){
+  S.staffNotes=document.getElementById('staff-notes').value;
+  const payDetail=S.paymentType==='Split payment'
+    ?`Split — ${S.firstPayment||'TBD'} today (${S.firstPaymentDate}), ${S.secondPayment||'TBD'} due ${S.splitDue}`
+    :S.paymentType;
+  const staffParams={
+    to_email:STAFF_EMAIL, client_name:S.clientName, client_phone:S.phone||'Not provided',
+    client_email:S.email, client_dob:S.dob||'Not provided', enrollment_date:S.date,
+    salesperson:S.salesperson, diagnosis:S.diagnosis, protocol_num:S.protocolNum,
+    protocol_name:S.protocolName, starting_phase:S.startingPhase,
+    additional_conds:S.additionalConds||'None', confirmed_sessions:S.confirmedSessions,
+    confirmed_price:S.confirmedPrice, custom_note:S.customNote||'None',
+    payment_type:S.paymentType, payment_detail:payDetail, split_due:S.splitDue||'N/A',
+    signature:S.signature, staff_notes:S.staffNotes||'None',
+  };
+  const clientParams={
+    to_email:S.email, to_name:S.clientName.split(' ')[0], client_name:S.clientName,
+    enrollment_date:S.date, diagnosis:S.diagnosis, protocol_num:S.protocolNum,
+    protocol_name:S.protocolName, starting_phase:S.startingPhase,
+    sessions:S.confirmedSessions, price:S.confirmedPrice,
+    payment_type:S.paymentType, split_due:S.splitDue||'N/A', salesperson:S.salesperson,
+  };
+  document.getElementById('overlay').classList.add('show');
+  try{
+    if(TEMPLATE_STAFF_ENR!=='YOUR_ENROLLMENT_STAFF_TEMPLATE_ID'){
+      await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_STAFF_ENR,staffParams);
+      await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_CLIENT_ENR,clientParams);
+    }
+    if(GOOGLE_SCRIPT_URL!=='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
+      await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({...staffParams,source:'Enrollment Form',
+          packageSessions:S.confirmedSessions,packagePrice:S.confirmedPrice})});
+    }
+    document.getElementById('overlay').classList.remove('show');
+    showSuccess();
+  }catch(err){
+    document.getElementById('overlay').classList.remove('show');
+    showSuccess();
+  }
+}
+function showSuccess(){
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('success-panel').classList.add('show');
+  document.getElementById('progress').style.width='100%';
+  document.querySelectorAll('.step-item').forEach(i=>{i.classList.remove('active');i.classList.add('done');});
+  document.getElementById('success-summary').innerHTML=`
+    <div class="ss-row"><span class="ss-label">Client</span><span class="ss-value">${S.clientName}</span></div>
+    <div class="ss-row"><span class="ss-label">Protocol</span><span class="ss-value">#${S.protocolNum} — ${S.protocolName}</span></div>
+    <div class="ss-row"><span class="ss-label">Sessions</span><span class="ss-value">${S.confirmedSessions} · ${S.confirmedPrice}</span></div>
+    <div class="ss-row"><span class="ss-label">Payment</span><span class="ss-value">${S.paymentType}</span></div>
+    <div class="ss-row"><span class="ss-label">Confirmation sent to</span><span class="ss-value">${S.email}</span></div>
+    <div class="ss-row"><span class="ss-label">Enrolled by</span><span class="ss-value">${S.salesperson}</span></div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function resetForm(){
+  S={step:0,salesperson:'',date:'',clientName:'',phone:'',email:'',dob:'',diagnosis:'',protocolNum:'',protocolName:'',startingPhase:'',additionalConds:'',confirmedSessions:'',confirmedPrice:'',customNote:'',paymentType:'',firstPayment:'',firstPaymentDate:'',secondPayment:'',splitDue:'',consentOk:false,signature:'',staffNotes:''};
+  document.getElementById('success-panel').classList.remove('show');
+  document.querySelectorAll('input[type=text],input[type=email],input[type=tel],textarea').forEach(el=>el.value='');
+  document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
+  document.querySelectorAll('input[type=checkbox]').forEach(el=>el.checked=false);
+  document.querySelectorAll('.check-row').forEach(el=>el.classList.remove('checked'));
+  document.querySelectorAll('.pay-btn').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('split-box').classList.remove('show');
+  document.getElementById('proto-rec').classList.remove('show');
+  document.getElementById('consent-btn').disabled=true;
+  const t=new Date();
+  document.getElementById('enroll-date').value=t.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('first-payment-date').value=t.toLocaleDateString('en-US');
+  S.date=t.toLocaleDateString('en-US');
+  goTo(0);
+}
+</script>
+</body>
+</html>

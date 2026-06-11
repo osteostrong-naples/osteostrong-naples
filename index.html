@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>OsteoStrong Naples — Staff Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',sans-serif;background:#F7F4EF;color:#1C1C2E;min-height:100vh}
+/* HEADER */
+.header{background:#1C1C2E;padding:20px 24px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.header-logo img{height:32px;filter:brightness(0) invert(1)}
+.header-right{text-align:right}
+.header-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;letter-spacing:-0.3px}
+.header-sub{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+/* HERO */
+.hero{background:linear-gradient(135deg,#1C1C2E 0%,#2C2C4E 100%);padding:36px 24px 32px;text-align:center;border-bottom:2px solid #C9A84C}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+.hero-title{font-family:'Playfair Display',serif;font-size:28px;color:#fff;margin-bottom:8px;line-height:1.2}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;max-width:400px;margin:0 auto}
+/* GRID */
+.grid-wrap{max-width:640px;margin:0 auto;padding:28px 16px}
+.grid-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A09080;margin-bottom:14px}
+/* TOOL CARDS */
+.tool-card{background:#fff;border:1px solid #EDE8E0;border-radius:16px;padding:22px;margin-bottom:14px;display:flex;align-items:center;gap:18px;cursor:pointer;transition:all 0.2s;text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,0.05);-webkit-tap-highlight-color:transparent}
+.tool-card:active{transform:scale(0.98)}
+.tool-card.primary{border-color:#C9A84C;background:#FBF6E9}
+.tool-card.dark{background:#1C1C2E;border-color:#1C1C2E}
+.tool-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.icon-gold{background:rgba(201,168,76,0.15)}
+.icon-navy{background:rgba(201,168,76,0.12)}
+.icon-white{background:rgba(255,255,255,0.1)}
+.tool-content{flex:1;min-width:0}
+.tool-name{font-size:16px;font-weight:700;color:#1C1C2E;margin-bottom:3px}
+.tool-name-light{color:#fff}
+.tool-desc{font-size:13px;color:#7A6E62;line-height:1.4}
+.tool-desc-light{color:rgba(255,255,255,0.55)}
+.tool-arrow{font-size:18px;color:#C9A84C;flex-shrink:0}
+/* EMAIL FORM */
+.email-section{background:#fff;border:1px solid #EDE8E0;border-radius:16px;padding:22px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
+.email-header{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.email-icon{width:52px;height:52px;border-radius:14px;background:rgba(201,168,76,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.email-title{font-size:16px;font-weight:700;color:#1C1C2E;margin-bottom:2px}
+.email-subtitle{font-size:13px;color:#7A6E62}
+.field{margin-bottom:12px}
+.field:last-of-type{margin-bottom:0}
+label{display:block;font-size:12px;font-weight:600;color:#4A4035;margin-bottom:5px;letter-spacing:0.2px}
+input[type=text],input[type=email]{width:100%;padding:11px 14px;border:1.5px solid #DDD8CF;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:#1C1C2E;background:#FDFCFA;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+input:focus{border-color:#C9A84C;background:#fff;box-shadow:0 0 0 3px rgba(201,168,76,0.12)}
+input.error{border-color:#C9484C}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-send{width:100%;margin-top:14px;padding:14px;border:none;border-radius:12px;background:#1C1C2E;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#fff;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.btn-send:active{transform:scale(0.98);background:#2C2C4E}
+.btn-send.sending{opacity:0.7;cursor:not-allowed}
+.send-success{display:none;background:#F0FAF0;border:1.5px solid #3A8A3A;border-radius:10px;padding:14px;margin-top:12px;text-align:center}
+.send-success.show{display:block}
+.send-success-title{font-size:14px;font-weight:700;color:#3A8A3A;margin-bottom:2px}
+.send-success-sub{font-size:12px;color:#5A8A5A}
+/* DIVIDER */
+.section-divider{display:flex;align-items:center;gap:12px;margin:20px 0 16px}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:#EDE8E0}
+.section-divider span{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A09080;white-space:nowrap}
+/* FOOTER */
+.footer{background:#1C1C2E;padding:20px 24px;text-align:center;margin-top:8px}
+.footer-text{font-size:11px;color:rgba(255,255,255,0.35);line-height:1.6}
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;background:rgba(28,28,46,0.75);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.overlay.show{display:flex}
+.spinner{width:36px;height:36px;border:3px solid rgba(201,168,76,0.3);border-top-color:#C9A84C;border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.overlay-text{color:#fff;font-size:14px;font-weight:500}
+@media(max-width:400px){
+  .field-row{grid-template-columns:1fr}
+  .hero-title{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay">
+  <div class="spinner"></div>
+  <div class="overlay-text">Sending LIMFA overview…</div>
+</div>
+<header class="header">
+  <div class="header-logo">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAADOQAAAJiCAYAAADdO/ymAAAACXBIWXMAAC4jAAAuIwF4pT92AAAGvmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTAxLTA5VDE5OjMwOjU3LTA1OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDE4LTAyLTIwVDEyOjE0OjIzLTA1OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wMi0yMFQxMjoxNDoyMy0wNTowMCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozN2FkNTFjYi1jZjM4LTQ3Y2ItYjc4Mi0yMGFmMmNjZDljNzUiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo0NDZiNjY4Yi03Y2NiLTJjNDgtOTRhZC1hNDNiMDJlZGVmYWIiIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDozMzU2MjI2My02NmFmLTRiZTEtYTZkOC1iNTg0ZjVmMTViNDIiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjcmVhdGVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjMzNTYyMjYzLTY2YWYtNGJlMS1hNmQ4LWI1ODRmNWYxNWI0MiIgc3RFdnQ6d2hlbj0iMjAxOC0wMS0wOVQxOTozMDo1Ny0wNTowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDozZjQwNDlkNy03MDQxLTRiYzMtYThjMi03ZDE3ZDc1YzQzYWUiIHN0RXZ0OndoZW49IjIwMTgtMDEtMDlUMTk6MzA6NTctMDU6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6MzdhZDUxY2ItY2YzOC00N2NiLWI3ODItMjBhZjJjY2Q5Yzc1IiBzdEV2dDp3aGVuPSIyMDE4LTAyLTIwVDEyOjE0OjIzLTA1OjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPC9yZGY6U2VxPiA8L3htcE1NOkhpc3Rvcnk+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+0B1Z+wABA4tJREFUeJzs3XfcW1d9P/CPo5scMgghrEAINhgIm7ARYQTE3j8aNmVTZoECZRYKpWUUyh4tmzJLgLLSEorCRqyyNxhsEvYKgRAukZLfH1dpjMmwbOle6Xne79dLL/uRpfP9OnlsX517PudsOO200wIAAAAAAAAAAAAAAADsnD26bgAAAAAAAAAAAAAAAABWiUAOAAAAAAAAAAAAAAAAzEAgBwAAAAAAAAAAAAAAAGYgkAMAAAAAAAAAAAAAAAAzEMgBAAAAAAAAAAAAAACAGQjkAAAAAAAAAAAAAAAAwAwEcgAAAAAAAAAAAAAAAGAGAjkAAAAAAAAAAAAAAAAwA4EcAAAAAAAAAAAAAAAAmIFADgAAAAAAAAAAAAAAAMxAIAcAAAAAAAAAAAAAAABmIJADAAAAAAAAAAAAAAAAMxDIAQAAAAAAAAAAAAAAgBkI5AAAAAAAAAAAAAAAAMAMBHIAAAAAAAAAAAAAAABgBgI5AAAAAAAAAAAAAAAAMAOBHAAAAAAAAAAAAAAAAJiBQA4AAAAAAAAAAAAAAADMQCAHAAAAAAAAAAAAAAAAZiCQAwAAAAAAAAAAAAAAADMQyAEAAAAAAAAAAAAAAIAZCOQAAAAAAAAAAAAAAADADARyAAAAAAAAAAAAAAAAYAYCOQAAAAAAAAAAAAAAADADgRwAAAAAAAAAAAAAAACYgUAOAAAAAAAAAAAAAAAAzEAgBwAAAAAAAAAAAAAAAGYgkAMAAAAAAAAAAAAAAAAzEMgBAAAAAAAAAAAAAACAGQjkAAAAAAAAAAAAAAAAwAwEcgAAAAAAAAAAAAAAAGAGAjkAAAAAAAAAAAAAAAAwA4EcAAAAAAAAAAAAAAAAmIFADgAAAAAAAAAAAAAAAMxAIAcAAAAAAAAAAAAAAABmIJADAAAAAAAAAAAAAAAAMxDIAQAAAAAAAAAAAAAAgBkI5AAAAAAAAAAAAAAAAMAMBHIAAAAAAAAAAAAAAABgBgI5AAAAAAAAAAAAAAAAMAOBHAAAAAAAAAAAAAAAAJiBQA4AAAAAAAAAAAAAAADMQCAHAAAAAAAAAAAAAAAAZiCQAwAAAAAAAAAAAAAAADMQyAEAAAAAAAAAAAAAAIAZCOQAAAAAAAAAAAAAAADADARyAAAAAAAAAAAAAAAAYAYCOQAAAAAAAAAAAAAAADADgRwAAAAAAAAAAAAAAACYgUAOAAAAAAAAAAAAAAAAzEAgBwAAAAAAAAAAAAAAAGYgkAMAAAAAAAAAAAAAAAAzEMgBAAAAAAAAAAAAAACAGQjkAAAAAAAAAAAAAAAAwAwEcgAAAAAAAAAAAAAAAGAGAjkAAAAAAAAAAAAAAAAwA4EcAAAAAAAAAAAAAAAAmIFADgAAAAAAAAAAAAAAAMxAIAcAAAAAAAAAAAAAAABmIJADAAAAAAAAAAAAAAAAMxDIAQAAAAAAAAAAAAAAgBkI5AAAAAAAAAAAAAAAAMAMBHIAAAAAAAAAAAAAAABgBgI5AAAAAAAAAAAAAAAAMAOBHAAAAAAAAAAAAAAAAJiBQA4AAAAAAAAAAAAAAADMQCAHAAAAAAAAAAAAAAAAZiCQAwAAAAAAAAAAAAAAADMQyAEAAAAAAAAAAAAAAIAZCOQAAAAAAAAAAAAAAADADARyAAAAAAAAAAAAAAAAYAYCOQAAAAAAAAAAAAAAADADgRwAAAAAAAAAAAAAAACYgUAOAAAAAAAAAAAAAAAAzEAgBwAAAAAAAAAAAAAAAGYgkAMAAAAAAAAAAAAAAAAzEMgBAAAAAAAAAAAAAACAGQjkAAAAAAAAAAAAAAAAwAwEcgAAAAAAAAAAAAAAAGAGAjkAAAAAAAAAAAAAAAAwA4EcAAAAAAAAAAAAAAAAmIFADgAAAAAAAAAAAAAAAMxAIAcAAAAAAAAAAAAAAABmIJADAAAAAAAAAAAAAAAAMxDIAQAAAAAAAAAAAAAAgBkI5AAAAAAAAAAAAAAAAMAMBHIAAAAAAAAAAAAAAABgBgI5AAAAAAAAAAAAAAAAMAOBHAAAAAAAAAAAAAAAAJiBQA4AAAAAAAAAAAAAAADMQCAHAAAAAAAAAAAAAAAAZiCQAwAAAAAAAAAAAAAAADMQyAEAAAAAAAAAAAAAAIAZCOQAAAAAAAAAAAAAAADADARyAAAAAAAAAAAAAAAAYAYCOQAAAAAAAAAAAAAAADADgRwAAAAAAAAAAAAAAACYgUAOAAAAAAAAAAAAAAAAzEAgBwAAAAAAAAAAAAAAAGYgkAMAAAAAAAAAAAAAAAAzEMgBAAAAAAAAAAAAAACAGQjkAAAAAAAAAAAAAAAAwAwEcgAAAAAAAAAAAAAAAGAGAjkAAAAAAAAAAAAAAAAwA4EcAAAAAAAAAAAAAAAAmIFADgAAAAAAAAAAAAAAAMxAIAcAAAAAAAAAAAAAAABmIJADAAAAAAAAAAAAAAAAMxDIAQAAAAAAAAAAAAAAgBkI5AAAAAAAAAAAAAAAAMAMBHIAAAAAAAAAAAAAAABgBgI5AAAAAAAAAAAAAAAAMAOBHAAAAAAAAAAAAAAAAJiBQA4AAAAAAAAAAAAAAADMQCAHAAAAAAAAAAAAAAAAZiCQAwAAAAAAAAAAAAAAADMQyAEAAAAAAAAAAAAAAIAZCOQAAAAAAAAAAAAAAADADARyAAAAAAAAAAAAAAAAYAYCOQAAAAAAAAAAAAAAADADgRwAAAAAAAAAAAAAAACYgUAOAAAAAAAAAAAAAAAAzEAgBwAAAAAAAAAAAAAAAGYgkAMAAAAAAAAAAAAAAAAzEMgBAAAAAAAAAAAAAACAGQjkAAAAAAAAAAAAAAAAwAwEcgAAAAAAAAAAAAAAAGAGAjkAAAAAAAAAAAAAAAAwA4EcAAAAAAAAAAAAAAAAmIFADgAAAAAAAAAAAAAAAMxAIAcAAAAAAAAAAAAAAABmIJADAAAAAAAAAAAAAAAAMxDIAQAAAAAAAAAAAAAAgBkI5AAAAAAAAAAAAAAAAMAMBHIAAAAAAAAAAAAAAABgBgI5AAAAAAAAAAAAAAAAMAOBHAAAAAAAAAAAAAAAAJiBQA4AAAAAAAAAAAAAAADMQCAHAAAAAAAAAAAAAAAAZiCQAwAAAAAAAAAAAAAAADMQyAEAAAAAAAAAAAAAAIAZCOQAAAAAAAAAAAAAAADADARyAAAAAAAAAAAAAAAAYAYCOQAAAAAAAAAAAAAAADADgRwAAAAAAAAAAAAAAACYgUAOAAAAAAAAAAAAAAAAzEAgBwAAAAAAAAAAAAAAAGYgkAMAAAAAAAAAAAAAAAAzEMgBAAAAAAAAAAAAAACAGQjkAAAAAAAAAAAAAAAAwAwEcgAAAAAAAAAAAAAAAGAGAjkAAAAAAAAAAAAAAAAwA4EcAAAAAAAAAAAAAAAAmIFADgAAAAAAAAAAAAAAAMxAIAcAAAAAAAAAAAAAAABmIJADAAAAAAAAAAAAAAAAMxDIAQAAAAAAAAAAAAAAgBkI5AAAAAAAAAAAAAAAAMAMBHIAAAAAAAAAAAAAAABgBgI5AAAAAAAAAAAAAAAAMAOBHAAAAAAAAAAAAAAAAJiBQA4AAAAAAAAAAAAAAADMQCAHAAAAAAAAAAAAAAAAZiCQAwAAAAAAAAAAAAAAADMQyAEAAAAAAAAAAAAAAIAZCOQAAAAAAAAAAAAAAADADARyAAAAAAAAAAAAAAAAYAYCOQAAAAAAAAAAAAAAADADgRwAAAAAAAAAAAAAAACYgUAOAAAAAAAAAAAAAAAAzEAgBwAAAAAAAAAAAAAAAGYgkAMAAAAAAAAAAAAAAAAzEMgBAAAAAAAAAAAAAACAGQjkAAAAAAAAAAAAAAAAwAwEcgAAAAAAAAAAAAAAAGAGAjkAAAAAAAAAAAAAAAAwA4EcAAAAAAAAAAAAAAAAmIFADgAAAAAAAAAAAAAAAMxAIAcAAAAAAAAAAAAAAABmIJADAAAAAAAAAAAAAAAAMxDIAQAAAAAAAAAAAAAAgBkI5AAAAAAAAAAAAAAAAMAMBHIAAAAAAAAAAAAAAABgBgI5AAAAAAAAAAAAAAAAMAOBHAAAAAAAAAAAAAAAAJiBQA4AAAAAAAAAAAAAAADMQCAHAAAAAAAAAAAAAAAAZiCQAwAAAAAAAAAAAAAAADOoum4AlsGGDRu6bgEAAAAAWGKT0aAkuViSCyc5KMkFklwkyYFJDkhy3umP504y75J9kuyV5DznNHSS3yX5fZI/JvlNkt8mOSHJr6c//mz6+Mn0x+OT/KjXH07m8psDAAAAAACgU6eddlrXLbALNvgfBwI5AAAAAMBMJqPBQUkOTXJJkosluXiSQ5IcuMMub+Xukv1OkuuS/D7JFUmuSfLrJD+f/vhz9ddfS3KjJAMAAAAAAADYc3Id+RLkQARyAAAAAGBfTUaDA5JcluTSJBcluT/JiU6OqpGTkxySZMVr6d+d7eVz6S7XZ+rvPEAAAA" alt="OsteoStrong" style="height:30px;filter:brightness(0) invert(1)">
+  </div>
+  <div class="header-right">
+    <div class="header-title">Staff Hub</div>
+    <div class="header-sub">Naples · LIMFA Program</div>
+  </div>
+</header>
+<div class="hero">
+  <div class="hero-eyebrow">OsteoStrong Naples</div>
+  <h1 class="hero-title">LIMFA Therapy Tools</h1>
+  <p class="hero-sub">Everything you need to consult, enroll, and communicate with LIMFA clients — all in one place.</p>
+</div>
+<div class="grid-wrap">
+  <div class="grid-label">Client tools</div>
+  <!-- PROTOCOL FINDER -->
+  <a class="tool-card primary" href="https://osteostrong-naples.github.io/LIMFA_Intake_Form_v2.html" target="_blank">
+    <div class="tool-icon icon-gold">🔍</div>
+    <div class="tool-content">
+      <div class="tool-name">Protocol Finder</div>
+      <div class="tool-desc">Walk a client through their condition and find the right LIMFA protocol. Use this during or after the consultation.</div>
+    </div>
+    <div class="tool-arrow">→</div>
+  </a>
+  <!-- ENROLLMENT FORM -->
+  <a class="tool-card dark" href="https://osteostrong-naples.github.io/LIMFA_Enrollment_Form.html" target="_blank">
+    <div class="tool-icon icon-white">✅</div>
+    <div class="tool-content">
+      <div class="tool-name tool-name-light">Enrollment Form</div>
+      <div class="tool-desc tool-desc-light">Complete the official enrollment once a client says yes. Captures protocol, package, payment, and consent.</div>
+    </div>
+    <div class="tool-arrow">→</div>
+  </a>
+  <div class="section-divider"><span>Send LIMFA overview email</span></div>
+  <!-- SEND LIMFA INFO EMAIL -->
+  <div class="email-section">
+    <div class="email-header">
+      <div class="email-icon">📧</div>
+      <div>
+        <div class="email-title">Send LIMFA Info to a Client</div>
+        <div class="email-subtitle">Sends a branded overview of LIMFA Therapy directly to their inbox</div>
+      </div>
+    </div>
+    <div class="field-row field">
+      <div class="field" style="margin-bottom:0">
+        <label>Client first name</label>
+        <input type="text" id="info-fname" placeholder="Jane">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Client last name</label>
+        <input type="text" id="info-lname" placeholder="Smith">
+      </div>
+    </div>
+    <div class="field">
+      <label>Client email <span style="color:#C9484C">*</span></label>
+      <input type="email" id="info-email" placeholder="jane@email.com">
+    </div>
+    <div class="field">
+      <label>Your name (sending as)</label>
+      <select id="info-sender" style="width:100%;padding:11px 14px;border:1.5px solid #DDD8CF;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:#1C1C2E;background:#FDFCFA;outline:none;-webkit-appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A09080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px">
+        <option value="">Select your name…</option>
+        <option>Amanda Restivo</option>
+        <option>Dan Little</option>
+        <option>Emily Shakeshaft</option>
+        <option>Josiah Biancaniello</option>
+        <option>Mackenzie McMahon</option>
+        <option>Rosanne Magee-Ryder</option>
+        <option>Sereena Wettels</option>
+      </select>
+    </div>
+    <button class="btn-send" onclick="sendInfoEmail()">Send LIMFA Overview →</button>
+    <div class="send-success" id="send-success">
+      <div class="send-success-title">✓ Email sent!</div>
+      <div class="send-success-sub" id="send-success-sub">The LIMFA overview has been sent to the client.</div>
+    </div>
+  </div>
+  <div class="section-divider"><span>Quick reference</span></div>
+  <!-- QUICK REF CARDS -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+    <div style="background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:16px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">💰</div>
+      <div style="font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:2px">$100 / session</div>
+      <div style="font-size:11px;color:#A09080">Founding member rate</div>
+    </div>
+    <div style="background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:16px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">📋</div>
+      <div style="font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:2px">35 protocols</div>
+      <div style="font-size:11px;color:#A09080">All conditions covered</div>
+    </div>
+    <div style="background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:16px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">⏱</div>
+      <div style="font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:2px">30–90 min</div>
+      <div style="font-size:11px;color:#A09080">Session length</div>
+    </div>
+    <div style="background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:16px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">📈</div>
+      <div style="font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:2px">Sessions 6–8</div>
+      <div style="font-size:11px;color:#A09080">When clients feel it</div>
+    </div>
+  </div>
+  <!-- KEY TALKING POINTS -->
+  <div style="background:#1C1C2E;border-radius:14px;padding:20px;margin-bottom:14px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;margin-bottom:12px">Key talking points</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.8">
+      ✦ &nbsp;Non-invasive · Drug-free · CE Certified<br>
+      ✦ &nbsp;Sessions 1–3 may feel slightly more intense — this is normal<br>
+      ✦ &nbsp;Noticeable results typically begin sessions 6–8<br>
+      ✦ &nbsp;Do NOT use mat and transducer at the same time<br>
+      ✦ &nbsp;Founding member pricing increases in August 2026<br>
+      ✦ &nbsp;Payment: Paid in full or split payment only
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="footer-text">OsteoStrong Naples · LIMFA Therapy Program<br>2343 Vanderbilt Beach Rd, Suite 618 · Naples, FL 34109<br>mackenzie@osteostrong.me</div>
+</footer>
+<script>
+// ── EMAILJS CONFIG ────────────────────────────────────────
+const EMAILJS_PUBLIC_KEY = 'GsK59nMBs9e5QOjZM';
+const EMAILJS_SERVICE_ID = 'service_vw8uqcj';
+const TEMPLATE_OVERVIEW  = 'YOUR_OVERVIEW_TEMPLATE_ID';  // TODO: create in EmailJS and paste ID here
+document.addEventListener('DOMContentLoaded', () => {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+});
+async function sendInfoEmail() {
+  const fname   = document.getElementById('info-fname').value.trim();
+  const lname   = document.getElementById('info-lname').value.trim();
+  const email   = document.getElementById('info-email').value.trim();
+  const sender  = document.getElementById('info-sender').value;
+  if (!email) {
+    document.getElementById('info-email').classList.add('error');
+    return;
+  }
+  document.getElementById('info-email').classList.remove('error');
+  const fullName = [fname, lname].filter(Boolean).join(' ') || 'there';
+  const params = {
+    to_email:    email,
+    to_name:     fname || fullName,
+    client_name: fullName,
+    sender_name: sender || 'The OsteoStrong Naples Team',
+  };
+  document.getElementById('overlay').classList.add('show');
+  try {
+    if (TEMPLATE_OVERVIEW !== 'YOUR_OVERVIEW_TEMPLATE_ID') {
+      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_OVERVIEW, params);
+    }
+    document.getElementById('overlay').classList.remove('show');
+    const successEl = document.getElementById('send-success');
+    const subEl = document.getElementById('send-success-sub');
+    subEl.textContent = `LIMFA overview has been sent to ${email}.`;
+    successEl.classList.add('show');
+    // Reset form after 4 seconds
+    setTimeout(() => {
+      successEl.classList.remove('show');
+      document.getElementById('info-fname').value = '';
+      document.getElementById('info-lname').value = '';
+      document.getElementById('info-email').value = '';
+      document.getElementById('info-sender').value = '';
+    }, 4000);
+  } catch (err) {
+    document.getElementById('overlay').classList.remove('show');
+    alert('Email could not be sent. Please try again.');
+  }
+}
+</script>
+</body>
+</html>
