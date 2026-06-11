@@ -415,8 +415,8 @@ textarea{height:80px;resize:vertical}
 // ── CONFIG ────────────────────────────────────────────────
 const EMAILJS_PUBLIC_KEY  = 'GsK59nMBs9e5QOjZM';
 const EMAILJS_SERVICE_ID  = 'service_vw8uqcj';
-const TEMPLATE_STAFF_ENR  = 'YOUR_ENROLLMENT_STAFF_TEMPLATE_ID';   // TODO: create in EmailJS and paste ID here
-const TEMPLATE_CLIENT_ENR = 'YOUR_ENROLLMENT_CLIENT_TEMPLATE_ID';  // TODO: create in EmailJS and paste ID here
+const TEMPLATE_STAFF_ENR  = 'template_s7omu4g';
+const TEMPLATE_CLIENT_ENR = 'template_nure5dj';
 const STAFF_EMAIL         = 'mackenzie@osteostrong.me';
 const GOOGLE_SCRIPT_URL   = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';    // optional — leave if not using Sheets
 // ── PROTOCOL DATA — all 35 conditions with exact session counts ──
@@ -669,7 +669,7 @@ async function submitEnrollment(){
   };
   document.getElementById('overlay').classList.add('show');
   try{
-    if(TEMPLATE_STAFF_ENR!=='YOUR_ENROLLMENT_STAFF_TEMPLATE_ID'){
+    if(TEMPLATE_STAFF_ENR){
       await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_STAFF_ENR,staffParams);
       await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_CLIENT_ENR,clientParams);
     }
