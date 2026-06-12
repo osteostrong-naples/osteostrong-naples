@@ -243,18 +243,30 @@ textarea{height:80px;resize:vertical}
   <!-- STEP 2 — CONTRAINDICATIONS -->
   <div class="step-panel" id="step-2">
     <p class="panel-title">Safety check</p>
-    <p class="panel-sub">Review these with the client before proceeding.</p>
+    <p class="panel-sub">Review both sections carefully with the client before proceeding.</p>
     <div class="contra-box">
       <div class="contra-title">⛔ Cannot proceed if client has:</div>
       <ul class="contra-list">
         <li>Active cancer or malignant tumors</li>
         <li>Pregnancy or actively trying to conceive</li>
         <li>Pacemaker or implanted electronic device (ICD, neurostimulator, cochlear implant, insulin pump)</li>
-        <li>Active bleeding disorder or taking blood thinners</li>
+        <li>Active bleeding disorder or currently taking blood thinners (anticoagulants)</li>
         <li>Epilepsy or seizure disorder</li>
         <li>Recent heart attack or stroke (within 6 months)</li>
         <li>Organ transplant / immunosuppressant medications</li>
         <li>Fever or active systemic infection</li>
+        <li>Thrombocytopenia (low platelet count)</li>
+      </ul>
+    </div>
+    <div class="caution-box">
+      <div class="caution-title">⚠️ Review with staff before proceeding:</div>
+      <ul class="caution-list">
+        <li>Intra-articular injection (cortisone, PRP) within the last 6 months</li>
+        <li>Recent surgery within 8 weeks in the area to be worked on</li>
+        <li>Metal implants (plates, screws, rods) near the treatment area</li>
+        <li>Currently taking opioid medications</li>
+        <li>Undiagnosed pain — confirm diagnosis before selecting protocol</li>
+        <li>Severe osteoporosis with high fracture risk — physician clearance recommended</li>
       </ul>
     </div>
     <div class="caution-box">
@@ -302,7 +314,7 @@ textarea{height:80px;resize:vertical}
 
     <div class="card" id="dur-card" style="display:none">
       <div class="card-title">How long has this been a concern?</div>
-      <div class="opt-grid">
+      <div class="opt-grid" id="dur-btns">
         <button class="opt-btn" onclick="selectDur(this,'acute')">Less than 3 months<span class="opt-tag tag-acute">Acute</span></button>
         <button class="opt-btn" onclick="selectDur(this,'chronic')">3 months or longer<span class="opt-tag tag-chronic">Chronic</span></button>
       </div>
@@ -593,6 +605,13 @@ function selectDur(btn,dur){
   document.getElementById('find-btn').disabled=false;
 }
 
+function selectDurSimple(btn,dur){
+  document.querySelectorAll('#dur-card .opt-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  S.duration=dur;
+  document.getElementById('find-btn').disabled=false;
+}
+
 function selectTscore(btn,val){
   document.querySelectorAll('#tscore-card .opt-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
@@ -618,6 +637,7 @@ function buildProtocol(){
   const p=P[S.cond];
   if(!p){alert('Could not determine protocol. Please check the condition selection.');return;}
   S.protocol=p;
+  const pt=PROTOCOL_TOTALS[S.cond]||{sessions:'—',price:'—',weeks:null};
 
   // Hero card
   document.getElementById('proto-hero').innerHTML=`
@@ -639,13 +659,13 @@ function buildProtocol(){
     </div>`;
 
   // Package — use exact session count from protocol
-  const pt = PROTOCOL_TOTALS[S.cond] || {sessions:'—', price:'—'};
+  const pt2 = PROTOCOL_TOTALS[S.cond] || {sessions:'—', price:'—'};
   document.getElementById('pkg-display').innerHTML=`
     <div class="pkg-recommended">
       <div class="pkg-rec-label">★ Recommended package</div>
       <div class="pkg-rec-name">${p.name}</div>
-      <div class="pkg-rec-detail">${pt.sessions} sessions · $100 per session · Includes initial assessment</div>
-      <div class="pkg-rec-price">${pt.price}</div>
+      <div class="pkg-rec-detail">${pt2.sessions} sessions · $100 per session · Includes initial assessment</div>
+      <div class="pkg-rec-price">${pt3.price}</div>
     </div>`;
 
   goTo(4);
@@ -656,7 +676,7 @@ function buildProtocol(){
 // ════════════════════════════════════════════════════════════
 async function sendEmails(){
   const p=S.protocol;
-  const pt2=PROTOCOL_TOTALS[S.cond]||{sessions:'—',price:'—'};
+  const pt3=PROTOCOL_TOTALS[S.cond]||{sessions:'—',price:'—'};
   const phaseSummary=p.phases.map(ph=>`${ph.p}: ${ph.pr} — ${ph.s} sessions, ${ph.f}`).join('\n');
 
   // Params for staff email
@@ -691,7 +711,7 @@ async function sendEmails(){
     phases: phaseSummary,
     recommended_package: p.name,
     package_price: pt2.price,
-    package_sessions: pt.sessions,
+    package_sessions: pt2 ? pt2.sessions : pt.sessions,
     client_note: p.clientNote + (pt && pt.weeks ? ` Plan duration: approximately ${pt.weeks} weeks.` : ''),
     salesperson: S.salesperson,
   };
@@ -724,7 +744,7 @@ function showSuccess(){
     <div class="ss-row"><span class="ss-label">Client</span><span class="ss-value">${S.clientName}</span></div>
     <div class="ss-row"><span class="ss-label">Condition</span><span class="ss-value">${S.condLabel}</span></div>
     <div class="ss-row"><span class="ss-label">Protocol</span><span class="ss-value">#${p.num} — ${p.name}</span></div>
-    <div class="ss-row"><span class="ss-label">Recommended package</span><span class="ss-value">${p.name} · ${pt2.price}</span></div>
+    <div class="ss-row"><span class="ss-label">Recommended package</span><span class="ss-value">${p.name} · ${pt3.price}</span></div>
     <div class="ss-row"><span class="ss-label">Plan sent to</span><span class="ss-value">${S.email}</span></div>
     <div class="ss-row"><span class="ss-label">Enrolled by</span><span class="ss-value">${S.salesperson}</span></div>`;
   window.scrollTo({top:0,behavior:'smooth'});
