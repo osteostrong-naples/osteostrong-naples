@@ -45,6 +45,7 @@ input:focus,select:focus,textarea:focus{border-color:#C9A84C;background:#fff;box
 input.error,select.error{border-color:#C9484C}
 textarea{height:80px;resize:vertical}
 .field-hint{font-size:11px;color:#A09080;margin-top:4px}
+
 /* PROTOCOL RECOMMENDATION BOX */
 .proto-rec{background:#1C1C2E;border-radius:14px;padding:20px;margin-bottom:14px;display:none}
 .proto-rec.show{display:block}
@@ -58,6 +59,7 @@ textarea{height:80px;resize:vertical}
 .pr-total{background:rgba(201,168,76,0.15);border-radius:8px;padding:10px 14px;margin-top:12px;display:flex;justify-content:space-between;align-items:center}
 .pr-total-label{font-size:12px;font-weight:600;color:#C9A84C}
 .pr-total-val{font-size:20px;font-weight:700;color:#C9A84C}
+
 /* PACKAGE PHASE BREAKDOWN */
 .phase-breakdown{margin-top:10px}
 .phase-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:12px}
@@ -68,9 +70,11 @@ textarea{height:80px;resize:vertical}
 .ph-suspension{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5)}
 .ph-consolidation{background:rgba(58,138,58,0.25);color:#90D090}
 .phase-detail{color:rgba(255,255,255,0.7)}
+
 /* CUSTOM SESSIONS */
 .custom-box{background:#F7F4EF;border-radius:10px;padding:14px;margin-top:12px;border:1.5px dashed #DDD8CF}
 .custom-box-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#A09080;margin-bottom:8px}
+
 /* PAYMENT */
 .payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .pay-btn{border:1.5px solid #DDD8CF;border-radius:12px;padding:16px 12px;cursor:pointer;background:#FDFCFA;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#4A4035;text-align:center;transition:all 0.18s;-webkit-tap-highlight-color:transparent}
@@ -78,6 +82,7 @@ textarea{height:80px;resize:vertical}
 .pay-icon{font-size:20px;display:block;margin-bottom:5px}
 .split-box{background:#F7F4EF;border-radius:10px;padding:14px;display:none}
 .split-box.show{display:block}
+
 /* CONSENT */
 .consent-block{background:#FFF8EC;border:1.5px solid #F0D080;border-radius:12px;padding:18px;margin-bottom:12px}
 .consent-title{font-size:12px;font-weight:700;color:#7A5C10;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px}
@@ -91,6 +96,7 @@ textarea{height:80px;resize:vertical}
 .check-row input[type=checkbox]:checked::after{content:'✓';color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
 .check-label{font-size:13px;font-weight:500;color:#3A4A3A;line-height:1.5}
 .check-label span{font-weight:400;color:#5A6A5A}
+
 /* REVIEW */
 .review-section{margin-bottom:16px}
 .review-section-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A09080;margin-bottom:8px}
@@ -98,6 +104,7 @@ textarea{height:80px;resize:vertical}
 .review-row:last-child{border-bottom:none}
 .rv-label{color:#7A6E62}
 .rv-value{font-weight:600;color:#1C1C2E;text-align:right;max-width:65%}
+
 /* NAV */
 .nav-row{display:flex;gap:12px;margin-top:18px;padding-bottom:16px}
 .btn-back{flex:1;padding:14px;border:1.5px solid #DDD8CF;border-radius:12px;background:transparent;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#7A6E62;cursor:pointer}
@@ -105,6 +112,7 @@ textarea{height:80px;resize:vertical}
 .btn-next:active{transform:scale(0.98)}
 .btn-next.gold{background:#C9A84C;color:#1C1C2E}
 .btn-next:disabled{opacity:0.4;cursor:not-allowed}
+
 /* SUCCESS */
 .success-panel{display:none;text-align:center;padding:40px 20px}
 .success-panel.show{display:block}
@@ -126,10 +134,12 @@ textarea{height:80px;resize:vertical}
 </style>
 </head>
 <body>
+
 <div class="overlay" id="overlay">
   <div class="spinner"></div>
   <div class="overlay-text">Enrolling client…</div>
 </div>
+
 <header class="header">
   <div>
     <div class="header-logo"><span>L</span>IMFA</div>
@@ -138,6 +148,7 @@ textarea{height:80px;resize:vertical}
   <div class="header-badge">Enrollment</div>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
 <nav class="step-nav">
   <div class="step-item active" id="nav-0"><div class="step-dot">1</div><div class="step-label">Staff</div></div>
   <div class="step-item" id="nav-1"><div class="step-dot">2</div><div class="step-label">Client</div></div>
@@ -147,7 +158,9 @@ textarea{height:80px;resize:vertical}
   <div class="step-item" id="nav-5"><div class="step-dot">6</div><div class="step-label">Consent</div></div>
   <div class="step-item" id="nav-6"><div class="step-dot">7</div><div class="step-label">Review</div></div>
 </nav>
+
 <main class="form-container">
+
   <!-- STEP 0 — STAFF -->
   <div class="step-panel active" id="step-0">
     <p class="panel-title">Who's enrolling this client?</p>
@@ -175,6 +188,7 @@ textarea{height:80px;resize:vertical}
       <button class="btn-next" onclick="nextStep(0)">Continue →</button>
     </div>
   </div>
+
   <!-- STEP 1 — CLIENT INFO -->
   <div class="step-panel" id="step-1">
     <p class="panel-title">Client details</p>
@@ -204,6 +218,7 @@ textarea{height:80px;resize:vertical}
       <button class="btn-next" onclick="nextStep(1)">Continue →</button>
     </div>
   </div>
+
   <!-- STEP 2 — PROTOCOL -->
   <div class="step-panel" id="step-2">
     <p class="panel-title">Confirm the protocol</p>
@@ -259,6 +274,7 @@ textarea{height:80px;resize:vertical}
         <input type="text" id="additional-conds" placeholder="e.g. Also has osteopenia — address after primary protocol">
       </div>
     </div>
+
     <!-- Auto-populated protocol summary -->
     <div class="proto-rec" id="proto-rec">
       <div class="pr-eyebrow" id="pr-eyebrow">Protocol #</div>
@@ -269,15 +285,18 @@ textarea{height:80px;resize:vertical}
         <div class="pr-total-val" id="pr-total"></div>
       </div>
     </div>
+
     <div class="nav-row">
       <button class="btn-back" onclick="prevStep(2)">← Back</button>
       <button class="btn-next" onclick="nextStep(2)">Continue →</button>
     </div>
   </div>
+
   <!-- STEP 3 — PACKAGE -->
   <div class="step-panel" id="step-3">
     <p class="panel-title">Package & sessions</p>
     <p class="panel-sub">Based on the selected protocol. Edit only if adjusting for the client.</p>
+
     <div class="proto-rec show" id="pkg-proto-summary" style="margin-bottom:14px">
       <div class="pr-eyebrow" id="pkg-eyebrow"></div>
       <div class="pr-name" id="pkg-proto-name"></div>
@@ -287,6 +306,7 @@ textarea{height:80px;resize:vertical}
         <div class="pr-total-val" id="pkg-total"></div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-title">Confirm session details</div>
       <div class="field-row field">
@@ -305,11 +325,13 @@ textarea{height:80px;resize:vertical}
         <div class="field-hint" style="margin-top:6px">Use this if you're adjusting sessions, applying a discount, or noting a special arrangement</div>
       </div>
     </div>
+
     <div class="nav-row">
       <button class="btn-back" onclick="prevStep(3)">← Back</button>
       <button class="btn-next" onclick="nextStep(3)">Continue →</button>
     </div>
   </div>
+
   <!-- STEP 4 — PAYMENT -->
   <div class="step-panel" id="step-4">
     <p class="panel-title">Payment</p>
@@ -348,6 +370,7 @@ textarea{height:80px;resize:vertical}
       <button class="btn-next" onclick="nextStep(4)">Continue →</button>
     </div>
   </div>
+
   <!-- STEP 5 — CONSENT -->
   <div class="step-panel" id="step-5">
     <p class="panel-title">Client agreement</p>
@@ -386,6 +409,7 @@ textarea{height:80px;resize:vertical}
       <button class="btn-next" id="consent-btn" onclick="nextStep(5)" disabled>Continue →</button>
     </div>
   </div>
+
   <!-- STEP 6 — REVIEW -->
   <div class="step-panel" id="step-6">
     <p class="panel-title">Review & enroll</p>
@@ -402,6 +426,7 @@ textarea{height:80px;resize:vertical}
       <button class="btn-next gold" onclick="submitEnrollment()">✓ Enroll Client</button>
     </div>
   </div>
+
   <!-- SUCCESS -->
   <div class="success-panel" id="success-panel">
     <div class="success-icon">✓</div>
@@ -410,54 +435,59 @@ textarea{height:80px;resize:vertical}
     <div class="success-card" id="success-summary"></div>
     <button class="btn-reset" onclick="resetForm()">+ Enroll Another Client</button>
   </div>
+
 </main>
+
 <script>
 // ── CONFIG ────────────────────────────────────────────────
-const EMAILJS_PUBLIC_KEY  = 'GsK59nMBs9e5QOjZM';
+const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';
 const EMAILJS_SERVICE_ID  = 'service_vw8uqcj';
-const TEMPLATE_STAFF_ENR  = 'template_s7omu4g';
-const TEMPLATE_CLIENT_ENR = 'template_nure5dj';
+const TEMPLATE_STAFF_ENR  = 'YOUR_ENROLLMENT_STAFF_TEMPLATE_ID';
+const TEMPLATE_CLIENT_ENR = 'YOUR_ENROLLMENT_CLIENT_TEMPLATE_ID';
 const STAFF_EMAIL         = 'mackenzie@osteostrong.me';
-const GOOGLE_SCRIPT_URL   = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';    // optional — leave if not using Sheets
+const GOOGLE_SCRIPT_URL   = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
 // ── PROTOCOL DATA — all 35 conditions with exact session counts ──
 const PROTOCOLS = {
-  '1':  { name:'Osteopenia', phase:'REPAIR', phases:[{p:'REPAIR',s:12,f:'Every 72 hrs'}], total:12, price:'$1,200' },
-  '2':  { name:'Osteoporosis', phase:'REPAIR', phases:[{p:'REPAIR',s:12,f:'Every 48-72 hrs',note:'Each session = femurs first (27 min) then spine (27 min) — 54 min combined'}], total:12, price:'$1,200' },
-  '3':  { name:'Bone Healing Delay', phase:'REPAIR', phases:[{p:'REPAIR',s:15,f:'Every 48 hrs'}], total:15, price:'$1,500' },
-  '4':  { name:'Ankle — Inflammation (cartilage/tendon)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
-  '5':  { name:'Ankle — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
-  '6':  { name:'Knee — Sprain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '7':  { name:'Knee — Gonarthrosis (Osteoarthritis)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
-  '8':  { name:'Knee — Cartilage Repair', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
-  '9':  { name:'Knee — Post Prosthesis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '10': { name:'Knee — Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
-  '11': { name:'Knee — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
-  '12': { name:'Hip — Arthrosis (Osteoarthritis)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:6,f:'1× per week'}], total:26, price:'$2,600' },
-  '13': { name:'Hip — Post Prosthesis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '14': { name:'Groin Strain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '15': { name:'Plantar Fasciitis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 48-72 hrs'}], total:10, price:'$1,000' },
-  '16': { name:'Achilles Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
-  '17': { name:'Cervical Osteoarthritis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
-  '18': { name:'Sciatica / Lumbosciatalgia', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
-  '19': { name:'Spinal Stenosis / Disc Hernia', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
-  '20': { name:'Muscle Contractures', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '21': { name:'Muscle Pain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '22': { name:'D.O.M.S.', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24 hrs'}], total:4, price:'$400' },
-  '23': { name:'Fibromyalgia', phase:'ACUTE', phases:[{p:'ACUTE',s:12,f:'Every 72 hrs'},{p:'REPAIR',s:6,f:'1× per week'}], total:18, price:'$1,800' },
-  '24': { name:'Post Surgery Pain', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24 hrs'}], total:5, price:'$500' },
-  '25': { name:'Rheumatoid Arthritis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:10,f:'Every 72 hrs'}], total:15, price:'$1,500' },
-  '26': { name:'Shoulder — Bursitis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '27': { name:'Shoulder — Inflammation', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '28': { name:'Shoulder — Rotator Cuff Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:16, price:'$1,600' },
-  '29': { name:'Shoulder — Frozen', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
-  '30': { name:'Epicondylitis (Tennis Elbow)', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
-  '31': { name:'Wrist — Inflammation (cartilage/tendon)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
-  '32': { name:'Wrist — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:11, price:'$1,100' },
-  '33': { name:'Carpal Tunnel Syndrome', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
-  '34': { name:'Thumb — Rhizarthrosis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
-  '35': { name:'Thumb — Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
+  '1':  { weeks:5, name:'Osteopenia', phase:'REPAIR', phases:[{p:'REPAIR',s:12,f:'Every 72 hrs'}], total:12, price:'$1,200' },
+  '2':  { weeks:5, name:'Osteoporosis', phase:'REPAIR', phases:[{p:'REPAIR',s:12,f:'Every 48-72 hrs',note:'Each session = femurs first (27 min) then spine (27 min) — 54 min combined'}], total:12, price:'$1,200' },
+  '3':  { weeks:4, name:'Bone Healing Delay', phase:'REPAIR', phases:[{p:'REPAIR',s:15,f:'Every 48 hrs'}], total:15, price:'$1,500' },
+  '4':  { weeks:14, name:'Ankle — Inflammation (cartilage/tendon)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '5':  { weeks:4, name:'Ankle — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
+  '6':  { weeks:3, name:'Knee — Sprain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '7':  { weeks:14, name:'Knee — Gonarthrosis (Osteoarthritis)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '8':  { weeks:14, name:'Knee — Cartilage Repair', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '9':  { weeks:3, name:'Knee — Post Prosthesis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '10': { weeks:8, name:'Knee — Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
+  '11': { weeks:4, name:'Knee — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
+  '12': { weeks:16, name:'Hip — Arthrosis (Osteoarthritis)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:6,f:'1× per week'}], total:26, price:'$2,600' },
+  '13': { weeks:3, name:'Hip — Post Prosthesis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '14': { weeks:3, name:'Groin Strain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '15': { weeks:4, name:'Plantar Fasciitis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 48-72 hrs'}], total:10, price:'$1,000' },
+  '16': { weeks:6, name:'Achilles Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '17': { weeks:8, name:'Cervical Osteoarthritis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
+  '18': { weeks:6, name:'Sciatica / Lumbosciatalgia', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '19': { weeks:6, name:'Spinal Stenosis / Disc Hernia', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '20': { weeks:3, name:'Muscle Contractures', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '21': { weeks:3, name:'Muscle Pain', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '22': { weeks:1, name:'D.O.M.S.', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24 hrs'}], total:4, price:'$400' },
+  '23': { weeks:11, name:'Fibromyalgia', phase:'ACUTE', phases:[{p:'ACUTE',s:12,f:'Every 72 hrs'},{p:'REPAIR',s:6,f:'1× per week'}], total:18, price:'$1,800' },
+  '24': { weeks:1, name:'Post Surgery Pain', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24 hrs'}], total:5, price:'$500' },
+  '25': { weeks:6, name:'Rheumatoid Arthritis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:10,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '26': { weeks:3, name:'Shoulder — Bursitis', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '27': { weeks:3, name:'Shoulder — Inflammation', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '28': { weeks:6, name:'Shoulder — Rotator Cuff Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:16, price:'$1,600' },
+  '29': { weeks:3, name:'Shoulder — Frozen', phase:'ACUTE', phases:[{p:'ACUTE',s:10,f:'Every 24-48 hrs'}], total:10, price:'$1,000' },
+  '30': { weeks:4, name:'Epicondylitis (Tennis Elbow)', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:10, price:'$1,000' },
+  '31': { weeks:14, name:'Wrist — Inflammation (cartilage/tendon)', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '32': { weeks:4, name:'Wrist — Trauma', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:6,f:'Every 72 hrs'}], total:11, price:'$1,100' },
+  '33': { weeks:6, name:'Carpal Tunnel Syndrome', phase:'ACUTE', phases:[{p:'ACUTE',s:4,f:'Every 24-48 hrs'},{p:'REPAIR',s:11,f:'Every 72 hrs'}], total:15, price:'$1,500' },
+  '34': { weeks:14, name:'Thumb — Rhizarthrosis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:12,f:'Every 72 hrs'},{p:'SUSPENSION',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',s:5,f:'1× per week'}], total:22, price:'$2,200' },
+  '35': { weeks:8, name:'Thumb — Tendinitis', phase:'ACUTE', phases:[{p:'ACUTE',s:5,f:'Every 24-48 hrs'},{p:'REPAIR',s:15,f:'Every 72 hrs'}], total:20, price:'$2,000' },
 };
+
 const PH_CLASS = {ACUTE:'ph-acute',REPAIR:'ph-repair',SUSPENSION:'ph-suspension',CONSOLIDATION:'ph-consolidation'};
+
 // ── STATE ─────────────────────────────────────────────────
 let S = {
   step:0, salesperson:'', date:'',
@@ -467,6 +497,7 @@ let S = {
   paymentType:'', firstPayment:'', firstPaymentDate:'', secondPayment:'', splitDue:'',
   consentOk:false, signature:'', staffNotes:''
 };
+
 document.addEventListener('DOMContentLoaded',()=>{
   const t = new Date();
   const ds = t.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
@@ -475,6 +506,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   S.date = t.toLocaleDateString('en-US');
   emailjs.init(EMAILJS_PUBLIC_KEY);
 });
+
 // ── NAVIGATION ────────────────────────────────────────────
 function goTo(n){
   document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
@@ -489,6 +521,7 @@ function goTo(n){
   document.getElementById('progress').style.width=Math.round((n/7)*100)+'%';
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
 function nextStep(from){
   if(from===0){
     const sp=document.getElementById('salesperson').value;
@@ -555,6 +588,7 @@ function nextStep(from){
   goTo(from+1);
 }
 function prevStep(from){goTo(from-1);}
+
 // ── PROTOCOL CHANGE ───────────────────────────────────────
 function onProtocolChange(){
   const pn=document.getElementById('protocol-num').value;
@@ -564,9 +598,10 @@ function onProtocolChange(){
   document.getElementById('pr-eyebrow').textContent='Protocol #'+pn;
   document.getElementById('pr-name').textContent=p.name;
   document.getElementById('pr-rows').innerHTML=buildPhaseRows(p.phases);
-  document.getElementById('pr-total').textContent=p.total+' sessions';
+  document.getElementById('pr-total').textContent=p.total+' sessions · ~'+p.weeks+' weeks';
   box.classList.add('show');
 }
+
 function buildPhaseRows(phases){
   return phases.map(ph=>{
     const s=typeof ph.s==='number'?ph.s+' sessions':ph.s;
@@ -577,13 +612,15 @@ function buildPhaseRows(phases){
     </div>`;
   }).join('');
 }
+
 function buildPkgSummary(pn){
   const p=PROTOCOLS[pn];
   document.getElementById('pkg-eyebrow').textContent='Protocol #'+pn;
   document.getElementById('pkg-proto-name').textContent=p.name;
   document.getElementById('pkg-proto-rows').innerHTML=buildPhaseRows(p.phases);
-  document.getElementById('pkg-total').textContent=p.total+' sessions';
+  document.getElementById('pkg-total').textContent=p.total+' sessions · ~'+p.weeks+' weeks';
 }
+
 // ── PAYMENT ───────────────────────────────────────────────
 function selectPayment(btn,type){
   document.querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('selected'));
@@ -591,6 +628,7 @@ function selectPayment(btn,type){
   S.paymentType=type;
   document.getElementById('split-box').classList.toggle('show',type==='Split payment');
 }
+
 // ── CONSENT ───────────────────────────────────────────────
 function updateConsent(){
   const c1=document.getElementById('check1').checked;
@@ -606,6 +644,7 @@ function checkConsentBtn(){
   const sig=document.getElementById('client-signature').value.trim();
   document.getElementById('consent-btn').disabled=!(S.consentOk&&sig.length>2);
 }
+
 // ── REVIEW ────────────────────────────────────────────────
 function buildReview(){
   const payDetail=S.paymentType==='Split payment'
@@ -644,12 +683,14 @@ function buildReview(){
       <div class="review-row"><span class="rv-label">Consent</span><span class="rv-value">All 3 confirmed ✓</span></div>
     </div>`;
 }
+
 // ── SUBMIT ────────────────────────────────────────────────
 async function submitEnrollment(){
   S.staffNotes=document.getElementById('staff-notes').value;
   const payDetail=S.paymentType==='Split payment'
     ?`Split — ${S.firstPayment||'TBD'} today (${S.firstPaymentDate}), ${S.secondPayment||'TBD'} due ${S.splitDue}`
     :S.paymentType;
+
   const staffParams={
     to_email:STAFF_EMAIL, client_name:S.clientName, client_phone:S.phone||'Not provided',
     client_email:S.email, client_dob:S.dob||'Not provided', enrollment_date:S.date,
@@ -667,9 +708,10 @@ async function submitEnrollment(){
     sessions:S.confirmedSessions, price:S.confirmedPrice,
     payment_type:S.paymentType, split_due:S.splitDue||'N/A', salesperson:S.salesperson,
   };
+
   document.getElementById('overlay').classList.add('show');
   try{
-    if(TEMPLATE_STAFF_ENR){
+    if(EMAILJS_PUBLIC_KEY!=='YOUR_EMAILJS_PUBLIC_KEY'){
       await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_STAFF_ENR,staffParams);
       await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_CLIENT_ENR,clientParams);
     }
@@ -686,6 +728,7 @@ async function submitEnrollment(){
     showSuccess();
   }
 }
+
 function showSuccess(){
   document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('success-panel').classList.add('show');
@@ -700,6 +743,7 @@ function showSuccess(){
     <div class="ss-row"><span class="ss-label">Enrolled by</span><span class="ss-value">${S.salesperson}</span></div>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
 function resetForm(){
   S={step:0,salesperson:'',date:'',clientName:'',phone:'',email:'',dob:'',diagnosis:'',protocolNum:'',protocolName:'',startingPhase:'',additionalConds:'',confirmedSessions:'',confirmedPrice:'',customNote:'',paymentType:'',firstPayment:'',firstPaymentDate:'',secondPayment:'',splitDue:'',consentOk:false,signature:'',staffNotes:''};
   document.getElementById('success-panel').classList.remove('show');
