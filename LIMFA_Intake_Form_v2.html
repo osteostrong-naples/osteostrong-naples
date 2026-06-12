@@ -11,15 +11,18 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;-webkit-text-size-adjust:100%}
 body{font-family:'Inter',sans-serif;background:#F7F4EF;color:#1C1C2E;min-height:100vh;padding-bottom:60px}
+
 /* HEADER */
 .header{background:#1C1C2E;padding:18px 24px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
 .header-logo{font-family:'Playfair Display',serif;font-size:21px;color:#fff;letter-spacing:-0.5px}
 .header-logo span{color:#C9A84C}
 .header-sub{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
 .header-badge{font-size:10px;font-weight:600;color:#C9A84C;border:1px solid rgba(201,168,76,0.4);border-radius:100px;padding:4px 10px;letter-spacing:1px;text-transform:uppercase}
+
 /* PROGRESS */
 .progress-bar{height:3px;background:rgba(255,255,255,0.1)}
 .progress-fill{height:100%;background:linear-gradient(90deg,#C9A84C,#E8C96A);transition:width 0.4s ease;width:0%}
+
 /* STEP NAV */
 .step-nav{display:flex;justify-content:center;padding:18px 24px 0;overflow-x:auto}
 .step-item{display:flex;flex-direction:column;align-items:center;position:relative;flex:1;min-width:52px}
@@ -31,15 +34,18 @@ body{font-family:'Inter',sans-serif;background:#F7F4EF;color:#1C1C2E;min-height:
 .step-label{font-size:9px;font-weight:500;color:#A09080;margin-top:4px;text-align:center;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
 .step-item.active .step-label{color:#1C1C2E;font-weight:600}
 .step-item.done .step-label{color:#C9A84C}
+
 /* CONTAINER */
 .form-container{max-width:600px;margin:22px auto 0;padding:0 16px}
 .step-panel{display:none}
 .step-panel.active{display:block}
 .panel-title{font-family:'Playfair Display',serif;font-size:23px;color:#1C1C2E;margin-bottom:4px}
 .panel-sub{font-size:13px;color:#7A6E62;margin-bottom:18px;line-height:1.5}
+
 /* CARDS */
 .card{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;border:1px solid #EDE8E0;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .card-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#A09080;margin-bottom:14px}
+
 /* FIELDS */
 .field{margin-bottom:14px}
 .field:last-child{margin-bottom:0}
@@ -51,6 +57,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 input:focus,select:focus,textarea:focus{border-color:#C9A84C;background:#fff;box-shadow:0 0 0 3px rgba(201,168,76,0.12)}
 input.error,select.error{border-color:#C9484C}
 textarea{height:80px;resize:vertical}
+
 /* OPTION BUTTONS */
 .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .opt-btn{background:#FDFCFA;border:1.5px solid #DDD8CF;border-radius:12px;padding:13px 11px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#4A4035;cursor:pointer;text-align:center;line-height:1.3;transition:all 0.18s;-webkit-tap-highlight-color:transparent}
@@ -61,6 +68,7 @@ textarea{height:80px;resize:vertical}
 .tag-acute{background:#FDEAEA;color:#8B1C1C}
 .tag-chronic{background:#FFF3D6;color:#7A5C10}
 .tag-bone{background:#E8F4FD;color:#1A5276}
+
 /* CONTRAINDICATIONS */
 .contra-box{background:#FFF8EC;border:1.5px solid #F0D080;border-radius:12px;padding:16px;margin-bottom:12px}
 .contra-title{font-size:11px;font-weight:700;color:#7A5C10;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px}
@@ -80,6 +88,7 @@ textarea{height:80px;resize:vertical}
 .check-confirm input[type=checkbox]:checked{background:#3A8A3A;border-color:#3A8A3A}
 .check-confirm input[type=checkbox]:checked::after{content:'✓';color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
 .check-label{font-size:13px;font-weight:500;color:#3A4A3A;line-height:1.4}
+
 /* PROTOCOL RESULT — THE HERO SCREEN */
 .protocol-hero{background:#1C1C2E;border-radius:18px;padding:24px;margin-bottom:14px;color:#fff}
 .proto-eyebrow{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:6px}
@@ -98,6 +107,7 @@ textarea{height:80px;resize:vertical}
 .pr-prog{font-size:13px;color:rgba(255,255,255,0.9);line-height:1.4}
 .pr-meta{font-size:11px;color:#C9A84C;text-align:right;white-space:nowrap}
 .proto-note{background:rgba(201,168,76,0.1);border-left:3px solid #C9A84C;border-radius:0 8px 8px 0;padding:10px 12px;margin-top:16px;font-size:12px;color:rgba(255,255,255,0.7);line-height:1.5}
+
 /* PACKAGE DISPLAY */
 .pkg-recommended{border:1.5px solid #C9A84C;border-radius:14px;padding:18px;background:#FBF6E9;margin-bottom:10px}
 .pkg-rec-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7A5C10;margin-bottom:8px}
@@ -108,10 +118,12 @@ textarea{height:80px;resize:vertical}
 .pkg-alt-name{font-size:13px;font-weight:600;color:#4A4035}
 .pkg-alt-detail{font-size:11px;color:#A09080;margin-top:2px}
 .pkg-alt-price{font-size:15px;font-weight:700;color:#4A4035}
+
 /* NEXT STEP CTA ON RESULT */
 .enroll-banner{background:#fff;border:1.5px solid #EDE8E0;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center}
 .enroll-title{font-size:15px;font-weight:700;color:#1C1C2E;margin-bottom:4px}
 .enroll-sub{font-size:12px;color:#7A6E62;line-height:1.5}
+
 /* NAV BUTTONS */
 .nav-row{display:flex;gap:12px;margin-top:18px;padding-bottom:16px}
 .btn-back{flex:1;padding:14px;border:1.5px solid #DDD8CF;border-radius:12px;background:transparent;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#7A6E62;cursor:pointer;transition:all 0.2s}
@@ -119,6 +131,7 @@ textarea{height:80px;resize:vertical}
 .btn-next:active{transform:scale(0.98)}
 .btn-next.gold{background:#C9A84C;color:#1C1C2E}
 .btn-next:disabled{opacity:0.4;cursor:not-allowed}
+
 /* SUCCESS */
 .success-panel{display:none;text-align:center;padding:40px 20px}
 .success-panel.show{display:block}
@@ -131,12 +144,14 @@ textarea{height:80px;resize:vertical}
 .ss-label{color:#7A6E62}
 .ss-value{font-weight:600;color:#1C1C2E;text-align:right;max-width:60%}
 .btn-reset{width:100%;padding:15px;border:1.5px solid #DDD8CF;border-radius:12px;background:transparent;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#4A4035;cursor:pointer;margin-top:10px}
+
 /* OVERLAY */
 .overlay{display:none;position:fixed;inset:0;background:rgba(28,28,46,0.75);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .overlay.show{display:flex}
 .spinner{width:40px;height:40px;border:3px solid rgba(201,168,76,0.3);border-top-color:#C9A84C;border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .overlay-text{color:#fff;font-size:14px;font-weight:500}
+
 @media(max-width:400px){
   .field-row{grid-template-columns:1fr}
   .opt-grid{grid-template-columns:1fr 1fr}
@@ -146,10 +161,12 @@ textarea{height:80px;resize:vertical}
 </style>
 </head>
 <body>
+
 <div class="overlay" id="overlay">
   <div class="spinner"></div>
   <div class="overlay-text" id="overlay-text">Sending emails…</div>
 </div>
+
 <header class="header">
   <div>
     <div class="header-logo"><span>L</span>IMFA</div>
@@ -158,6 +175,7 @@ textarea{height:80px;resize:vertical}
   <div class="header-badge">Protocol Finder</div>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
 <nav class="step-nav" id="stepNav">
   <div class="step-item active" id="nav-0"><div class="step-dot">1</div><div class="step-label">Staff</div></div>
   <div class="step-item" id="nav-1"><div class="step-dot">2</div><div class="step-label">Client</div></div>
@@ -165,7 +183,9 @@ textarea{height:80px;resize:vertical}
   <div class="step-item" id="nav-3"><div class="step-dot">4</div><div class="step-label">Condition</div></div>
   <div class="step-item" id="nav-4"><div class="step-dot">5</div><div class="step-label">Protocol</div></div>
 </nav>
+
 <main class="form-container">
+
   <!-- STEP 0 — STAFF -->
   <div class="step-panel active" id="step-0">
     <p class="panel-title">Who's with this client?</p>
@@ -193,6 +213,7 @@ textarea{height:80px;resize:vertical}
       <button class="btn-next" onclick="nextStep(0)">Continue →</button>
     </div>
   </div>
+
   <!-- STEP 1 — CLIENT INFO -->
   <div class="step-panel" id="step-1">
     <p class="panel-title">Client information</p>
@@ -218,6 +239,7 @@ textarea{height:80px;resize:vertical}
       <button class="btn-next" onclick="nextStep(1)">Continue →</button>
     </div>
   </div>
+
   <!-- STEP 2 — CONTRAINDICATIONS -->
   <div class="step-panel" id="step-2">
     <p class="panel-title">Safety check</p>
@@ -228,6 +250,11 @@ textarea{height:80px;resize:vertical}
         <li>Active cancer or malignant tumors</li>
         <li>Pregnancy or actively trying to conceive</li>
         <li>Pacemaker or implanted electronic device (ICD, neurostimulator, cochlear implant, insulin pump)</li>
+        <li>Active bleeding disorder or taking blood thinners</li>
+        <li>Epilepsy or seizure disorder</li>
+        <li>Recent heart attack or stroke (within 6 months)</li>
+        <li>Organ transplant / immunosuppressant medications</li>
+        <li>Fever or active systemic infection</li>
       </ul>
     </div>
     <div class="caution-box">
@@ -250,10 +277,12 @@ textarea{height:80px;resize:vertical}
       <button class="btn-next" id="contra-btn" onclick="nextStep(2)" disabled>Continue →</button>
     </div>
   </div>
+
   <!-- STEP 3 — CONDITION -->
   <div class="step-panel" id="step-3">
     <p class="panel-title">What's the primary concern?</p>
     <p class="panel-sub">Select the area, then the specific condition. Condition #1 determines the recommended protocol.</p>
+
     <div class="card" id="area-card">
       <div class="card-title">Area of concern</div>
       <div class="opt-grid">
@@ -265,10 +294,12 @@ textarea{height:80px;resize:vertical}
         <button class="opt-btn" onclick="selectArea(this,'hand')"><span class="opt-icon">✋</span>Hand / wrist</button>
       </div>
     </div>
+
     <div class="card" id="cond-card" style="display:none">
       <div class="card-title" id="cond-title">Specific condition</div>
       <div class="opt-grid" id="cond-grid"></div>
     </div>
+
     <div class="card" id="dur-card" style="display:none">
       <div class="card-title">How long has this been a concern?</div>
       <div class="opt-grid">
@@ -276,6 +307,7 @@ textarea{height:80px;resize:vertical}
         <button class="opt-btn" onclick="selectDur(this,'chronic')">3 months or longer<span class="opt-tag tag-chronic">Chronic</span></button>
       </div>
     </div>
+
     <div class="card" id="tscore-card" style="display:none">
       <div class="card-title">Do they have a recent bone scan?</div>
       <div class="opt-grid">
@@ -285,6 +317,7 @@ textarea{height:80px;resize:vertical}
         <button class="opt-btn" onclick="selectTscore(this,'osteopenia')">No scan yet</button>
       </div>
     </div>
+
     <div class="card" id="imaging-card" style="display:none">
       <div class="card-title">Has this been confirmed by imaging (MRI / X-ray)?</div>
       <div class="opt-grid">
@@ -292,6 +325,7 @@ textarea{height:80px;resize:vertical}
         <button class="opt-btn" onclick="selectImaging(this,'no')">No imaging done</button>
       </div>
     </div>
+
     <div class="card" id="extra-card" style="display:none">
       <div class="card-title">Additional conditions <span style="font-weight:400;font-size:11px;color:#A09080">(optional)</span></div>
       <textarea id="extra-conds" placeholder="e.g. also has knee pain — may address after primary protocol"></textarea>
@@ -300,26 +334,32 @@ textarea{height:80px;resize:vertical}
         <textarea id="staff-notes" placeholder="e.g. Chuck recommended arthritis as priority. Client wants to start ASAP."></textarea>
       </div>
     </div>
+
     <div class="nav-row">
       <button class="btn-back" onclick="prevStep(3)">← Back</button>
       <button class="btn-next gold" id="find-btn" onclick="buildProtocol()" disabled>Find My Protocol →</button>
     </div>
   </div>
+
   <!-- STEP 4 — PROTOCOL RESULT -->
   <div class="step-panel" id="step-4">
     <p class="panel-title">Your personalized plan</p>
     <p class="panel-sub">Walk the client through this together. When they're ready, send it to their email.</p>
+
     <div id="proto-hero"></div>
     <div id="pkg-display"></div>
+
     <div class="enroll-banner">
       <div class="enroll-title">Ready to get started?</div>
       <div class="enroll-sub">Send this plan to the client's email and move to enrollment with a coach.</div>
     </div>
+
     <div class="nav-row">
       <button class="btn-back" onclick="prevStep(4)">← Back</button>
       <button class="btn-next gold" onclick="sendEmails()">✉️ Send Plan & Save</button>
     </div>
   </div>
+
   <!-- SUCCESS -->
   <div class="success-panel" id="success-panel">
     <div class="success-icon">✓</div>
@@ -329,16 +369,29 @@ textarea{height:80px;resize:vertical}
     <button class="btn-next gold" style="width:100%;margin-bottom:10px" onclick="alert('Open the Enrollment Form to complete sign-up.')">Continue to Enrollment →</button>
     <button class="btn-reset" onclick="resetForm()">+ New Client Consultation</button>
   </div>
+
 </main>
+
 <script>
 // ════════════════════════════════════════════════════════════
 // EMAILJS CONFIGURATION
 // ════════════════════════════════════════════════════════════
-const EMAILJS_PUBLIC_KEY   = 'GsK59nMBs9e5QOjZM';
-const EMAILJS_SERVICE_ID   = 'service_vw8uqcj';
-const TEMPLATE_STAFF       = 'template_4jtsvju';
-const TEMPLATE_CLIENT      = 'template_2cf23bk';
-const STAFF_EMAIL          = 'mackenzie@osteostrong.me';
+// SETUP INSTRUCTIONS:
+// 1. Go to emailjs.com and create a free account
+// 2. Add an Email Service (Gmail works great) — copy the Service ID
+// 3. Create TWO email templates:
+//    Template A (to you/staff): subject = "New LIMFA Consultation — {{client_name}}"
+//    Template B (to client):    subject = "Your personalized LIMFA plan — {{client_name}}"
+// 4. Copy each Template ID
+// 5. Go to Account > API Keys and copy your Public Key
+// 6. Replace the values below:
+
+const EMAILJS_PUBLIC_KEY   = 'YOUR_EMAILJS_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID   = 'YOUR_SERVICE_ID';
+const TEMPLATE_STAFF       = 'YOUR_STAFF_TEMPLATE_ID';   // email to you
+const TEMPLATE_CLIENT      = 'YOUR_CLIENT_TEMPLATE_ID';  // email to client
+const STAFF_EMAIL          = 'YOUR_EMAIL@osteostrong.com'; // your email address
+
 // ════════════════════════════════════════════════════════════
 // DATA
 // ════════════════════════════════════════════════════════════
@@ -350,6 +403,7 @@ const CONDITIONS = {
   upper:  { label:'Upper Body',     items:[{v:'shoulder-bursitis',l:'Shoulder — bursitis'},{v:'shoulder-inflam',l:'Shoulder — inflammation'},{v:'rotator',l:'Shoulder — rotator cuff trauma'},{v:'frozen',l:'Shoulder — frozen shoulder'},{v:'tennis-elbow',l:'Epicondylitis (tennis elbow)'}] },
   hand:   { label:'Hand / Wrist',   items:[{v:'wrist-inflam',l:'Wrist — inflammation (cartilage/tendon)'},{v:'wrist-trauma',l:'Wrist — trauma'},{v:'carpal',l:'Carpal tunnel syndrome'},{v:'thumb-rhiz',l:'Thumb rhizarthrosis'},{v:'thumb-tendinitis',l:'Thumb tendinitis'}] }
 };
+
 const P = {
   osteopenia:        {name:'Osteopenia',num:1,device:'Mat (systemic)',pkg:'osteopenia',phases:[{p:'REPAIR',pr:'Program 6 — Bone Repair',s:'12',f:'Every 72 hrs'}],note:'Bone density peaks 1 year after completing your sessions. The mat provides a gentle whole-body treatment — most clients find it very relaxing.',clientNote:'LIMFA uses a therapeutic mat that works with your body at a cellular level to support bone density. You simply lie on it for 27 minutes per session.'},
   osteoporosis:      {name:'Osteoporosis',num:2,device:'Transducer',pkg:'osteoporosis',phases:[{p:'REPAIR',pr:'Program 6 — Bone Repair × 2 sites',s:'12 + 12',f:'Every 48–72 hrs'}],note:'Femurs treated first (transducers sideways), then spine second. Combined into one 54-min session. For severe cases, follow with Osteopenia protocol.',clientNote:'Your protocol targets two areas — your femurs and spine — in a single session. Research shows an average 18% improvement in T-score after completing the protocol.'},
@@ -388,56 +442,61 @@ const P = {
   'thumb-rhiz':      {name:'Thumb Rhizarthrosis',num:34,device:'Transducer',pkg:'chronic',phases:[{p:'ACUTE',pr:'AUTO (70 min)',s:'5',f:'Every 24–48 hrs'},{p:'REPAIR',pr:'Program 7 — Connective Tissue',s:'12',f:'Every 72 hrs'},{p:'SUSPENSION',pr:'Rest period',s:'15 days',f:'No sessions'},{p:'CONSOLIDATION',pr:'Program 7 — Connective Tissue',s:'5',f:'1× per week'}],note:'Thumb osteoarthritis.',clientNote:'Your plan uses our connective tissue repair program to support the thumb joint over a structured four-phase protocol.'},
   'thumb-tendinitis':{name:'Thumb Tendinitis',num:35,device:'Transducer',pkg:'chronic',phases:[{p:'ACUTE',pr:'AUTO (70 min)',s:'5',f:'Every 24–48 hrs'},{p:'REPAIR',pr:'Program 7 — Connective Tissue',s:'15',f:'Every 72 hrs'}],note:'',clientNote:'The connective tissue repair program targets the tendon directly to support healing and reduce inflammation in the thumb.'},
 };
+
 // Exact session totals per protocol — matches enrollment form exactly
 const PROTOCOL_TOTALS = {
-  'osteopenia':       {sessions:12,  price:'$1,200'},
-  'osteoporosis':     {sessions:12,  price:'$1,200'},
-  'bone-healing':     {sessions:15,  price:'$1,500'},
-  'dental':           {sessions:15,  price:'$1,500'},
-  'ankle-inflam':     {sessions:22,  price:'$2,200'},
-  'ankle-trauma':     {sessions:10,  price:'$1,000'},
-  'knee-sprain':      {sessions:10,  price:'$1,000'},
-  'knee-gon':         {sessions:22,  price:'$2,200'},
-  'knee-cartilage':   {sessions:22,  price:'$2,200'},
-  'knee-prosthesis':  {sessions:10,  price:'$1,000'},
-  'knee-tendinitis':  {sessions:20,  price:'$2,000'},
-  'knee-trauma':      {sessions:10,  price:'$1,000'},
-  'hip-arthrosis':    {sessions:26,  price:'$2,600'},
-  'hip-prosthesis':   {sessions:10,  price:'$1,000'},
-  'groin':            {sessions:10,  price:'$1,000'},
-  'plantar':          {sessions:10,  price:'$1,000'},
-  'achilles':         {sessions:15,  price:'$1,500'},
-  'cervical':         {sessions:20,  price:'$2,000'},
-  'sciatica':         {sessions:15,  price:'$1,500'},
-  'stenosis':         {sessions:15,  price:'$1,500'},
-  'contractures':     {sessions:10,  price:'$1,000'},
-  'muscle-pain':      {sessions:10,  price:'$1,000'},
-  'doms':             {sessions:4,   price:'$400'},
-  'fibro':            {sessions:18,  price:'$1,800'},
-  'post-surgery':     {sessions:5,   price:'$500'},
-  'ra':               {sessions:15,  price:'$1,500'},
-  'shoulder-bursitis':{sessions:10,  price:'$1,000'},
-  'shoulder-inflam':  {sessions:10,  price:'$1,000'},
-  'rotator':          {sessions:16,  price:'$1,600'},
-  'frozen':           {sessions:10,  price:'$1,000'},
-  'tennis-elbow':     {sessions:10,  price:'$1,000'},
-  'wrist-inflam':     {sessions:22,  price:'$2,200'},
-  'wrist-trauma':     {sessions:11,  price:'$1,100'},
-  'carpal':           {sessions:15,  price:'$1,500'},
-  'thumb-rhiz':       {sessions:22,  price:'$2,200'},
-  'thumb-tendinitis': {sessions:20,  price:'$2,000'},
+  'osteopenia':       {sessions:12,  price:'$1,200', weeks:5},
+  'osteoporosis':     {weeks:5,sessions:12,  price:'$1,200', weeks:5},
+  'bone-healing':     {weeks:4,sessions:15,  price:'$1,500', weeks:4},
+  'dental':           {sessions:15,  price:'$1,500', weeks:4},
+  'ankle-inflam':     {weeks:14,sessions:22,  price:'$2,200', weeks:14},
+  'ankle-trauma':     {weeks:4,sessions:10,  price:'$1,000', weeks:4},
+  'knee-sprain':      {weeks:3,sessions:10,  price:'$1,000', weeks:3},
+  'knee-gon':         {sessions:22,  price:'$2,200', weeks:14},
+  'knee-cartilage':   {sessions:22,  price:'$2,200', weeks:14},
+  'knee-prosthesis':  {sessions:10,  price:'$1,000', weeks:3},
+  'knee-tendinitis':  {sessions:20,  price:'$2,000', weeks:8},
+  'knee-trauma':      {weeks:4,sessions:10,  price:'$1,000', weeks:4},
+  'hip-arthrosis':    {sessions:26,  price:'$2,600', weeks:16},
+  'hip-prosthesis':   {sessions:10,  price:'$1,000', weeks:3},
+  'groin':            {sessions:10,  price:'$1,000', weeks:3},
+  'plantar':          {sessions:10,  price:'$1,000', weeks:4},
+  'achilles':         {sessions:15,  price:'$1,500', weeks:6},
+  'cervical':         {sessions:20,  price:'$2,000', weeks:8},
+  'sciatica':         {sessions:15,  price:'$1,500', weeks:6},
+  'stenosis':         {sessions:15,  price:'$1,500', weeks:6},
+  'contractures':     {weeks:3,sessions:10,  price:'$1,000', weeks:3},
+  'muscle-pain':      {weeks:3,sessions:10,  price:'$1,000', weeks:3},
+  'doms':             {sessions:4,   price:'$400', weeks:1},
+  'fibro':            {sessions:18,  price:'$1,800', weeks:11},
+  'post-surgery':     {weeks:1,sessions:5,   price:'$500', weeks:1},
+  'ra':               {sessions:15,  price:'$1,500', weeks:6},
+  'shoulder-bursitis':{sessions:10,  price:'$1,000', weeks:3},
+  'shoulder-inflam':  {sessions:10,  price:'$1,000', weeks:3},
+  'rotator':          {sessions:16,  price:'$1,600', weeks:6},
+  'frozen':           {sessions:10,  price:'$1,000', weeks:3},
+  'tennis-elbow':     {weeks:4,sessions:10,  price:'$1,000', weeks:4},
+  'wrist-inflam':     {weeks:14,sessions:22,  price:'$2,200', weeks:14},
+  'wrist-trauma':     {weeks:4,sessions:11,  price:'$1,100', weeks:4},
+  'carpal':           {sessions:15,  price:'$1,500', weeks:6},
+  'thumb-rhiz':       {sessions:22,  price:'$2,200', weeks:14},
+  'thumb-tendinitis': {weeks:8,sessions:20,  price:'$2,000', weeks:8},
 };
+
 const PH_CLASS = {ACUTE:'ph-acute',REPAIR:'ph-repair',SUSPENSION:'ph-suspension',CONSOLIDATION:'ph-consolidation'};
+
 // ════════════════════════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════════════════════════
 let S = {step:0,salesperson:'',date:'',clientName:'',phone:'',email:'',contraOk:false,area:null,cond:null,condLabel:'',extraConds:'',staffNotes:'',protocol:null};
+
 document.addEventListener('DOMContentLoaded',()=>{
   const t=new Date();
   document.getElementById('intake-date').value=t.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   S.date=t.toLocaleDateString('en-US');
   emailjs.init(EMAILJS_PUBLIC_KEY);
 });
+
 // ════════════════════════════════════════════════════════════
 // NAVIGATION
 // ════════════════════════════════════════════════════════════
@@ -454,6 +513,7 @@ function goTo(n){
   document.getElementById('progress').style.width=Math.round((n/5)*100)+'%';
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
 function nextStep(from){
   if(from===0){
     const sp=document.getElementById('salesperson').value;
@@ -474,6 +534,7 @@ function nextStep(from){
   goTo(from+1);
 }
 function prevStep(from){goTo(from-1);}
+
 // ════════════════════════════════════════════════════════════
 // CONTRAINDICATIONS
 // ════════════════════════════════════════════════════════════
@@ -483,6 +544,7 @@ function toggleContra(){
   document.getElementById('contra-btn').disabled=!cb.checked;
   S.contraOk=cb.checked;
 }
+
 // ════════════════════════════════════════════════════════════
 // CONDITION SELECTION
 // ════════════════════════════════════════════════════════════
@@ -504,6 +566,7 @@ function selectArea(btn,area){
   document.getElementById('cond-title').textContent=CONDITIONS[area].label+' — select condition';
   document.getElementById('cond-card').style.display='block';
 }
+
 function selectCond(btn,val,label){
   document.querySelectorAll('#cond-grid .opt-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
@@ -521,6 +584,7 @@ function selectCond(btn,val,label){
     document.getElementById('dur-card').style.display='block';
   }
 }
+
 function selectDur(btn,dur){
   document.querySelectorAll('#dur-card .opt-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
@@ -528,6 +592,7 @@ function selectDur(btn,dur){
   document.getElementById('extra-card').style.display='block';
   document.getElementById('find-btn').disabled=false;
 }
+
 function selectTscore(btn,val){
   document.querySelectorAll('#tscore-card .opt-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
@@ -535,6 +600,7 @@ function selectTscore(btn,val){
   document.getElementById('extra-card').style.display='block';
   document.getElementById('find-btn').disabled=false;
 }
+
 function selectImaging(btn,val){
   document.querySelectorAll('#imaging-card .opt-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
@@ -542,6 +608,7 @@ function selectImaging(btn,val){
   document.getElementById('extra-card').style.display='block';
   document.getElementById('find-btn').disabled=false;
 }
+
 // ════════════════════════════════════════════════════════════
 // BUILD PROTOCOL RESULT
 // ════════════════════════════════════════════════════════════
@@ -551,12 +618,14 @@ function buildProtocol(){
   const p=P[S.cond];
   if(!p){alert('Could not determine protocol. Please check the condition selection.');return;}
   S.protocol=p;
+
   // Hero card
   document.getElementById('proto-hero').innerHTML=`
     <div class="protocol-hero">
       <div class="proto-eyebrow">Protocol #${p.num} — Recommended for ${S.clientName.split(' ')[0]}</div>
       <div class="proto-name">${p.name}</div>
       <div class="proto-device">Device: ${p.device}</div>
+      ${pt && pt.weeks ? `<div style="display:inline-block;background:rgba(201,168,76,0.15);border-radius:100px;padding:4px 12px;font-size:11px;font-weight:600;color:#C9A84C;margin-top:6px;">⏱ Approx. ${pt.weeks} weeks total</div>` : ''}
       <div class="proto-phases">${p.phases.map(ph=>`<span class="phase-pill ${PH_CLASS[ph.p]||''}">${ph.p}</span>`).join('')}</div>
       <div class="proto-table">
         ${p.phases.map(ph=>`
@@ -568,6 +637,7 @@ function buildProtocol(){
       </div>
       ${p.note?`<div class="proto-note">📋 ${p.note}</div>`:''}
     </div>`;
+
   // Package — use exact session count from protocol
   const pt = PROTOCOL_TOTALS[S.cond] || {sessions:'—', price:'—'};
   document.getElementById('pkg-display').innerHTML=`
@@ -577,15 +647,18 @@ function buildProtocol(){
       <div class="pkg-rec-detail">${pt.sessions} sessions · $100 per session · Includes initial assessment</div>
       <div class="pkg-rec-price">${pt.price}</div>
     </div>`;
+
   goTo(4);
 }
+
 // ════════════════════════════════════════════════════════════
 // SEND EMAILS
 // ════════════════════════════════════════════════════════════
 async function sendEmails(){
   const p=S.protocol;
-  const pt=PROTOCOL_TOTALS[S.cond]||{sessions:'—',price:'—'};
+  const pt2=PROTOCOL_TOTALS[S.cond]||{sessions:'—',price:'—'};
   const phaseSummary=p.phases.map(ph=>`${ph.p}: ${ph.pr} — ${ph.s} sessions, ${ph.f}`).join('\n');
+
   // Params for staff email
   const staffParams={
     to_email: STAFF_EMAIL,
@@ -601,11 +674,12 @@ async function sendEmails(){
     device: p.device,
     phases: phaseSummary,
     recommended_package: p.name,
-    package_price: pt.price,
+    package_price: pt2.price,
     additional_conditions: S.extraConds||'None',
     staff_notes: S.staffNotes||'None',
     clinical_note: p.note||'None',
   };
+
   // Params for client email
   const clientParams={
     to_email: S.email,
@@ -616,16 +690,20 @@ async function sendEmails(){
     protocol_name: p.name,
     phases: phaseSummary,
     recommended_package: p.name,
-    package_price: pt.price,
+    package_price: pt2.price,
     package_sessions: pt.sessions,
-    client_note: p.clientNote,
+    client_note: p.clientNote + (pt && pt.weeks ? ` Plan duration: approximately ${pt.weeks} weeks.` : ''),
     salesperson: S.salesperson,
   };
+
   document.getElementById('overlay').classList.add('show');
   document.getElementById('overlay-text').textContent='Sending your plan…';
+
   try {
-    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_STAFF, staffParams);
-    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, clientParams);
+    if(EMAILJS_PUBLIC_KEY!=='YOUR_EMAILJS_PUBLIC_KEY'){
+      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_STAFF, staffParams);
+      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, clientParams);
+    }
     document.getElementById('overlay').classList.remove('show');
     showSuccess();
   } catch(err){
@@ -634,22 +712,24 @@ async function sendEmails(){
     showSuccess(); // still show success
   }
 }
+
 function showSuccess(){
   document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('success-panel').classList.add('show');
   document.getElementById('progress').style.width='100%';
   document.querySelectorAll('.step-item').forEach(i=>{i.classList.remove('active');i.classList.add('done');});
   const p=S.protocol;
-  const pt=PROTOCOL_TOTALS[S.cond]||{sessions:'—',price:'—'};
+  const pt3=PROTOCOL_TOTALS[S.cond]||{sessions:'—',price:'—'};
   document.getElementById('success-summary').innerHTML=`
     <div class="ss-row"><span class="ss-label">Client</span><span class="ss-value">${S.clientName}</span></div>
     <div class="ss-row"><span class="ss-label">Condition</span><span class="ss-value">${S.condLabel}</span></div>
     <div class="ss-row"><span class="ss-label">Protocol</span><span class="ss-value">#${p.num} — ${p.name}</span></div>
-    <div class="ss-row"><span class="ss-label">Recommended package</span><span class="ss-value">${p.name} · ${pt.price}</span></div>
+    <div class="ss-row"><span class="ss-label">Recommended package</span><span class="ss-value">${p.name} · ${pt2.price}</span></div>
     <div class="ss-row"><span class="ss-label">Plan sent to</span><span class="ss-value">${S.email}</span></div>
     <div class="ss-row"><span class="ss-label">Enrolled by</span><span class="ss-value">${S.salesperson}</span></div>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
 function resetForm(){
   S={step:0,salesperson:'',date:'',clientName:'',phone:'',email:'',contraOk:false,area:null,cond:null,condLabel:'',extraConds:'',staffNotes:'',protocol:null};
   document.getElementById('success-panel').classList.remove('show');
