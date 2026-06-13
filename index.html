@@ -275,7 +275,7 @@ async function sendInfoEmail() {
     document.getElementById('overlay').classList.remove('show');
     const successEl = document.getElementById('send-success');
     const subEl = document.getElementById('send-success-sub');
-    subEl.textContent = ;
+    subEl.textContent = `LIMFA overview sent to ${fullName} at ${email}.`;
     successEl.classList.add('show');
     // Reset form after 4 seconds
     setTimeout(() => {
