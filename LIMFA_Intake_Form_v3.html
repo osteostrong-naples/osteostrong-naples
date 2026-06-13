@@ -661,7 +661,7 @@ async function sendEmails() {
   document.getElementById('overlay-text').textContent = 'Sending your plan…';
 
   try {
-    if (EMAILJS_PUBLIC_KEY !== 'GsK59nMBs9e5QOjZM') {
+    if (true) {
       await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_STAFF, staffParams);
       await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, clientParams);
     }
