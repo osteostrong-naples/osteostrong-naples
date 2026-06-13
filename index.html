@@ -115,7 +115,7 @@ input.error{border-color:#C9484C}
   <div class="grid-label">Client tools</div>
 
   <!-- PROTOCOL FINDER -->
-  <a class="tool-card primary" href="PROTOCOL_FINDER_URL" target="_blank">
+  <a class="tool-card primary" href="https://osteostrong-naples.github.io/osteostrong-naples/LIMFA_Intake_Form_v3.html" target="_blank">
     <div class="tool-icon icon-gold">🔍</div>
     <div class="tool-content">
       <div class="tool-name">Protocol Finder</div>
@@ -125,7 +125,7 @@ input.error{border-color:#C9484C}
   </a>
 
   <!-- ENROLLMENT FORM -->
-  <a class="tool-card dark" href="ENROLLMENT_FORM_URL" target="_blank">
+  <a class="tool-card dark" href="https://osteostrong-naples.github.io/osteostrong-naples/LIMFA_Enrollment_Form.html" target="_blank">
     <div class="tool-icon icon-white">✅</div>
     <div class="tool-content">
       <div class="tool-name tool-name-light">Enrollment Form</div>
@@ -239,9 +239,9 @@ input.error{border-color:#C9484C}
 
 <script>
 // ── EMAILJS CONFIG ────────────────────────────────────────
-const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY';
+const EMAILJS_PUBLIC_KEY = 'GsK59nMBs9e5QOjZM';
 const EMAILJS_SERVICE_ID = 'service_vw8uqcj';
-const TEMPLATE_OVERVIEW  = 'YOUR_OVERVIEW_TEMPLATE_ID';
+const TEMPLATE_OVERVIEW  = 'template_n4rbsus';
 
 document.addEventListener('DOMContentLoaded', () => {
   emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -271,7 +271,7 @@ async function sendInfoEmail() {
   document.getElementById('overlay').classList.add('show');
 
   try {
-    if (EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+    if (EMAILJS_PUBLIC_KEY !== 'GsK59nMBs9e5QOjZM') {
       await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_OVERVIEW, params);
     }
     document.getElementById('overlay').classList.remove('show');
