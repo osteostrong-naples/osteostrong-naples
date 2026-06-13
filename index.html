@@ -271,9 +271,7 @@ async function sendInfoEmail() {
   document.getElementById('overlay').classList.add('show');
 
   try {
-    if (EMAILJS_PUBLIC_KEY !== 'GsK59nMBs9e5QOjZM') {
-      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_OVERVIEW, params);
-    }
+    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_OVERVIEW, params);
     document.getElementById('overlay').classList.remove('show');
     const successEl = document.getElementById('send-success');
     const subEl = document.getElementById('send-success-sub');
