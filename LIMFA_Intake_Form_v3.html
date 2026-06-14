@@ -661,10 +661,8 @@ async function sendEmails() {
   document.getElementById('overlay-text').textContent = 'Sending your plan…';
 
   try {
-    if (true) {
-      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_STAFF, staffParams);
-      await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, clientParams);
-    }
+    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_STAFF, staffParams);
+    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, clientParams);
     document.getElementById('overlay').classList.remove('show');
     showSuccess();
   } catch(err) {

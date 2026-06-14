@@ -711,10 +711,8 @@ async function submitEnrollment(){
 
   document.getElementById('overlay').classList.add('show');
   try{
-    if(EMAILJS_PUBLIC_KEY!=='GsK59nMBs9e5QOjZM'){
-      await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_STAFF_ENR,staffParams);
-      await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_CLIENT_ENR,clientParams);
-    }
+    await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_STAFF_ENR,staffParams);
+    await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_CLIENT_ENR,clientParams);
     if(GOOGLE_SCRIPT_URL!==''){
       await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',
         headers:{'Content-Type':'application/json'},
