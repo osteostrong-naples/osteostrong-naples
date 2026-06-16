@@ -4,25 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>OsteoStrong Naples — Staff Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;-webkit-text-size-adjust:100%}
+html{font-size:16px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:#F7F4EF;color:#1C1C2E;min-height:100vh}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* HEADER */
-.header{background:#1C1C2E;padding:20px 24px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.header-logo img{height:32px;filter:brightness(0) invert(1)}
+.header{background:#1C1C2E;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
+.header a{text-decoration:none}
+.header-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:2px}
+.header-logo span{color:#C9A84C}
 .header-right{text-align:right}
 .header-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;letter-spacing:-0.3px}
 .header-sub{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
 
 /* HERO */
-.hero{background:linear-gradient(135deg,#1C1C2E 0%,#2C2C4E 100%);padding:36px 24px 32px;text-align:center;border-bottom:2px solid #C9A84C}
-.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
-.hero-title{font-family:'Playfair Display',serif;font-size:28px;color:#fff;margin-bottom:8px;line-height:1.2}
-.hero-sub{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;max-width:400px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#1C1C2E 0%,#2A2048 50%,#1C1C2E 100%);padding:28px 24px 24px;text-align:center;border-bottom:3px solid #C9A84C;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(201,168,76,0.06) 0%,transparent 50%)}
+.hero-greeting{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:6px;animation:fadeIn 0.8s ease}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;animation:fadeIn 0.6s ease}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,30px);color:#fff;margin-bottom:8px;line-height:1.2;animation:fadeUp 0.7s ease}
+.hero-title em{font-style:normal;color:#C9A84C}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;max-width:450px;margin:0 auto;animation:fadeUp 0.8s ease 0.1s both}
+.hero-stats{display:flex;justify-content:center;gap:28px;margin-top:22px;animation:fadeUp 0.9s ease 0.2s both}
+.hero-stat{text-align:center}
+.hero-stat-val{font-size:22px;font-weight:800;color:#C9A84C}
+.hero-stat-label{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 
 /* GRID */
 .grid-wrap{max-width:640px;margin:0 auto;padding:28px 16px}
@@ -33,16 +45,19 @@ body{font-family:'Inter',sans-serif;background:#F7F4EF;color:#1C1C2E;min-height:
 .tool-card:active{transform:scale(0.98)}
 .tool-card.primary{border-color:#C9A84C;background:#FBF6E9}
 .tool-card.dark{background:#1C1C2E;border-color:#1C1C2E}
+.tool-card.ai-card{background:linear-gradient(135deg,#1C1C2E 0%,#2A2A40 100%);border:1px solid rgba(201,168,76,0.3)}
 .tool-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
 .icon-gold{background:rgba(201,168,76,0.15)}
 .icon-navy{background:rgba(201,168,76,0.12)}
 .icon-white{background:rgba(255,255,255,0.1)}
+.icon-ai{background:linear-gradient(135deg,#C9A84C,#E8C96A);color:#1C1C2E}
 .tool-content{flex:1;min-width:0}
 .tool-name{font-size:16px;font-weight:700;color:#1C1C2E;margin-bottom:3px}
 .tool-name-light{color:#fff}
 .tool-desc{font-size:13px;color:#7A6E62;line-height:1.4}
 .tool-desc-light{color:rgba(255,255,255,0.55)}
 .tool-arrow{font-size:18px;color:#C9A84C;flex-shrink:0}
+.tool-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 8px;border-radius:100px;margin-bottom:4px}
 
 /* EMAIL FORM */
 .email-section{background:#fff;border:1px solid #EDE8E0;border-radius:16px;padding:22px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
@@ -70,20 +85,93 @@ input.error{border-color:#C9484C}
 .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:#EDE8E0}
 .section-divider span{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A09080;white-space:nowrap}
 
+/* QUICK REFERENCE - 4 columns */
+.quick-ref{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.quick-ref-card{background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:14px 8px;text-align:center}
+.quick-ref-icon{font-size:20px;margin-bottom:4px}
+.quick-ref-val{font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:1px}
+.quick-ref-label{font-size:10px;color:#A09080}
+
+/* LIMFA PROGRAMS */
+.programs-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.prog-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;background:#fff;border:1px solid #EDE8E0;cursor:default;transition:all 0.2s}
+.prog-chip:hover{border-color:#C9A84C;background:#FBF6E9}
+.prog-num{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
+.prog-dur{color:#999;font-weight:400}
+
+/* KEY TALKING POINTS */
+.talk-box{background:#1C1C2E;border-radius:14px;padding:20px;margin-bottom:14px}
+.talk-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.talk-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C}
+.talk-copy-btn{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:#C9A84C;font-size:11px;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.talk-copy-btn:hover{background:rgba(201,168,76,0.25)}
+.talk-copy-btn.copied{background:#3A8A3A;border-color:#3A8A3A;color:#fff}
+.talk-item{display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,0.8);line-height:1.7;padding:2px 0}
+.talk-bullet{color:#C9A84C;flex-shrink:0}
+
+/* SESSION FREQUENCY GUIDE */
+.freq-box{background:#FBF6E9;border:1.5px solid #C9A84C;border-radius:14px;padding:16px 14px 8px;margin-bottom:14px}
+.freq-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;margin-bottom:12px}
+.center-hours{display:flex;gap:3px;margin-bottom:14px}
+.center-hour-pill{flex:1;text-align:center;border-radius:6px;padding:5px 2px;font-size:8px;font-weight:600;line-height:1.3}
+.center-hour-pill.open-day{background:#e8f5e9;color:#2e7d32}
+.center-hour-pill.closed-day{background:#fce4ec;color:#c62828}
+.freq-card{border-radius:14px;margin-bottom:10px;overflow:hidden;cursor:pointer;transition:all 0.3s ease;border:1px solid rgba(0,0,0,0.06)}
+.freq-card:active{transform:scale(0.98)}
+.freq-header{display:flex;align-items:center;padding:14px 16px;gap:12px}
+.freq-badge{min-width:52px;text-align:center;padding:6px 10px;border-radius:10px;font-size:14px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.freq-info{flex:1}
+.freq-label{font-size:14px;font-weight:700;color:#1C1C2E;margin:0}
+.freq-sub{font-size:11px;color:#888;margin:2px 0 0}
+.freq-arrow{font-size:16px;color:#bbb;transition:transform 0.3s ease}
+.freq-card.open .freq-arrow{transform:rotate(180deg)}
+.freq-details{max-height:0;overflow:hidden;transition:max-height 0.35s ease;background:rgba(0,0,0,0.02)}
+.freq-card.open .freq-details{max-height:600px}
+.freq-programs{padding:0 16px 14px;display:flex;flex-wrap:wrap;gap:6px}
+.freq-prog{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;background:#fff;border:1px solid rgba(0,0,0,0.06)}
+.freq-prog .fprog-num{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
+.freq-note{margin:0 16px 14px;padding:8px 12px;border-radius:8px;font-size:11px;color:#666;line-height:1.5;border-left:3px solid}
+.freq-week{padding:0 16px 14px}
+.freq-week-title{font-size:10px;font-weight:700;color:#999;letter-spacing:1px;text-transform:uppercase;margin:0 0 6px}
+.freq-days{display:flex;gap:3px}
+.freq-day{flex:1;text-align:center;padding:6px 2px;border-radius:6px;font-size:9px;font-weight:700;color:#999;background:#f4f4f4;transition:all 0.3s ease}
+.freq-day.active{color:#fff}
+.freq-day.closed{color:#ccc;background:#eee;font-size:7px}
+.freq-rule{margin-top:4px;padding:10px 14px;background:rgba(28,28,46,0.06);border-radius:10px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.freq-rule-text{font-size:12px;color:#555;line-height:1.5}
+.freq-rule-text strong{color:#1C1C2E}
+
+/* CONDITIONS WE TREAT */
+.section-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A09080;margin-bottom:10px}
+.condition-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.condition-tag{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:20px;border:1.5px solid #EDE8E0;background:#fff;font-size:12px;font-weight:500;color:#4A4035;text-decoration:none;transition:all 0.2s;white-space:nowrap;cursor:pointer}
+.condition-tag:hover{border-color:#C9A84C;background:#FBF6E9;color:#1C1C2E}
+
 /* FOOTER */
 .footer{background:#1C1C2E;padding:20px 24px;text-align:center;margin-top:8px}
 .footer-text{font-size:11px;color:rgba(255,255,255,0.35);line-height:1.6}
+
+/* SCROLL TO TOP */
+.scroll-top{position:fixed;bottom:20px;right:20px;width:44px;height:44px;border-radius:50%;background:#1C1C2E;color:#C9A84C;border:1.5px solid rgba(201,168,76,0.3);font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:90;box-shadow:0 2px 12px rgba(0,0,0,0.2);transition:all 0.2s}
+.scroll-top.show{display:flex}
+.scroll-top:hover{background:#2A2A40;transform:translateY(-2px)}
 
 /* OVERLAY */
 .overlay{display:none;position:fixed;inset:0;background:rgba(28,28,46,0.75);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:14px}
 .overlay.show{display:flex}
 .spinner{width:36px;height:36px;border:3px solid rgba(201,168,76,0.3);border-top-color:#C9A84C;border-radius:50%;animation:spin 0.8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 .overlay-text{color:#fff;font-size:14px;font-weight:500}
 
-@media(max-width:400px){
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(20px);transition:all 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:480px){
+  .quick-ref{grid-template-columns:repeat(2,1fr)}
   .field-row{grid-template-columns:1fr}
   .hero-title{font-size:24px}
+  .hero-stats{gap:16px}
+  .programs-row{gap:6px}
 }
 </style>
 </head>
@@ -95,9 +183,9 @@ input.error{border-color:#C9484C}
 </div>
 
 <header class="header">
-  <div class="header-logo">
-    <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:2px;">OSTEO<span style="color:#C9A84C;">⊗</span>STRONG</span>
-  </div>
+  <a href="#">
+    <div class="header-logo">OSTEO<span>⊗</span>STRONG</div>
+  </a>
   <div class="header-right">
     <div class="header-title">Staff Hub</div>
     <div class="header-sub">Naples · LIMFA Program</div>
@@ -105,19 +193,35 @@ input.error{border-color:#C9484C}
 </header>
 
 <div class="hero">
+  <div class="hero-greeting" id="heroGreeting"></div>
   <div class="hero-eyebrow">OsteoStrong Naples</div>
-  <h1 class="hero-title">LIMFA Therapy Tools</h1>
-  <p class="hero-sub">Everything you need to consult, enroll, and communicate with LIMFA clients — all in one place.</p>
+  <h1 class="hero-title">LIMFA <em>Staff Hub</em></h1>
+  <p class="hero-sub">Everything your team needs to consult, enroll, and communicate with LIMFA clients — all in one place.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-val" data-count="35">0</div>
+      <div class="hero-stat-label">Protocols</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val" data-count="7">0</div>
+      <div class="hero-stat-label">Programs</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val" data-count="6">0</div>
+      <div class="hero-stat-label">Categories</div>
+    </div>
+  </div>
 </div>
 
 <div class="grid-wrap">
 
-  <div class="grid-label">Client tools</div>
+  <div class="grid-label">Tools</div>
 
   <!-- PROTOCOL FINDER -->
-  <a class="tool-card primary" href="https://osteostrong-naples.github.io/osteostrong-naples/LIMFA_Intake_Form_v3.html" target="_blank">
+  <a class="tool-card primary reveal" href="https://osteostrong-naples.github.io/osteostrong-naples/LIMFA_Intake_Form_v3.html" target="_blank">
     <div class="tool-icon icon-gold">🔍</div>
     <div class="tool-content">
+      <div class="tool-badge" style="background:#C9A84C;color:#1C1C2E">35 protocols</div>
       <div class="tool-name">Protocol Finder</div>
       <div class="tool-desc">Walk a client through their condition and find the right LIMFA protocol. Use this during or after the consultation.</div>
     </div>
@@ -125,7 +229,7 @@ input.error{border-color:#C9484C}
   </a>
 
   <!-- ENROLLMENT FORM -->
-  <a class="tool-card dark" href="https://osteostrong-naples.github.io/osteostrong-naples/LIMFA_Enrollment_Form.html" target="_blank">
+  <a class="tool-card dark reveal" href="https://osteostrong-naples.github.io/osteostrong-naples/LIMFA_Enrollment_Form.html" target="_blank">
     <div class="tool-icon icon-white">✅</div>
     <div class="tool-content">
       <div class="tool-name tool-name-light">Enrollment Form</div>
@@ -134,8 +238,18 @@ input.error{border-color:#C9484C}
     <div class="tool-arrow">→</div>
   </a>
 
+  <!-- AI PROTOCOL ADVISOR -->
+  <a class="tool-card ai-card reveal" id="advisorCard" href="https://limerick-staff-hub-e7ce8299.viktor.space/advisor" target="_blank">
+    <div class="tool-icon icon-ai">🤖</div>
+    <div class="tool-content">
+      <div class="tool-name tool-name-light">AI Protocol Advisor</div>
+      <div class="tool-desc tool-desc-light">Paste a client conversation or describe their condition — get instant protocol recommendations, treatment plans, and packaging suggestions.</div>
+    </div>
+    <div class="tool-arrow" style="color:#C9A84C">→</div>
+  </a>
+
   <!-- PROTOCOL REFERENCE GUIDE -->
-  <a class="tool-card" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide" target="_blank" style="border-color:#EDE8E0">
+  <a class="tool-card reveal" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide" target="_blank" style="border-color:#EDE8E0">
     <div class="tool-icon" style="background:rgba(28,28,46,0.08)">📖</div>
     <div class="tool-content">
       <div class="tool-name">Protocol Reference Guide</div>
@@ -144,15 +258,15 @@ input.error{border-color:#C9484C}
     <div class="tool-arrow" style="color:#A09080">→</div>
   </a>
 
-  <div class="section-divider"><span>Send LIMFA overview email</span></div>
+  <div class="section-divider"><span>Send info to clients</span></div>
 
   <!-- SEND LIMFA INFO EMAIL -->
-  <div class="email-section">
+  <div class="email-section reveal">
     <div class="email-header">
       <div class="email-icon">📧</div>
       <div>
-        <div class="email-title">Send LIMFA Info to a Client</div>
-        <div class="email-subtitle">Sends a branded overview of LIMFA Therapy directly to their inbox</div>
+        <div class="email-title">Send LIMFA Overview Email</div>
+        <div class="email-subtitle">Beautiful branded email with benefits, protocols, pricing, and a scheduling CTA</div>
       </div>
     </div>
 
@@ -172,7 +286,7 @@ input.error{border-color:#C9484C}
     </div>
     <div class="field">
       <label>Your name (sending as)</label>
-      <select id="info-sender" style="width:100%;padding:11px 14px;border:1.5px solid #DDD8CF;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:#1C1C2E;background:#FDFCFA;outline:none;-webkit-appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A09080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px">
+      <select id="info-sender" style="width:100%;padding:11px 14px;border:1.5px solid #DDD8CF;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:#1C1C2E;background:#FDFCFA;outline:none;-webkit-appearance:none;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A09080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 14px center;padding-right:36px">
         <option value="">Select your name…</option>
         <option>Amanda Restivo</option>
         <option>Dan Little</option>
@@ -194,44 +308,164 @@ input.error{border-color:#C9484C}
 
   <div class="section-divider"><span>Quick reference</span></div>
 
-  <!-- QUICK REF CARDS -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-    <div style="background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:16px;text-align:center">
-      <div style="font-size:22px;margin-bottom:6px">💰</div>
-      <div style="font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:2px">$100 / session</div>
-      <div style="font-size:11px;color:#A09080">Founding member rate</div>
+  <!-- QUICK REF CARDS - 4 columns -->
+  <div class="quick-ref reveal">
+    <div class="quick-ref-card">
+      <div class="quick-ref-icon">💰</div>
+      <div class="quick-ref-val">$100</div>
+      <div class="quick-ref-label">per session</div>
     </div>
-    <div style="background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:16px;text-align:center">
-      <div style="font-size:22px;margin-bottom:6px">📋</div>
-      <div style="font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:2px">35 protocols</div>
-      <div style="font-size:11px;color:#A09080">All conditions covered</div>
+    <div class="quick-ref-card">
+      <div class="quick-ref-icon">📋</div>
+      <div class="quick-ref-val">35</div>
+      <div class="quick-ref-label">protocols</div>
     </div>
-    <div style="background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:16px;text-align:center">
-      <div style="font-size:22px;margin-bottom:6px">⏱</div>
-      <div style="font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:2px">30–90 min</div>
-      <div style="font-size:11px;color:#A09080">Session length</div>
+    <div class="quick-ref-card">
+      <div class="quick-ref-icon">⏱</div>
+      <div class="quick-ref-val">20–70 min</div>
+      <div class="quick-ref-label">session length</div>
     </div>
-    <div style="background:#fff;border:1px solid #EDE8E0;border-radius:12px;padding:16px;text-align:center">
-      <div style="font-size:22px;margin-bottom:6px">📈</div>
-      <div style="font-size:12px;font-weight:700;color:#1C1C2E;margin-bottom:2px">Sessions 6–8</div>
-      <div style="font-size:11px;color:#A09080">When clients feel it</div>
+    <div class="quick-ref-card">
+      <div class="quick-ref-icon">📈</div>
+      <div class="quick-ref-val">6–8</div>
+      <div class="quick-ref-label">sessions to feel it</div>
     </div>
+  </div>
+
+  <!-- LIMFA PROGRAMS -->
+  <div class="section-divider"><span>LIMFA Programs · tap for details</span></div>
+  <div class="programs-row reveal">
+    <div class="prog-chip"><span class="prog-num" style="background:#2e7d32">1</span> Analgesic <span class="prog-dur">20m</span></div>
+    <div class="prog-chip"><span class="prog-num" style="background:#2e7d32">2</span> Anti-Edema <span class="prog-dur">20m</span></div>
+    <div class="prog-chip"><span class="prog-num" style="background:#2e7d32">3</span> Anti-Inflam. <span class="prog-dur">30m</span></div>
+    <div class="prog-chip"><span class="prog-num" style="background:#2e7d32">4</span> Muscle Relax <span class="prog-dur">51m</span></div>
+    <div class="prog-chip"><span class="prog-num" style="background:#e65100">5</span> Neuromusc. <span class="prog-dur">40m</span></div>
+    <div class="prog-chip"><span class="prog-num" style="background:#e65100">6</span> Bone Repair <span class="prog-dur">27m</span></div>
+    <div class="prog-chip"><span class="prog-num" style="background:#e65100">7</span> Connective <span class="prog-dur">53m</span></div>
+    <div class="prog-chip" style="border-color:#C9A84C;background:#FBF6E9"><span class="prog-num" style="background:#1C1C2E">A</span> <strong>Automatic</strong> <span class="prog-dur">70m</span></div>
   </div>
 
   <!-- KEY TALKING POINTS -->
-  <div style="background:#1C1C2E;border-radius:14px;padding:20px;margin-bottom:14px">
-    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;margin-bottom:12px">Key talking points</div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.8">
-      ✦ &nbsp;Non-invasive · Drug-free · CE Certified<br>
-      ✦ &nbsp;Sessions 1–3 may feel slightly more intense — this is normal<br>
-      ✦ &nbsp;Noticeable results typically begin sessions 6–8<br>
-      ✦ &nbsp;Do NOT use mat and transducer at the same time<br>
-      ✦ &nbsp;Founding member pricing increases in August 2026<br>
-      ✦ &nbsp;Payment: Paid in full or split payment only
+  <div class="talk-box reveal">
+    <div class="talk-header">
+      <span class="talk-title">Key Talking Points</span>
+      <button class="talk-copy-btn" id="copyTalkBtn" onclick="copyTalkingPoints()">📋 Copy All</button>
+    </div>
+    <div class="talk-item"><span class="talk-bullet">✦</span><span>Non-invasive · Drug-free · CE Certified medical device</span></div>
+    <div class="talk-item"><span class="talk-bullet">✦</span><span>Sessions 1–3 may feel slightly more intense — this is a <strong style="color:#C9A84C">positive sign</strong> of healing activation</span></div>
+    <div class="talk-item"><span class="talk-bullet">✦</span><span>Noticeable results typically begin sessions 6–8</span></div>
+    <div class="talk-item"><span class="talk-bullet">✦</span><span>⚠️ Do NOT use mat and transducer at the same time (causes interference)</span></div>
+    <div class="talk-item"><span class="talk-bullet">✦</span><span>Transducer penetration depth: <strong style="color:#C9A84C">7 inches</strong> — keep 6+ inches apart</span></div>
+    <div class="talk-item"><span class="talk-bullet">✦</span><span>LIMFA logo should face away from the body · must not touch skin directly</span></div>
+    <div class="talk-item"><span class="talk-bullet">✦</span><span>Founding member pricing at <strong style="color:#C9A84C">$100/session</strong> — lock in your rate now</span></div>
+    <div class="talk-item"><span class="talk-bullet">✦</span><span>Payment: Paid in full or split payment only</span></div>
+  </div>
+
+  <!-- SESSION FREQUENCY GUIDE -->
+  <div class="freq-box reveal">
+    <div class="freq-title">📅 Session Frequency Guide</div>
+
+    <!-- CENTER HOURS DISPLAY -->
+    <div class="center-hours" id="centerHours"></div>
+
+    <!-- ACUTE & AUTOMATIC -->
+    <div class="freq-card" onclick="this.classList.toggle('open')">
+      <div class="freq-header" style="background:linear-gradient(135deg,#e8f5e9,#f1f8e9)">
+        <div class="freq-badge" style="background:#2e7d32">3–5×</div>
+        <div class="freq-info">
+          <div class="freq-label">Acute & Automatic Phases</div>
+          <div class="freq-sub">No rest day required · can do back-to-back</div>
+        </div>
+        <div class="freq-arrow">▼</div>
+      </div>
+      <div class="freq-details">
+        <div style="padding:12px 16px 6px;font-size:11px;color:#555">These programs can be done <strong>every day or 2 days in a row</strong> if the situation or condition requires:</div>
+        <div class="freq-programs">
+          <div class="freq-prog"><span class="fprog-num" style="background:#2e7d32">1</span> Analgesic <span style="color:#999;font-weight:400">20m</span></div>
+          <div class="freq-prog"><span class="fprog-num" style="background:#2e7d32">2</span> Anti-Edema <span style="color:#999;font-weight:400">20m</span></div>
+          <div class="freq-prog"><span class="fprog-num" style="background:#2e7d32">3</span> Anti-Inflammatory <span style="color:#999;font-weight:400">30m</span></div>
+          <div class="freq-prog"><span class="fprog-num" style="background:#2e7d32">4</span> Muscle Relaxant <span style="color:#999;font-weight:400">51m</span></div>
+          <div class="freq-prog" style="border-color:#C9A84C;background:#FBF6E9"><span class="fprog-num" style="background:#1C1C2E">A</span> <strong>Automatic</strong> <span style="color:#999;font-weight:400">70m</span></div>
+        </div>
+        <div class="freq-week" id="acuteWeek"></div>
+        <div class="freq-note" style="border-color:#2e7d32;background:rgba(46,125,50,0.05)">✦ Ideal: 3× per week · Can increase to daily if condition is acute or requires aggressive treatment</div>
+      </div>
+    </div>
+
+    <!-- REPAIR PROGRAMS -->
+    <div class="freq-card" onclick="this.classList.toggle('open')">
+      <div class="freq-header" style="background:linear-gradient(135deg,#fff3e0,#fce4ec)">
+        <div class="freq-badge" style="background:#e65100">2–3×</div>
+        <div class="freq-info">
+          <div class="freq-label">Repair Phase Programs</div>
+          <div class="freq-sub">⚠️ Rest day required between sessions</div>
+        </div>
+        <div class="freq-arrow">▼</div>
+      </div>
+      <div class="freq-details">
+        <div style="padding:12px 16px 6px;font-size:11px;color:#555">These programs need a <strong>rest day in between</strong> to allow tissue regeneration:</div>
+        <div class="freq-programs">
+          <div class="freq-prog"><span class="fprog-num" style="background:#e65100">5</span> Neuromuscular Repair <span style="color:#999;font-weight:400">40m</span></div>
+          <div class="freq-prog"><span class="fprog-num" style="background:#e65100">6</span> Bone Repair <span style="color:#999;font-weight:400">27m</span></div>
+          <div class="freq-prog"><span class="fprog-num" style="background:#e65100">7</span> Connective Tissue <span style="color:#999;font-weight:400">53m</span></div>
+        </div>
+        <div class="freq-week" id="repairWeek"></div>
+        <div class="freq-note" style="border-color:#e65100;background:rgba(230,81,0,0.05)">⚠️ The day in between is <strong>only required for Repair phase</strong> programs — the body needs recovery time for deep tissue and bone regeneration</div>
+      </div>
+    </div>
+
+    <!-- RULE OF THUMB -->
+    <div class="freq-rule">
+      <span style="font-size:20px">⚡</span>
+      <span class="freq-rule-text"><strong>Rule of thumb:</strong> Rest days are only needed for Repair programs (5, 6, 7). Everything else can go back-to-back.</span>
     </div>
   </div>
 
+  <!-- CONDITIONS WE TREAT -->
+  <div class="section-label reveal">Conditions we treat <span style="font-size:9px;color:#C9A84C;font-weight:400;letter-spacing:0">· tap to view protocol</span></div>
+  <div class="condition-tags reveal">
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=osteopenia" target="_blank">🦴 Osteopenia</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=osteoporosis" target="_blank">🦴 Osteoporosis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=bone+healing" target="_blank">🦴 Bone Healing Delay</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=knee+sprain" target="_blank">🦿 Knee Sprain</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=gonarthrosis" target="_blank">🦿 Knee Osteoarthritis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=cartilage" target="_blank">🦿 Knee Cartilage Repair</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=prosthesis" target="_blank">🦿 Knee Post Prosthesis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=knee+tendinitis" target="_blank">🦿 Knee Tendinitis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=knee+trauma" target="_blank">🦿 Knee Trauma</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=hip+arthrosis" target="_blank">🦿 Hip Osteoarthritis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=hip+surgery" target="_blank">🦿 Hip Post Surgery</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=groin" target="_blank">🦿 Groin Strain</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=ankle+inflammation" target="_blank">🦶 Ankle Inflammation</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=ankle+trauma" target="_blank">🦶 Ankle Trauma</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=plantar" target="_blank">🦶 Plantar Fasciitis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=achilles" target="_blank">🦶 Achilles Tendinitis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=shin" target="_blank">🦶 Shin Splints</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=cervical" target="_blank">🧠 Cervical Osteoarthritis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=sciatica" target="_blank">🧠 Sciatica</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=spinal" target="_blank">🧠 Spinal Stenosis / Disc Hernia</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=bursitis" target="_blank">🤸 Shoulder Bursitis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=shoulder+inflammation" target="_blank">🤸 Shoulder Inflammation</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=rotator+cuff" target="_blank">🤸 Rotator Cuff Trauma</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=frozen" target="_blank">🤸 Frozen Shoulder</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=epicondylitis" target="_blank">🤸 Tennis Elbow</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=wrist+inflammation" target="_blank">✋ Wrist Inflammation</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=wrist+trauma" target="_blank">✋ Wrist Trauma</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=carpal" target="_blank">✋ Carpal Tunnel</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=rhizarthrosis" target="_blank">✋ Thumb Osteoarthritis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=thumb+tendinitis" target="_blank">✋ Thumb Tendinitis</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=contracture" target="_blank">💪 Muscle Contractures</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=muscle+pain" target="_blank">💪 Muscle Pain</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=doms" target="_blank">💪 DOMS Recovery</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=fibromyalgia" target="_blank">💪 Fibromyalgia</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=surgery" target="_blank">⚡ Post-Surgery Pain</a>
+    <a class="condition-tag" href="https://limerick-staff-hub-e7ce8299.viktor.space/protocol-guide?search=rheumatoid" target="_blank">⚡ Rheumatoid Arthritis</a>
+  </div>
+
 </div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <footer class="footer">
   <div class="footer-text">OsteoStrong Naples · LIMFA Therapy Program<br>2343 Vanderbilt Beach Rd, Suite 618 · Naples, FL 34109<br>mackenzie@osteostrong.me</div>
@@ -245,8 +479,119 @@ const TEMPLATE_OVERVIEW  = 'template_n4rbsus';
 
 document.addEventListener('DOMContentLoaded', () => {
   emailjs.init(EMAILJS_PUBLIC_KEY);
+  initGreeting();
+  initCounters();
+  initReveal();
+  initFrequencyGuide();
+  initScrollTop();
 });
 
+// ── TIME-OF-DAY GREETING ──────────────────────────────────
+function initGreeting() {
+  const h = new Date().getHours();
+  let g = 'Good evening';
+  if (h < 12) g = 'Good morning';
+  else if (h < 17) g = 'Good afternoon';
+  document.getElementById('heroGreeting').textContent = g + ' 👋';
+}
+
+// ── ANIMATED COUNTERS ─────────────────────────────────────
+function initCounters() {
+  const counters = document.querySelectorAll('[data-count]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count);
+        let current = 0;
+        const step = Math.max(1, Math.floor(target / 20));
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = current;
+        }, 40);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => observer.observe(c));
+}
+
+// ── REVEAL ON SCROLL ──────────────────────────────────────
+function initReveal() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// ── SCROLL TO TOP BUTTON ──────────────────────────────────
+function initScrollTop() {
+  const btn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('show', window.scrollY > 400);
+  });
+}
+
+// ── COPY TALKING POINTS ───────────────────────────────────
+function copyTalkingPoints() {
+  const items = document.querySelectorAll('.talk-item span:last-child');
+  const text = Array.from(items).map(el => '• ' + el.textContent).join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyTalkBtn');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copy All'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── SESSION FREQUENCY GUIDE ───────────────────────────────
+function initFrequencyGuide() {
+  const NAPLES_HOURS = {
+    MON: '8AM–6PM', TUE: '8AM–6PM', WED: '8AM–6PM',
+    THU: '8AM–6PM', FRI: '8AM–3PM', SAT: '8AM–12PM', SUN: null
+  };
+  const DAY_NAMES = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+
+  // Render center hours strip
+  const hoursEl = document.getElementById('centerHours');
+  hoursEl.innerHTML = DAY_NAMES.map(d => {
+    const hrs = NAPLES_HOURS[d];
+    const cls = hrs ? 'open-day' : 'closed-day';
+    return '<div class="center-hour-pill ' + cls + '"><div>' + d + '</div><div>' + (hrs || 'CLOSED') + '</div></div>';
+  }).join('');
+
+  // Acute week: Mon-Sat all open (6 days), suggest 3-5
+  const openDays = DAY_NAMES.filter(d => NAPLES_HOURS[d]);
+  const acutePicks = openDays.slice(0, 5); // MON-FRI
+  renderWeekGrid('acuteWeek', acutePicks, '#2e7d32', NAPLES_HOURS, DAY_NAMES);
+
+  // Repair: pick days with gaps (MON, WED, FRI)
+  const repairPicks = ['MON', 'WED', 'FRI'];
+  renderWeekGrid('repairWeek', repairPicks, '#e65100', NAPLES_HOURS, DAY_NAMES);
+}
+
+function renderWeekGrid(containerId, activeDays, color, daysMap, dayNames) {
+  const el = document.getElementById(containerId);
+  el.innerHTML =
+    '<div class="freq-week-title">Sample week · based on center hours</div>' +
+    '<div class="freq-days">' +
+    dayNames.map(d => {
+      const isActive = activeDays.includes(d);
+      const isClosed = daysMap[d] === null;
+      if (isClosed) return '<div class="freq-day closed">' + d + '<br>closed</div>';
+      if (isActive) return '<div class="freq-day active" style="background:' + color + '">' + d + '</div>';
+      return '<div class="freq-day">' + d + '</div>';
+    }).join('') +
+    '</div>';
+}
+
+// ── SEND OVERVIEW EMAIL ───────────────────────────────────
 async function sendInfoEmail() {
   const fname   = document.getElementById('info-fname').value.trim();
   const lname   = document.getElementById('info-lname').value.trim();
@@ -275,9 +620,8 @@ async function sendInfoEmail() {
     document.getElementById('overlay').classList.remove('show');
     const successEl = document.getElementById('send-success');
     const subEl = document.getElementById('send-success-sub');
-    subEl.textContent = `LIMFA overview sent to ${fullName} at ${email}.`;
+    subEl.textContent = 'LIMFA overview sent to ' + fullName + ' at ' + email + '.';
     successEl.classList.add('show');
-    // Reset form after 4 seconds
     setTimeout(() => {
       successEl.classList.remove('show');
       document.getElementById('info-fname').value = '';
