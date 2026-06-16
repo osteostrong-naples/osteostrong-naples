@@ -350,7 +350,7 @@ textarea{height:80px;resize:vertical}
           </div>
           <div class="field" style="margin-bottom:0">
             <label>First payment date</label>
-            <input type="text" id="first-payment-date" readonly>
+            <input type="date" id="first-payment-date">
           </div>
         </div>
         <div class="field-row field" style="margin-top:12px">
@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const t = new Date();
   const ds = t.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('enroll-date').value = ds;
-  document.getElementById('first-payment-date').value = t.toLocaleDateString('en-US');
+  document.getElementById('first-payment-date').value = t.toISOString().split('T')[0];
   S.date = t.toLocaleDateString('en-US');
   emailjs.init(EMAILJS_PUBLIC_KEY);
 });
@@ -573,7 +573,8 @@ function nextStep(from){
         document.getElementById('split-due').classList.add('error');return;
       }
       S.firstPayment=document.getElementById('first-payment').value;
-      S.firstPaymentDate=document.getElementById('first-payment-date').value;
+      var fpRaw=document.getElementById('first-payment-date').value;
+      if(fpRaw){var fpd=new Date(fpRaw+'T00:00:00');S.firstPaymentDate=fpd.toLocaleDateString('en-US');}else{S.firstPaymentDate=new Date().toLocaleDateString('en-US');}
       S.secondPayment=document.getElementById('second-payment').value;
       S.splitDue=document.getElementById('split-due').value;
       document.getElementById('split-due').classList.remove('error');
@@ -648,7 +649,7 @@ function checkConsentBtn(){
 // ── REVIEW ────────────────────────────────────────────────
 function buildReview(){
   const payDetail=S.paymentType==='Split payment'
-    ?`Split — ${S.firstPayment||'TBD'} today, ${S.secondPayment||'TBD'} due ${S.splitDue}`
+    ?`Split — ${S.firstPayment||'TBD'} on ${S.firstPaymentDate||'today'}, ${S.secondPayment||'TBD'} due ${S.splitDue}`
     :S.paymentType;
   document.getElementById('review-card').innerHTML=`
     <div class="review-section">
@@ -688,7 +689,7 @@ function buildReview(){
 async function submitEnrollment(){
   S.staffNotes=document.getElementById('staff-notes').value;
   const payDetail=S.paymentType==='Split payment'
-    ?`Split — ${S.firstPayment||'TBD'} today (${S.firstPaymentDate}), ${S.secondPayment||'TBD'} due ${S.splitDue}`
+    ?`Split — ${S.firstPayment||'TBD'} on ${S.firstPaymentDate||'today'}, ${S.secondPayment||'TBD'} due ${S.splitDue}`
     :S.paymentType;
 
   const staffParams={
@@ -755,7 +756,7 @@ function resetForm(){
   document.getElementById('consent-btn').disabled=true;
   const t=new Date();
   document.getElementById('enroll-date').value=t.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('first-payment-date').value=t.toLocaleDateString('en-US');
+  document.getElementById('first-payment-date').value=t.toISOString().split('T')[0];
   S.date=t.toLocaleDateString('en-US');
   goTo(0);
 }
