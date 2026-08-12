@@ -193,6 +193,14 @@ textarea{height:80px;resize:vertical}
       <input type="email" id="client-email" placeholder="jane@email.com">
     </div>
   </div>
+  <div class="card">
+    <div class="card-title">OsteoStrong membership *</div>
+    <div class="opt-grid">
+      <button class="opt-btn" onclick="selectMembership(this,'Member')"><span class="opt-icon">⭐</span>OsteoStrong Member<br><span style="font-size:11px;opacity:.7">$100 per session</span></button>
+      <button class="opt-btn" onclick="selectMembership(this,'Non-Member')"><span class="opt-icon">👤</span>Non-Member<br><span style="font-size:11px;opacity:.7">$125 per session</span></button>
+    </div>
+    <p class="panel-sub" style="margin-top:10px">Sets the session rate on their recommendation. Member pricing is an OsteoStrong member discount.</p>
+  </div>
   <div class="nav-row">
     <button class="btn-back" onclick="goTo(0)">← Back</button>
     <button class="btn-next" onclick="step1Next()">Continue →</button>
@@ -445,8 +453,16 @@ const PH_CLASS = {ACUTE:'ph-acute',REPAIR:'ph-repair',SUSPENSION:'ph-suspension'
 let S = {
   salesperson:'', date:'', clientName:'', phone:'', email:'',
   area:null, cond:null, condLabel:'', extraConds:'', staffNotes:'',
-  protocol:null
+  membership:'', protocol:null
 };
+
+// Session rates. Member pricing is an OsteoStrong member discount.
+const RATES = {'Member':100, 'Non-Member':125};
+
+// PROTOCOLS prices are stored at the $100 member rate; recompute for the actual rate.
+function rate() { return RATES[S.membership] || 100; }
+function money(n) { return '$' + n.toLocaleString('en-US'); }
+function pkgPrice(p) { return money(p.sessions * rate()); }
 
 // ── INIT ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
@@ -483,6 +499,7 @@ function step1Next() {
   var e = document.getElementById('client-email').value.trim();
   if (!n) { document.getElementById('client-name').classList.add('error'); return; }
   if (!e) { document.getElementById('client-email').classList.add('error'); return; }
+  if (!S.membership) { alert('Please select whether the client is an OsteoStrong Member — it sets the session rate.'); return; }
   S.clientName = n;
   S.phone = document.getElementById('client-phone').value;
   S.email = e;
@@ -499,6 +516,12 @@ function toggleContra() {
 }
 
 // ── AREA SELECTION ────────────────────────────────────────
+function selectMembership(btn, type) {
+  btn.closest('.opt-grid').querySelectorAll('.opt-btn').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  S.membership = type;
+}
+
 function selectArea(btn, area) {
   document.querySelectorAll('#area-card .opt-btn').forEach(function(b){ b.classList.remove('selected'); });
   btn.classList.add('selected');
@@ -587,7 +610,7 @@ function showProtocol() {
   html += '<div class="pr-eyebrow">Protocol #' + p.num + ' — Recommended for ' + S.clientName.split(' ')[0] + '</div>';
   html += '<div class="pr-name">' + p.name + '</div>';
   html += '<div class="pr-device">Device: ' + p.device + '</div>';
-  html += '<div class="pr-weeks">⏱ Approx. ' + p.weeks + ' weeks total · ' + p.sessions + ' sessions · ' + p.price + '</div>';
+  html += '<div class="pr-weeks">⏱ Approx. ' + p.weeks + ' weeks total · ' + p.sessions + ' sessions · ' + pkgPrice(p) + '</div>';
   html += '<div class="pr-phases">';
   p.phases.forEach(function(ph) {
     html += '<span class="phase-pill ' + (PH_CLASS[ph.p]||'') + '">' + ph.p + '</span>';
@@ -606,8 +629,8 @@ function showProtocol() {
   html += '<div class="pkg-card">';
   html += '<div class="pkg-label">★ Recommended package</div>';
   html += '<div class="pkg-name">' + p.name + '</div>';
-  html += '<div class="pkg-detail">' + p.sessions + ' sessions · $100 per session · Includes initial assessment</div>';
-  html += '<div class="pkg-price">' + p.price + '</div>';
+  html += '<div class="pkg-detail">' + p.sessions + ' sessions · ' + money(rate()) + ' per session (' + S.membership + ') · Includes initial assessment</div>';
+  html += '<div class="pkg-price">' + pkgPrice(p) + '</div>';
   html += '</div>';
 
   document.getElementById('result-container').innerHTML = html;
@@ -633,7 +656,9 @@ async function sendEmails() {
     device: p.device,
     phases: phaseSummary,
     recommended_package: p.name,
-    package_price: p.price,
+    package_price: pkgPrice(p),
+    membership_status: S.membership,
+    session_rate: money(rate()),
     package_sessions: p.sessions,
     weeks: p.weeks,
     additional_conditions: S.extraConds || 'None',
@@ -652,7 +677,9 @@ async function sendEmails() {
     client_note: p.clientNote + ' Plan duration: approximately ' + p.weeks + ' weeks.',
     recommended_package: p.name,
     package_sessions: p.sessions,
-    package_price: p.price,
+    package_price: pkgPrice(p),
+    membership_status: S.membership,
+    session_rate: money(rate()),
     salesperson: S.salesperson
   };
 
@@ -681,14 +708,14 @@ function showSuccess() {
     '<div class="ss-row"><span class="ss-label">Client</span><span class="ss-value">' + S.clientName + '</span></div>' +
     '<div class="ss-row"><span class="ss-label">Protocol</span><span class="ss-value">#' + p.num + ' — ' + p.name + '</span></div>' +
     '<div class="ss-row"><span class="ss-label">Sessions</span><span class="ss-value">' + p.sessions + ' sessions · ~' + p.weeks + ' weeks</span></div>' +
-    '<div class="ss-row"><span class="ss-label">Price</span><span class="ss-value">' + p.price + '</span></div>' +
+    '<div class="ss-row"><span class="ss-label">Price</span><span class="ss-value">' + pkgPrice(p) + '</span></div>' +
     '<div class="ss-row"><span class="ss-label">Plan sent to</span><span class="ss-value">' + S.email + '</span></div>' +
     '<div class="ss-row"><span class="ss-label">Enrolled by</span><span class="ss-value">' + S.salesperson + '</span></div>';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
 function resetForm() {
-  S = {salesperson:'',date:'',clientName:'',phone:'',email:'',area:null,cond:null,condLabel:'',extraConds:'',staffNotes:'',protocol:null};
+  S = {salesperson:'',date:'',clientName:'',phone:'',email:'',area:null,cond:null,condLabel:'',extraConds:'',staffNotes:'',membership:'',protocol:null};
   document.getElementById('success-panel').classList.remove('show');
   document.getElementById('contra-cb').checked = false;
   document.getElementById('contra-wrap').classList.remove('checked');
