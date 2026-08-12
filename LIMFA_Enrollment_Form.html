@@ -83,6 +83,19 @@ textarea{height:80px;resize:vertical}
 .split-box{background:#F7F4EF;border-radius:10px;padding:14px;display:none}
 .split-box.show{display:block}
 
+/* PRICING CALCULATOR */
+.calc-box{background:#F7F4EF;border-radius:10px;padding:14px;margin-top:12px;display:none;border:1.5px dashed #DDD8CF}
+.calc-box.show{display:block}
+.calc-lines{background:#FDFCFA;border:1.5px solid #EDE8E0;border-radius:10px;padding:14px;margin-top:12px}
+.calc-line{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px;color:#4A4035;padding:5px 0}
+.calc-line .cl-label{color:#7A6A55}
+.calc-line .cl-val{font-variant-numeric:tabular-nums;font-weight:500}
+.calc-line.discount .cl-label,.calc-line.discount .cl-val{color:#3A8A3A;font-weight:600}
+.calc-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1.5px solid #EDE8E0;margin-top:8px;padding-top:10px}
+.calc-total .ct-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#A09080}
+.calc-total .ct-val{font-size:20px;font-weight:700;color:#1C1C2E;font-variant-numeric:tabular-nums}
+.calc-note{font-size:11px;color:#A09080;margin-top:8px;line-height:1.6}
+
 /* CONSENT */
 .consent-block{background:#FFF8EC;border:1.5px solid #F0D080;border-radius:12px;padding:18px;margin-bottom:12px}
 .consent-title{font-size:12px;font-weight:700;color:#7A5C10;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px}
@@ -307,17 +320,51 @@ textarea{height:80px;resize:vertical}
     </div>
 
     <div class="card">
+      <div class="card-title">Membership status</div>
+      <div class="payment-grid">
+        <button class="pay-btn" onclick="selectMembership(this,'Member')"><span class="pay-icon">⭐</span>OsteoStrong Member<br><span style="font-size:11px;color:#A09080">$100/session</span></button>
+        <button class="pay-btn" onclick="selectMembership(this,'Non-Member')"><span class="pay-icon">👤</span>Non-Member<br><span style="font-size:11px;color:#A09080">$125/session</span></button>
+      </div>
+      <div class="field-hint">Member pricing is an OsteoStrong member discount.</div>
+    </div>
+
+    <div class="card">
       <div class="card-title">Confirm session details</div>
       <div class="field-row field">
         <div class="field" style="margin-bottom:0">
           <label>Total sessions <span class="req">*</span></label>
-          <input type="text" id="confirmed-sessions" placeholder="e.g. 22">
+          <input type="text" id="confirmed-sessions" placeholder="e.g. 22" oninput="recalcPrice()">
         </div>
         <div class="field" style="margin-bottom:0">
           <label>Total price <span class="req">*</span></label>
           <input type="text" id="confirmed-price" placeholder="e.g. $2,200">
         </div>
       </div>
+
+      <div class="custom-box" style="border-style:solid">
+        <label class="check-row" id="second-proto-row" style="margin-bottom:0" onclick="toggleSecondProtocol(event)">
+          <input type="checkbox" id="second-proto-check">
+          <span style="font-size:13px;color:#4A4035">Client is adding a <strong>second protocol</strong> (e.g. both knees, or a second area)</span>
+        </label>
+        <div class="calc-box" id="second-proto-box">
+          <div class="field-row field" style="margin-bottom:0">
+            <div class="field" style="margin-bottom:0">
+              <label>Second protocol #</label>
+              <input type="text" id="second-proto-num" placeholder="e.g. 7" oninput="recalcPrice()">
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label>Second protocol sessions</label>
+              <input type="text" id="second-proto-sessions" placeholder="e.g. 10" oninput="recalcPrice()">
+            </div>
+          </div>
+          <label class="check-row" id="clinical-row" style="margin-top:12px;margin-bottom:0" onclick="toggleClinical(event)">
+            <input type="checkbox" id="clinical-check">
+            <span style="font-size:12px;color:#4A4035">Both protocols are <strong>clinically required</strong> (per LIMFA USA guidance) — bill both at full price, no 50% discount</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="calc-lines" id="calc-lines" style="display:none"></div>
       <div class="custom-box">
         <div class="custom-box-title">Custom adjustment <span style="font-weight:400;text-transform:none;font-size:11px;color:#A09080">(optional)</span></div>
         <input type="text" id="custom-note" placeholder="e.g. 1 complimentary session applied — 21 paid sessions at $100">
@@ -493,6 +540,7 @@ let S = {
   clientName:'', phone:'', email:'', dob:'',
   diagnosis:'', protocolNum:'', protocolName:'', startingPhase:'', additionalConds:'',
   confirmedSessions:'', confirmedPrice:'', customNote:'',
+  membership:'', secondProtocol:'None', priceBreakdown:'',
   paymentType:'', firstPayment:'', firstPaymentDate:'', secondPayment:'', splitDue:'',
   consentOk:false, signature:'', staffNotes:''
 };
@@ -551,13 +599,17 @@ function nextStep(from){
     // Pre-fill package step
     if(PROTOCOLS[pn]){
       document.getElementById('confirmed-sessions').value=PROTOCOLS[pn].total;
+      // Price comes from the calculator so it reflects the member/non-member rate.
+      // Fall back to the protocol's listed price until membership is chosen.
       document.getElementById('confirmed-price').value=PROTOCOLS[pn].price;
+      recalcPrice();
       buildPkgSummary(pn);
     }
   }
   if(from===3){
     const cs=document.getElementById('confirmed-sessions').value.trim();
     const cp=document.getElementById('confirmed-price').value.trim();
+    if(!S.membership){alert('Please select the client\u2019s membership status \u2014 it sets the session rate.');return;}
     if(!cs){document.getElementById('confirmed-sessions').classList.add('error');return;}
     if(!cp){document.getElementById('confirmed-price').classList.add('error');return;}
     S.confirmedSessions=cs; S.confirmedPrice=cp;
@@ -623,10 +675,89 @@ function buildPkgSummary(pn){
 
 // ── PAYMENT ───────────────────────────────────────────────
 function selectPayment(btn,type){
-  document.querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('selected'));
+  btn.closest('.payment-grid').querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
   S.paymentType=type;
   document.getElementById('split-box').classList.toggle('show',type==='Split payment');
+}
+
+// ── PRICING CALCULATOR ────────────────────────────────────
+const RATES={'Member':100,'Non-Member':125};
+
+function selectMembership(btn,type){
+  btn.closest('.payment-grid').querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  S.membership=type;
+  recalcPrice();
+}
+
+function toggleSecondProtocol(e){
+  if(e.target.tagName!=='INPUT'){e.preventDefault();
+    document.getElementById('second-proto-check').checked=!document.getElementById('second-proto-check').checked;}
+  const on=document.getElementById('second-proto-check').checked;
+  document.getElementById('second-proto-row').classList.toggle('checked',on);
+  document.getElementById('second-proto-box').classList.toggle('show',on);
+  recalcPrice();
+}
+
+function toggleClinical(e){
+  if(e.target.tagName!=='INPUT'){e.preventDefault();
+    document.getElementById('clinical-check').checked=!document.getElementById('clinical-check').checked;}
+  document.getElementById('clinical-row').classList.toggle('checked',document.getElementById('clinical-check').checked);
+  recalcPrice();
+}
+
+function money(n){return '$'+n.toLocaleString('en-US');}
+
+function recalcPrice(){
+  const box=document.getElementById('calc-lines');
+  const rate=RATES[S.membership];
+  const s1=parseInt(document.getElementById('confirmed-sessions').value.replace(/[^0-9]/g,''),10);
+  // Need a membership selection and a valid session count before we can price anything
+  if(!rate||!s1){box.style.display='none';S.priceBreakdown='';return;}
+
+  const second=document.getElementById('second-proto-check').checked;
+  const clinical=document.getElementById('clinical-check').checked;
+  const s2=parseInt(document.getElementById('second-proto-sessions').value.replace(/[^0-9]/g,''),10);
+  const p2num=document.getElementById('second-proto-num').value.trim();
+
+  const p1=s1*rate;
+  let rows=`<div class="calc-line"><span class="cl-label">Protocol ${S.protocolNum||'1'} — ${s1} session${s1===1?'':'s'} × ${money(rate)}</span><span class="cl-val">${money(p1)}</span></div>`;
+  let total=p1, discount=0, note='';
+
+  if(second&&s2){
+    const p2=s2*rate;
+    rows+=`<div class="calc-line"><span class="cl-label">Protocol ${p2num||'2'} — ${s2} session${s2===1?'':'s'} × ${money(rate)}</span><span class="cl-val">${money(p2)}</span></div>`;
+    total=p1+p2;
+    if(clinical){
+      note='Both protocols clinically required — billed at full price, no discount applied.';
+    }else{
+      // 50% off the equal-or-lesser-value protocol
+      discount=Math.round(Math.min(p1,p2)*0.5);
+      rows+=`<div class="calc-line discount"><span class="cl-label">Second protocol discount — 50% off equal-or-lesser value</span><span class="cl-val">−${money(discount)}</span></div>`;
+      total-=discount;
+    }
+  }else if(second&&!s2){
+    note='Enter the second protocol’s session count to include it in the total.';
+  }
+
+  rows+=`<div class="calc-total"><span class="ct-label">Total price</span><span class="ct-val">${money(total)}</span></div>`;
+  if(note)rows+=`<div class="calc-note">${note}</div>`;
+  rows+=`<div class="calc-note">${S.membership} rate: ${money(rate)}/session. Auto-calculated — you can still edit Total price above if you're applying a custom arrangement.</div>`;
+
+  box.innerHTML=rows;
+  box.style.display='block';
+  document.getElementById('confirmed-price').value=money(total);
+
+  // Plain-text breakdown for the review screen, email and webhook
+  let bd=`Protocol ${S.protocolNum||'1'}: ${s1} × ${money(rate)} = ${money(p1)}`;
+  if(second&&s2){
+    bd+=` | Protocol ${p2num||'2'}: ${s2} × ${money(rate)} = ${money(s2*rate)}`;
+    bd+=clinical?' | Both clinically required — no discount':` | 50% off lesser protocol: −${money(discount)}`;
+  }
+  bd+=` | Total: ${money(total)}`;
+  S.priceBreakdown=bd;
+  S.secondProtocol=(second&&s2)?`Protocol ${p2num||'2'} — ${s2} sessions${clinical?' (clinically required, full price)':' (50% off applied)'}`:'None';
 }
 
 // ── CONSENT ───────────────────────────────────────────────
@@ -672,7 +803,9 @@ function buildReview(){
     </div>
     <div class="review-section">
       <div class="review-section-title">Package & Payment</div>
+      <div class="review-row"><span class="rv-label">Membership</span><span class="rv-value">${S.membership}${S.membership?` · $${S.membership==='Member'?100:125}/session`:''}</span></div>
       <div class="review-row"><span class="rv-label">Sessions</span><span class="rv-value">${S.confirmedSessions}</span></div>
+      ${S.secondProtocol&&S.secondProtocol!=='None'?`<div class="review-row"><span class="rv-label">Second protocol</span><span class="rv-value">${S.secondProtocol}</span></div>`:''}
       <div class="review-row"><span class="rv-label">Total price</span><span class="rv-value">${S.confirmedPrice}</span></div>
       ${S.customNote?`<div class="review-row"><span class="rv-label">Adjustment</span><span class="rv-value">${S.customNote}</span></div>`:''}
       <div class="review-row"><span class="rv-label">Payment</span><span class="rv-value">${payDetail}</span></div>
@@ -698,6 +831,9 @@ async function submitEnrollment(){
     protocol_name:S.protocolName, starting_phase:S.startingPhase,
     additional_conds:S.additionalConds||'None', confirmed_sessions:S.confirmedSessions,
     confirmed_price:S.confirmedPrice, custom_note:S.customNote||'None',
+    membership_status:S.membership||'Not specified',
+    second_protocol:S.secondProtocol||'None',
+    price_breakdown:S.priceBreakdown||'Not calculated',
     payment_type:S.paymentType, payment_detail:payDetail, split_due:S.splitDue||'N/A',
     signature:S.signature, staff_notes:S.staffNotes||'None',
   };
@@ -706,6 +842,7 @@ async function submitEnrollment(){
     enrollment_date:S.date, diagnosis:S.diagnosis, protocol_num:S.protocolNum,
     protocol_name:S.protocolName, starting_phase:S.startingPhase,
     sessions:S.confirmedSessions, price:S.confirmedPrice,
+    membership_status:S.membership||'Not specified',
     payment_type:S.paymentType, split_due:S.splitDue||'N/A', salesperson:S.salesperson,
   };
 
@@ -743,8 +880,10 @@ function showSuccess(){
 }
 
 function resetForm(){
-  S={step:0,salesperson:'',date:'',clientName:'',phone:'',email:'',dob:'',diagnosis:'',protocolNum:'',protocolName:'',startingPhase:'',additionalConds:'',confirmedSessions:'',confirmedPrice:'',customNote:'',paymentType:'',firstPayment:'',firstPaymentDate:'',secondPayment:'',splitDue:'',consentOk:false,signature:'',staffNotes:''};
+  S={step:0,salesperson:'',date:'',clientName:'',phone:'',email:'',dob:'',diagnosis:'',protocolNum:'',protocolName:'',startingPhase:'',additionalConds:'',confirmedSessions:'',confirmedPrice:'',customNote:'',membership:'',secondProtocol:'None',priceBreakdown:'',paymentType:'',firstPayment:'',firstPaymentDate:'',secondPayment:'',splitDue:'',consentOk:false,signature:'',staffNotes:''};
   document.getElementById('success-panel').classList.remove('show');
+  document.getElementById('second-proto-box').classList.remove('show');
+  document.getElementById('calc-lines').style.display='none';
   document.querySelectorAll('input[type=text],input[type=email],input[type=tel],textarea').forEach(el=>el.value='');
   document.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
   document.querySelectorAll('input[type=checkbox]').forEach(el=>el.checked=false);
