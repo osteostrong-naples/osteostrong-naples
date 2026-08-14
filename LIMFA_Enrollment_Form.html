@@ -322,10 +322,10 @@ textarea{height:80px;resize:vertical}
     <div class="card">
       <div class="card-title">Membership status</div>
       <div class="payment-grid">
-        <button class="pay-btn" onclick="selectMembership(this,'Member')"><span class="pay-icon">⭐</span>OsteoStrong Member<br><span style="font-size:11px;color:#A09080">$100/session</span></button>
-        <button class="pay-btn" onclick="selectMembership(this,'Non-Member')"><span class="pay-icon">👤</span>Non-Member<br><span style="font-size:11px;color:#A09080">$125/session</span></button>
+        <button class="pay-btn" onclick="selectMembership(this,'Member Discount')"><span class="pay-icon">⭐</span>OsteoStrong Member<br><span style="font-size:11px;color:#A09080">$100/session — Member Discount</span></button>
+        <button class="pay-btn" onclick="selectMembership(this,'Standard')"><span class="pay-icon">👤</span>Standard Pricing<br><span style="font-size:11px;color:#A09080">$125/session</span></button>
       </div>
-      <div class="field-hint">Member pricing is an OsteoStrong member discount.</div>
+      <div class="field-hint">Standard LIMFA pricing is $125/session. OsteoStrong members receive a $25/session Member Discount.</div>
     </div>
 
     <div class="card">
@@ -599,7 +599,7 @@ function nextStep(from){
     // Pre-fill package step
     if(PROTOCOLS[pn]){
       document.getElementById('confirmed-sessions').value=PROTOCOLS[pn].total;
-      // Price comes from the calculator so it reflects the member/non-member rate.
+      // Price comes from the calculator so it reflects the member-discount / standard rate.
       // Fall back to the protocol's listed price until membership is chosen.
       document.getElementById('confirmed-price').value=PROTOCOLS[pn].price;
       recalcPrice();
@@ -682,7 +682,7 @@ function selectPayment(btn,type){
 }
 
 // ── PRICING CALCULATOR ────────────────────────────────────
-const RATES={'Member':100,'Non-Member':125};
+const RATES={'Member Discount':100,'Standard':125};
 
 function selectMembership(btn,type){
   btn.closest('.payment-grid').querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('selected'));
@@ -803,7 +803,7 @@ function buildReview(){
     </div>
     <div class="review-section">
       <div class="review-section-title">Package & Payment</div>
-      <div class="review-row"><span class="rv-label">Membership</span><span class="rv-value">${S.membership}${S.membership?` · $${S.membership==='Member'?100:125}/session`:''}</span></div>
+      <div class="review-row"><span class="rv-label">Membership</span><span class="rv-value">${S.membership}${S.membership?` · $${RATES[S.membership]}/session`:''}</span></div>
       <div class="review-row"><span class="rv-label">Sessions</span><span class="rv-value">${S.confirmedSessions}</span></div>
       ${S.secondProtocol&&S.secondProtocol!=='None'?`<div class="review-row"><span class="rv-label">Second protocol</span><span class="rv-value">${S.secondProtocol}</span></div>`:''}
       <div class="review-row"><span class="rv-label">Total price</span><span class="rv-value">${S.confirmedPrice}</span></div>
