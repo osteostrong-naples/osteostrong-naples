@@ -279,9 +279,9 @@ textarea{height:80px;resize:vertical}
   <div class="card" id="tscore-card" style="display:none">
     <div class="card-title">Do they have a recent bone scan?</div>
     <div class="opt-grid">
-      <button class="opt-btn" onclick="selectTscore(this,'osteoporosis')">T-score worse than −2.5<span class="opt-tag tag-bone" style="display:block;margin-top:4px">Osteoporosis</span></button>
-      <button class="opt-btn" onclick="selectTscore(this,'osteoporosis')">T-score around −2.0 to −2.5</button>
-      <button class="opt-btn" onclick="selectTscore(this,'osteopenia')">T-score −1.0 to −2.5<span class="opt-tag tag-bone" style="display:block;margin-top:4px">Osteopenia</span></button>
+      <button class="opt-btn" onclick="selectTscore(this,'osteo-dual')">T-score −3.4 or worse<span class="opt-tag tag-bone" style="display:block;margin-top:4px">Osteoporosis + Osteopenia · 90 min</span></button>
+      <button class="opt-btn" onclick="selectTscore(this,'osteoporosis')">T-score −2.5 to −3.3<span class="opt-tag tag-bone" style="display:block;margin-top:4px">Osteoporosis</span></button>
+      <button class="opt-btn" onclick="selectTscore(this,'osteopenia')">T-score −1.0 to −2.4<span class="opt-tag tag-bone" style="display:block;margin-top:4px">Osteopenia</span></button>
       <button class="opt-btn" onclick="selectTscore(this,'osteopenia')">No scan yet</button>
     </div>
   </div>
@@ -408,8 +408,14 @@ const USE_TSCORE = ['osteopenia','osteoporosis'];
 const USE_IMAGING = ['ankle-inflam','wrist-inflam'];
 
 // ── PROTOCOLS ─────────────────────────────────────────────
+const RATES = {'Member Discount':100, 'Standard':125};
+// Osteoporosis + Osteopenia run back-to-back in one 90-min appointment (T-score −3.4 or worse).
+// Combined rate, NOT the sum of two protocols.
+const DUAL_RATES = {'Member Discount':165, 'Standard':175};
+
 const PROTOCOLS = {
   'osteopenia':        {name:'Osteopenia',num:1,device:'Mat (systemic)',weeks:5,sessions:12,price:'$1,200',phases:[{p:'REPAIR',pr:'Program 6 — Bone Repair',s:'12 sessions',f:'Every 72 hrs'}],note:'Bone density peaks 1 year after completion.',clientNote:'LIMFA uses a therapeutic mat that works at the cellular level to support bone density. You simply lie on it for 27 minutes per session.'},
+  'osteo-dual':        {name:'Osteoporosis + Osteopenia (Advanced Bone)',num:'2 + 1',device:'Transducer + Mat (systemic)',weeks:5,sessions:12,minutes:90,rates:DUAL_RATES,price:'$1,980',phases:[{p:'REPAIR',pr:'Program 6 — Bone Repair × 2 sites (femurs + spine)',s:'12 sessions',f:'Every 48-72 hrs'},{p:'REPAIR',pr:'Program 6 — Bone Repair (systemic mat)',s:'12 sessions',f:'Same visit, immediately after'}],note:'T-score −3.4 or worse. Transducer work first (femurs 27 min, spine 27 min), then the systemic mat — book a 90-minute appointment. Combined rate, not two separate protocol prices.',clientNote:'Your scan puts you in the range where we combine both bone protocols in a single visit — targeted work on the hips and spine, followed by full-body support on the therapeutic mat. Plan for about 90 minutes per session.'},
   'osteoporosis':      {name:'Osteoporosis',num:2,device:'Transducer',weeks:5,sessions:12,price:'$1,200',phases:[{p:'REPAIR',pr:'Program 6 — Bone Repair × 2 sites',s:'12 sessions',f:'Every 48-72 hrs'}],note:'Each session: femurs first (27 min) then spine (27 min) — 54 min combined.',clientNote:'Research shows an average 18% improvement in T-score after completing the protocol.'},
   'bone-healing':      {name:'Bone Healing Delay',num:3,device:'Transducer',weeks:4,sessions:15,price:'$1,500',phases:[{p:'REPAIR',pr:'Program 6 — Bone Repair',s:'15 sessions',f:'Every 48 hrs'}],note:'Apply transducer to area of break or delayed healing. If swelling, start with AUTO first.',clientNote:'The transducer is placed directly over the affected area to support your body\'s natural healing process.'},
   'dental':            {name:'Bone Healing Delay',num:3,device:'Transducer',weeks:4,sessions:15,price:'$1,500',phases:[{p:'REPAIR',pr:'Program 6 — Bone Repair',s:'15 sessions',f:'Every 48 hrs'}],note:'Apply transducer to the dental implant area. If swelling, start with AUTO first.',clientNote:'LIMFA can support the healing process around dental implants by encouraging your body\'s natural bone repair.'},
@@ -457,12 +463,12 @@ let S = {
 };
 
 // Session rates. $125 is standard pricing; members receive a $25/session Member Discount.
-const RATES = {'Member Discount':100, 'Standard':125};
-
 // PROTOCOLS prices are stored at the $100 member-discount rate; recompute for the actual rate.
-function rate() { return RATES[S.membership] || 125; }  // default to standard, never under-quote
+// A protocol may carry its own `rates` table (e.g. the dual bone protocol).
+function rateTable(p) { return (p && p.rates) || RATES; }
+function rate(p) { var t = rateTable(p); return t[S.membership] || t['Standard']; }
 function money(n) { return '$' + n.toLocaleString('en-US'); }
-function pkgPrice(p) { return money(p.sessions * rate()); }
+function pkgPrice(p) { return money(p.sessions * rate(p)); }
 
 // ── INIT ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
@@ -629,7 +635,7 @@ function showProtocol() {
   html += '<div class="pkg-card">';
   html += '<div class="pkg-label">★ Recommended package</div>';
   html += '<div class="pkg-name">' + p.name + '</div>';
-  html += '<div class="pkg-detail">' + p.sessions + ' sessions · ' + money(rate()) + ' per session (' + S.membership + ') · Includes initial assessment</div>';
+  html += '<div class="pkg-detail">' + p.sessions + ' sessions · ' + money(rate(p)) + ' per session (' + S.membership + ') · Includes initial assessment</div>';
   html += '<div class="pkg-price">' + pkgPrice(p) + '</div>';
   html += '</div>';
 
@@ -658,7 +664,7 @@ async function sendEmails() {
     recommended_package: p.name,
     package_price: pkgPrice(p),
     membership_status: S.membership,
-    session_rate: money(rate()),
+    session_rate: money(rate(p)),
     package_sessions: p.sessions,
     weeks: p.weeks,
     additional_conditions: S.extraConds || 'None',
@@ -679,7 +685,7 @@ async function sendEmails() {
     package_sessions: p.sessions,
     package_price: pkgPrice(p),
     membership_status: S.membership,
-    session_rate: money(rate()),
+    session_rate: money(rate(p)),
     salesperson: S.salesperson
   };
 
