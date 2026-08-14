@@ -196,10 +196,10 @@ textarea{height:80px;resize:vertical}
   <div class="card">
     <div class="card-title">OsteoStrong membership *</div>
     <div class="opt-grid">
-      <button class="opt-btn" onclick="selectMembership(this,'Member')"><span class="opt-icon">⭐</span>OsteoStrong Member<br><span style="font-size:11px;opacity:.7">$100 per session</span></button>
-      <button class="opt-btn" onclick="selectMembership(this,'Non-Member')"><span class="opt-icon">👤</span>Non-Member<br><span style="font-size:11px;opacity:.7">$125 per session</span></button>
+      <button class="opt-btn" onclick="selectMembership(this,'Member Discount')"><span class="opt-icon">⭐</span>OsteoStrong Member<br><span style="font-size:11px;opacity:.7">$100 per session — Member Discount</span></button>
+      <button class="opt-btn" onclick="selectMembership(this,'Standard')"><span class="opt-icon">👤</span>Standard Pricing<br><span style="font-size:11px;opacity:.7">$125 per session</span></button>
     </div>
-    <p class="panel-sub" style="margin-top:10px">Sets the session rate on their recommendation. Member pricing is an OsteoStrong member discount.</p>
+    <p class="panel-sub" style="margin-top:10px">Sets the session rate on their recommendation. Standard LIMFA pricing is $125/session; OsteoStrong members receive a $25/session Member Discount.</p>
   </div>
   <div class="nav-row">
     <button class="btn-back" onclick="goTo(0)">← Back</button>
@@ -456,11 +456,11 @@ let S = {
   membership:'', protocol:null
 };
 
-// Session rates. Member pricing is an OsteoStrong member discount.
-const RATES = {'Member':100, 'Non-Member':125};
+// Session rates. $125 is standard pricing; members receive a $25/session Member Discount.
+const RATES = {'Member Discount':100, 'Standard':125};
 
-// PROTOCOLS prices are stored at the $100 member rate; recompute for the actual rate.
-function rate() { return RATES[S.membership] || 100; }
+// PROTOCOLS prices are stored at the $100 member-discount rate; recompute for the actual rate.
+function rate() { return RATES[S.membership] || 125; }  // default to standard, never under-quote
 function money(n) { return '$' + n.toLocaleString('en-US'); }
 function pkgPrice(p) { return money(p.sessions * rate()); }
 
