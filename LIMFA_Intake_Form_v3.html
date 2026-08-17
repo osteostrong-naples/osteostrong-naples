@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>LIMFA Protocol Finder — OsteoStrong Naples</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;-webkit-text-size-adjust:100%}
@@ -337,10 +336,23 @@ textarea{height:80px;resize:vertical}
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────
-const EMAILJS_PUBLIC_KEY = 'GsK59nMBs9e5QOjZM';
-const EMAILJS_SERVICE_ID = 'service_vw8uqcj';
-const TEMPLATE_STAFF     = 'template_4jtsvju';
-const TEMPLATE_CLIENT    = 'template_2cf23bk';
+// ── LIMFA EMAIL API (Rackspace SMTP via Convex) ───────────
+// Replaces EmailJS. Templates + pricing live server-side.
+const LIMFA_API = 'https://tough-zebra-485.convex.site/limfa/send';
+
+async function limfaSend(template, params) {
+  const res = await fetch(LIMFA_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ template: template, params: params })
+  });
+  let data;
+  try { data = await res.json(); } catch (e) { data = {}; }
+  if (!res.ok || !data.success) {
+    throw new Error(data.error || 'Email failed to send');
+  }
+  return data;
+}
 const STAFF_EMAIL        = 'mackenzie@osteostrong.me';
 
 // ── CONDITIONS ────────────────────────────────────────────
@@ -475,7 +487,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var t = new Date();
   document.getElementById('intake-date').value = t.toLocaleDateString('en-US', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   S.date = t.toLocaleDateString('en-US');
-  emailjs.init(EMAILJS_PUBLIC_KEY);
 });
 
 // ── NAVIGATION ────────────────────────────────────────────
@@ -693,8 +704,8 @@ async function sendEmails() {
   document.getElementById('overlay-text').textContent = 'Sending your plan…';
 
   try {
-    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_STAFF, staffParams);
-    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_CLIENT, clientParams);
+    await limfaSend('finder_staff', staffParams);
+    await limfaSend('finder_client', clientParams);
     document.getElementById('overlay').classList.remove('show');
     showSuccess();
   } catch(err) {
