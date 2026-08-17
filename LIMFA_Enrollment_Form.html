@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>LIMFA Enrollment — OsteoStrong Naples</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;-webkit-text-size-adjust:100%}
@@ -487,10 +486,23 @@ textarea{height:80px;resize:vertical}
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────
-const EMAILJS_PUBLIC_KEY  = 'GsK59nMBs9e5QOjZM';
-const EMAILJS_SERVICE_ID  = 'service_vw8uqcj';
-const TEMPLATE_STAFF_ENR  = 'template_s7omu4g';
-const TEMPLATE_CLIENT_ENR = 'template_nure5dj';
+// ── LIMFA EMAIL API (Rackspace SMTP via Convex) ───────────
+// Replaces EmailJS. Templates + pricing live server-side.
+const LIMFA_API = 'https://tough-zebra-485.convex.site/limfa/send';
+
+async function limfaSend(template, params) {
+  const res = await fetch(LIMFA_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ template: template, params: params })
+  });
+  let data;
+  try { data = await res.json(); } catch (e) { data = {}; }
+  if (!res.ok || !data.success) {
+    throw new Error(data.error || 'Email failed to send');
+  }
+  return data;
+}
 const STAFF_EMAIL         = 'mackenzie@osteostrong.me';
 const GOOGLE_SCRIPT_URL   = '';
 
@@ -553,7 +565,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('enroll-date').value = ds;
   document.getElementById('first-payment-date').value = t.toISOString().split('T')[0];
   S.date = t.toLocaleDateString('en-US');
-  emailjs.init(EMAILJS_PUBLIC_KEY);
 });
 
 // ── NAVIGATION ────────────────────────────────────────────
@@ -857,8 +868,8 @@ async function submitEnrollment(){
 
   document.getElementById('overlay').classList.add('show');
   try{
-    await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_STAFF_ENR,staffParams);
-    await emailjs.send(EMAILJS_SERVICE_ID,TEMPLATE_CLIENT_ENR,clientParams);
+    await limfaSend('enrollment_staff',staffParams);
+    await limfaSend('enrollment_client',clientParams);
     if(GOOGLE_SCRIPT_URL!==''){
       await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',
         headers:{'Content-Type':'application/json'},
