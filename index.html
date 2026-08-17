@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>OsteoStrong Naples — Staff Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -474,13 +473,25 @@ input.error{border-color:#C9484C}
 </footer>
 
 <script>
-// ── EMAILJS CONFIG ────────────────────────────────────────
-const EMAILJS_PUBLIC_KEY = 'GsK59nMBs9e5QOjZM';
-const EMAILJS_SERVICE_ID = 'service_vw8uqcj';
-const TEMPLATE_OVERVIEW  = 'template_n4rbsus';
+// ── LIMFA EMAIL API (Rackspace SMTP via Convex) ───────────
+// Replaces EmailJS. Templates + pricing live server-side.
+const LIMFA_API = 'https://tough-zebra-485.convex.site/limfa/send';
+
+async function limfaSend(template, params) {
+  const res = await fetch(LIMFA_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ template: template, params: params })
+  });
+  let data;
+  try { data = await res.json(); } catch (e) { data = {}; }
+  if (!res.ok || !data.success) {
+    throw new Error(data.error || 'Email failed to send');
+  }
+  return data;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-  emailjs.init(EMAILJS_PUBLIC_KEY);
   initGreeting();
   initCounters();
   initReveal();
@@ -620,7 +631,7 @@ async function sendInfoEmail() {
   document.getElementById('overlay').classList.add('show');
 
   try {
-    await emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_OVERVIEW, params);
+    await limfaSend('overview', params);
     document.getElementById('overlay').classList.remove('show');
     const successEl = document.getElementById('send-success');
     const subEl = document.getElementById('send-success-sub');
