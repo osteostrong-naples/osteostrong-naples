@@ -71,6 +71,10 @@ input[type=text],input[type=email]{width:100%;padding:11px 14px;border:1.5px sol
 input:focus{border-color:#C9A84C;background:#fff;box-shadow:0 0 0 3px rgba(201,168,76,0.12)}
 input.error{border-color:#C9484C}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.email-type{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.email-type-btn{padding:12px 12px;border:1.5px solid #DDD8CF;border-radius:10px;background:#FDFCFA;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1C1C2E;cursor:pointer;text-align:left;line-height:1.35;-webkit-tap-highlight-color:transparent}
+.email-type-btn span{display:block;font-size:11.5px;font-weight:400;color:#7A6E62;margin-top:3px}
+.email-type-btn.active{border-color:#C9484C;background:rgba(201,72,76,0.06)}
 .btn-send{width:100%;margin-top:14px;padding:14px;border:none;border-radius:12px;background:#1C1C2E;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#fff;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
 .btn-send:active{transform:scale(0.98);background:#2C2C4E}
 .btn-send.sending{opacity:0.7;cursor:not-allowed}
@@ -264,8 +268,16 @@ input.error{border-color:#C9484C}
     <div class="email-header">
       <div class="email-icon">📧</div>
       <div>
-        <div class="email-title">Send LIMFA Overview Email</div>
-        <div class="email-subtitle">Beautiful branded email with benefits, protocols, pricing, and a scheduling CTA</div>
+        <div class="email-title">Send LIMFA Email</div>
+        <div class="email-subtitle">Branded email with how LIMFA works, pricing, and a consultation CTA</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Which email?</label>
+      <div class="email-type">
+        <button type="button" class="email-type-btn active" data-template="overview" onclick="selectEmailType(this)">General Overview<span>All conditions + pricing</span></button>
+        <button type="button" class="email-type-btn" data-template="bone_overview" onclick="selectEmailType(this)">Bone Health<span>Osteopenia &amp; osteoporosis</span></button>
       </div>
     </div>
 
@@ -297,7 +309,7 @@ input.error{border-color:#C9484C}
       </select>
     </div>
 
-    <button class="btn-send" onclick="sendInfoEmail()">Send LIMFA Overview →</button>
+    <button class="btn-send" id="btn-send-info" onclick="sendInfoEmail()">Send LIMFA Overview →</button>
 
     <div class="send-success" id="send-success">
       <div class="send-success-title">✓ Email sent!</div>
@@ -605,6 +617,19 @@ function renderWeekGrid(containerId, activeDays, color, daysMap, dayNames) {
     '</div>';
 }
 
+// ── EMAIL TYPE PICKER ─────────────────────────────────────
+const EMAIL_TYPES = {
+  overview:      { button: 'Send LIMFA Overview →',    label: 'LIMFA overview' },
+  bone_overview: { button: 'Send Bone Health Email →', label: 'LIMFA bone health email' },
+};
+let emailTemplate = 'overview';
+function selectEmailType(btn) {
+  document.querySelectorAll('.email-type .email-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  emailTemplate = btn.dataset.template;
+  document.getElementById('btn-send-info').textContent = EMAIL_TYPES[emailTemplate].button;
+}
+
 // ── SEND OVERVIEW EMAIL ───────────────────────────────────
 async function sendInfoEmail() {
   const fname   = document.getElementById('info-fname').value.trim();
@@ -632,11 +657,11 @@ async function sendInfoEmail() {
   document.getElementById('overlay').classList.add('show');
 
   try {
-    await limfaSend('overview', params);
+    await limfaSend(emailTemplate, params);
     document.getElementById('overlay').classList.remove('show');
     const successEl = document.getElementById('send-success');
     const subEl = document.getElementById('send-success-sub');
-    subEl.textContent = 'LIMFA overview sent to ' + fullName + ' at ' + email + '.';
+    subEl.textContent = EMAIL_TYPES[emailTemplate].label.replace(/^./, c => c.toUpperCase()) + ' sent to ' + fullName + ' at ' + email + '.';
     successEl.classList.add('show');
     setTimeout(() => {
       successEl.classList.remove('show');
